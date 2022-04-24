@@ -12,6 +12,7 @@ User = settings.AUTH_USER_MODEL
 # all of this is used as options lists througout the app
 class Speciality(models.Model):
     name =models.CharField(max_length=100)
+    url=models.TextField(null = True)
     def __str__(self):
         return self.name
 
