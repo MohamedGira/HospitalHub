@@ -19,7 +19,7 @@ urlpatterns = [
 
     #########################
     #paths for admin
-    
+    path('admin/home', views.AdminHome,name='admin_home'),
 
 
 
