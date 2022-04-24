@@ -193,5 +193,14 @@ class MedicalTest(models.Model):
     result=models.TextField(null=True)
 
 
+class Rating(models.IntegerChoices):
+    EXCELLENT = 5, '5';    VERYGOOD = 4, '4';    GOOD = 3, '3';    OK = 2, '2';BAD = 1, '1'
 
 
+
+
+class Review(models.Model):
+    doctor= models.ForeignKey(Doctor,on_delete= models.CASCADE,related_name="my_reviews")
+    patient=models.ForeignKey(Patient,on_delete= models.CASCADE,related_name="my_comments")
+    comment=models.TextField()
+    rating= models.IntegerField(default=Rating.EXCELLENT, choices=Rating.choices)
