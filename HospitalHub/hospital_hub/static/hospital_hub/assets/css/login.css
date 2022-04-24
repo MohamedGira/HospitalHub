@@ -17,6 +17,7 @@ body {
   background-attachment:fixed;
 }
 
+
 .container {
   width:500px;
   height: 700px;
@@ -36,6 +37,8 @@ body {
   height:100%;
   filter:blur(10px);
 }
+
+
 
 .page-login{
     margin-top: 9.5em;

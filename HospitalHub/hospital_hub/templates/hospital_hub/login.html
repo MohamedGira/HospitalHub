@@ -1,148 +1,164 @@
+{%load static%}
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>CodePen - Login</title>
-   <!--Import Google Icon Font-->
- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
- <link href="https://fonts.googleapis.com/css?family=Baloo+Paaji" rel="stylesheet">
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap" rel="stylesheet">
- <link rel="stylesheet" href="../assets/css/login2.css"><link rel="stylesheet" href="../assets/css/login.css">
+    <meta charset="UTF-8">
+    <title>CodePen - Login</title>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Paaji" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'hospital_hub/assets/css/login2.css'%}" />
+    <link rel="stylesheet" href="{%static 'hospital_hub/assets/css/login.css'%}" />
 
 </head>
-<body>
-  <div class="container">
-    <div class="bg"></div>
-  </div>
-    <div style="margin-top:-650px; margin-left:830px; width:100%;" class="row page-login">
-    <div class="col s12" >
-      <ul class="tabs" id="tabs-login">
-        <li class="tab col s3" id="tab1"><a class="active" href="#test1"><i class="material-icons">person</i></a></li>
-        <li class="tab col s3" id="tab2" ><a href="#test2"><i class="material-icons">local_hospital</i></a></li>
-      </ul>
-      <div id="test1" class="card-login" >
-        <div style="color: #1572A1; text-align:center;"id="login-content" class="row">
-          <h5> Login as User</h5>
-            <form class="login-form">
-              <div class="row margin">
-                <div class="input-field col s12">
-                  <input id="username" type="text">
-                  <label style="color:#cf484c80;" for="username" class="center-align active" value="">Username</label>
-                </div>
-              </div>
-              <div class="row margin">
-                <div class="person input-field col s12">
-                  <input id="password" type="password">
-                  <label style="color:#cf484c80;" for="password" class="">Password</label>
-                </div>
-              </div>
-              <span class="margin right-align medium-small">
-              <!--Modal Trigger -->
-              <a class="modal-trigger" href="#modal1">Forgot password?</a>
-              <!-- Modal Structure -->
-              <div id="modal1" class="modal">
-                <div class="modal-content">
-                  <h4>Forgot your password?</h4>
-                  <h5>Please type your email address</h5>
-                  <form class="form-forgot">
-                    <div class="row margin">
-                      <div class="input-field col s12">
-                        <input type="text" class="form-control" name="email">
-                        <label class="control-label">Email address</label>
-                      </div>
-                    </div>
-                    <input  type="hidden" name="signin_as" value="user"/>
-                    <input class="btn btn-forgot" type="submit" name="button" value="Submit"/>
-                  </form>
-                </div>
-                <div class="modal-footer" id="footer-forgot">
-                  <a href="#!" id="cancel-btn" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-                </div>
-              </div>
-            </span>
-              <div class="row">
-                <div class="input-field col s12 login1">
-                    <a href="" class="waves-effect waves-light btn col s12" id="btn-login" value="">Login</a>
-                </div>
-              </div>
-            </form>
 
+<body >
 
-
-
-            <div class="center-align" id="register">
-                <p style="color: #1572A1;">Not a member yet ?</p>
-              <a href="#" class="waves-effect waves-light btn">Register now!</a>
-            </div>
-          </div>
-        </div>
-
-
-        <div id="test2" class="card-login" >
-          <div style="color: #1572A1; text-align:center;"id="login-content" class="row">
-            <h5>Login as Doctor</h5>
-              <form class="login-form">
-                <div class="row margin">
-                  <div class="input-field col s12">
-                    <input id="username" type="text">
-                    <label style="color:#cf484c80;" for="username" class="center-align active" value="">Username</label>
-                  </div>
-                </div>
-                <div class="row margin">
-                  <div class="person input-field col s12">
-                    <input id="password" type="password">
-                    <label style="color:#cf484c80;" for="password" class="">Password</label>
-                  </div>
-                </div>
-                <span class="margin right-align medium-small">
-                <!--Modal Trigger -->
-                <a class="modal-trigger" href="#modal2">Forgot password?</a>
-                <!-- Modal Structure -->
-                <div id="modal2" class="modal">
-                  <div class="modal-content">
-                    <h4>Forgot your password?</h4>
-                    <h5>Please type your email address</h5>
-                    <form class="form-forgot">
-                      <div class="row margin">
-                        <div class="input-field col s12">
-                          <input type="text" class="form-control" name="email">
-                          <label class="control-label">Email address</label>
-                        </div>
-                      </div>
-                      <input  type="hidden" name="signin_as" value=doctor/>
-
-                      <input class="btn btn-forgot" type="submit" name="button" value="Submit"/>
-                    </form>
-                  </div>
-                  <div class="modal-footer" id="footer-forgot">
-                    <a href="#!" id="cancel-btn" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
-                  </div>
-                </div>
-              </span>
-                <div class="row">
-                  <div class="input-field col s12 login1">
-                      <a href="" class="waves-effect waves-light btn col s12" id="btn-login" value="">Login</a>
-                  </div>
-                </div>
-              </form>
-
-
-              <div class="center-align" id="register">
-                  <p style="color: #1572A1;">Sign up as a Doctor</p>
-                <a href="#" class="waves-effect waves-light btn">Register now!</a>
-              </div>
-            </div>
-          </div>
+    <div class="container">
+        <div class="bg"></div>
     </div>
-  </div>
+
+    <div style="margin-top:-650px; margin-left:830px; width:100%;" class="row page-login">
+        <div class="col s12">
+            <ul class="tabs" id="tabs-login">
+                <li class="tab col s3" id="tab1"><a class="active" href="#test1"><i
+                            class="material-icons">person</i></a></li>
+                <li class="tab col s3" id="tab2"><a href="#test2"><i class="material-icons">local_hospital</i></a></li>
+            </ul>
+            <div id="test1" class="card-login">
+                <div style="color: #1572A1; text-align:center;" id="login-content" class="row">
+                    <h5> Login as User</h5>
+                    <form class="login-form">
+                        <div class="row margin">
+                            <div class="input-field col s12">
+                                <input id="username" type="text">
+                                <label style="color:#cf484c80;" for="username" class="center-align active"
+                                    value="">Username</label>
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="person input-field col s12">
+                                <input id="password" type="password">
+                                <label style="color:#cf484c80;" for="password" class="">Password</label>
+                            </div>
+                        </div>
+                        <span class="margin right-align medium-small">
+                            <!--Modal Trigger -->
+                            <a class="modal-trigger" href="#modal1">Forgot password?</a>
+                            <!-- Modal Structure -->
+                            <div id="modal1" class="modal">
+                                <div class="modal-content">
+                                    <h4>Forgot your password?</h4>
+                                    <h5>Please type your email address</h5>
+                                    <form class="form-forgot">
+                                        <div class="row margin">
+                                            <div class="input-field col s12">
+                                                <input type="text" class="form-control" name="email">
+                                                <label class="control-label">Email address</label>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="signin_as" value="user" />
+                                        <input class="btn btn-forgot" type="submit" name="button" value="Submit" />
+                                    </form>
+                                </div>
+                                <div class="modal-footer" id="footer-forgot">
+                                    <a href="#!" id="cancel-btn"
+                                        class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+                                </div>
+                            </div>
+                        </span>
+                        <div class="row">
+                            <div class="input-field col s12 login1">
+                                <a href="" class="waves-effect waves-light btn col s12" id="btn-login"
+                                    value="">Login</a>
+                            </div>
+                        </div>
+                    </form>
+
+
+
+
+                    <div class="center-align" id="register">
+                        <p style="color: #1572A1;">Not a member yet ?</p>
+                        <a href="#" class="waves-effect waves-light btn">Register now!</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="test2" class="card-login">
+                <div style="color: #1572A1; text-align:center;" id="login-content" class="row">
+                    <h5>Login as Doctor</h5>
+                    <form class="login-form">
+                        <div class="row margin">
+                            <div class="input-field col s12">
+                                <input id="username" type="text">
+                                <label style="color:#cf484c80;" for="username" class="center-align active"
+                                    value="">Username</label>
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="person input-field col s12">
+                                <input id="password" type="password">
+                                <label style="color:#cf484c80;" for="password" class="">Password</label>
+                            </div>
+                        </div>
+                        <span class="margin right-align medium-small">
+                            <!--Modal Trigger -->
+                            <a class="modal-trigger" href="#modal2">Forgot password?</a>
+                            <!-- Modal Structure -->
+                            <div id="modal2" class="modal">
+                                <div class="modal-content">
+                                    <h4>Forgot your password?</h4>
+                                    <h5>Please type your email address</h5>
+                                    <form class="form-forgot">
+                                        <div class="row margin">
+                                            <div class="input-field col s12">
+                                                <input type="text" class="form-control" name="email">
+                                                <label class="control-label">Email address</label>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="signin_as" value=doctor />
+
+                                        <input class="btn btn-forgot" type="submit" name="button" value="Submit" />
+                                    </form>
+                                </div>
+                                <div class="modal-footer" id="footer-forgot">
+                                    <a href="#!" id="cancel-btn"
+                                        class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+                                </div>
+                            </div>
+                        </span>
+                        <div class="row">
+                            <div class="input-field col s12 login1">
+                                <a href="" class="waves-effect waves-light btn col s12" id="btn-login"
+                                    value="">Login</a>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <div class="center-align" id="register">
+                        <p style="color: #1572A1;">Sign up as a Doctor</p>
+                        <a href="#" class="waves-effect waves-light btn">Register now!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
+
 </html>
 <!-- partial -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js'></script><script  src="../assets/js/login.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js'></script>
+<script src="{%static 'hospital_hub/assets/js/login.js'%}"></script>
 
 </body>
+
 </html>

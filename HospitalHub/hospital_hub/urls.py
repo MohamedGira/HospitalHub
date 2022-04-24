@@ -19,6 +19,7 @@ urlpatterns = [
 
     #########################
     #paths for admin
+    path('admin/login', views.AdminLogin,name='admin_login'),
     path('admin/home', views.AdminHome,name='admin_home'),
 
 
