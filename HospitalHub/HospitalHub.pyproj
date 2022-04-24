@@ -67,6 +67,10 @@
     <Folder Include="hospital_hub\migrations\" />
     <Folder Include="hospital_hub\templates\" />
     <Folder Include="hospital_hub\templates\hospital_hub\" />
+    <Folder Include="hospital_hub\templates\hospital_hub\Doctor\" />
+    <Folder Include="hospital_hub\templates\hospital_hub\Admin\" />
+    <Folder Include="hospital_hub\templates\hospital_hub\Patient\" />
+    <Folder Include="hospital_hub\templates\hospital_hub\Owner\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="hospital_hub\templates\hospital_hub\index.html" />
