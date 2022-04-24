@@ -166,10 +166,10 @@ class Doctor(models.Model):
 class Schedule(models.Model):
     day= models.CharField(max_length=50)
     doctor= models.ForeignKey(Doctor,on_delete= models.CASCADE,related_name="dailyschedule")
-    start_time=models.TimeField();
-    end_time=models.TimeField();
-    price=models.IntegerField();
-    patient_count=models.IntegerField();
+    start_time=models.TimeField()
+    end_time=models.TimeField()
+    price=models.IntegerField()
+    patient_count=models.IntegerField()
 
 class Appointment(models.Model):
     doctor=models.ForeignKey(Doctor,on_delete= models.CASCADE,related_name="appointments")
@@ -185,8 +185,6 @@ class AppointmentDocument(models.Model):
     attachment=models.TextField()
     diagnosis =models.TextField()
     disease=models.CharField(max_length=100)
-
-    
 
 class MedicalTest(models.Model):
     type= models.ForeignKey(MedicalTestType,on_delete= models.CASCADE,related_name="document")
