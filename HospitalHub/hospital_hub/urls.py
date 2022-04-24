@@ -9,4 +9,30 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='home'),
+    #########################
+    #paths for owner
+
+    #example :        path('/Onwer/Hoapitals', views.logowner, name='onwer_login'),
+    #example :        path('/Onwer/home', views.index, name='onwer_home'),
+
+
+
+    #########################
+    #paths for admin
+    
+
+
+
+
+    #########################
+    #paths for doctor
+
+
+
+
+
+    #########################
+    #paths for patient
+
+
 ]
