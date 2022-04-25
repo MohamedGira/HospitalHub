@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login, logout
+
+from django.contrib.auth import get_user_model
 
 from .models import *
 
@@ -15,7 +16,6 @@ def index(request):
 
 ############################################################################
 #owner app
-
 
 
 
