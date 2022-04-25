@@ -37,7 +37,7 @@ class AppointmentStatus(models.Model):
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email,full_name=None,
-                   password=None, is_owner=True,
+                   password=None, is_owner=False,
                   is_admin=False, is_doctor=False,is_staff=False,
                   is_patient=False,city=None,phone_number=None):
         if not (username and password and full_name and email ):
