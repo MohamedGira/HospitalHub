@@ -39,4 +39,4 @@ class Patient:
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html") 
-        #gvgvgvgvgvg
+   
