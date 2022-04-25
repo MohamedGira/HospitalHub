@@ -31,8 +31,12 @@ class AppointmentStatus(models.Model):
     def __str__(self):
         return self.name
 
+class Hospital(models.Model):
+    name =models.CharField(max_length=100)
+    city = models.ForeignKey(City,on_delete=models.PROTECT,null=True)
 
-
+    def __str__(self):
+        return self.name
 
 
 class UserManager(BaseUserManager):
@@ -152,6 +156,7 @@ class Owner(models.Model):
     
 class Admin(models.Model):
     my_account= models.ForeignKey(User,on_delete= models.CASCADE,related_name="my_admin")
+    hospital= models.ForeignKey(Hospital, on_delete=models.CASCADE,related_name="my_admins")
 
 class Patient(models.Model):  
     my_account= models.ForeignKey(User,on_delete= models.CASCADE,related_name="my_patient")
@@ -160,7 +165,7 @@ class Doctor(models.Model):
     my_account= models.ForeignKey(User,on_delete= models.CASCADE,related_name="my_doctor")
     is_employed= models.BooleanField(default=False)
     speciality= models.ForeignKey(Speciality, on_delete=models.CASCADE,related_name="doctors")
-
+    hospital= models.ForeignKey(Hospital, on_delete=models.SET_NULL,related_name="my_doctors",null=True)
 
 # Organizational classes
 
