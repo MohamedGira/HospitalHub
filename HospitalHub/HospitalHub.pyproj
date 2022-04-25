@@ -149,6 +149,7 @@
     <Content Include="hospital_hub\static\hospital_hub\assets\vendor\wow\wow.min.js" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\add_specialization.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\admin_login.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\login_admin.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\admin_home.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Doctor\doctor_registration.html" />
     <Content Include="hospital_hub\templates\hospital_hub\home_layout.html" />
