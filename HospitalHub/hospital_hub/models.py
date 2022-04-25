@@ -157,6 +157,8 @@ class Owner(models.Model):
 class Admin(models.Model):
     my_account= models.ForeignKey(User,on_delete= models.CASCADE,related_name="my_admin")
     hospital= models.ForeignKey(Hospital, on_delete=models.CASCADE,related_name="my_admins")
+    def __str__(self):
+        return "Hospital of "+str(self.hospital)+" - Admin "+str(self.id)
 
 class Patient(models.Model):  
     my_account= models.ForeignKey(User,on_delete= models.CASCADE,related_name="my_patient")

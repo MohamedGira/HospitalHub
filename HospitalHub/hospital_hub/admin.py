@@ -16,6 +16,7 @@ admin.site.register(Appointment)
 admin.site.register(AppointmentDocument)
 admin.site.register(MedicalTest)
 admin.site.register(Review)
+admin.site.register(Hospital)
 
 
 

@@ -28,5 +28,6 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('admin/', admin.site.urls),
     path("hospital_hub/", include("hospital_hub.urls")),
+    path("hospitalhub/", include("hospital_hub.urls")),
 
 ]
