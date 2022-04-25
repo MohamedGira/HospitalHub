@@ -11,7 +11,7 @@ User = settings.AUTH_USER_MODEL
 
 # all of this is used as options lists througout the app
 class Speciality(models.Model):
-    name =models.CharField(max_length=100)
+    name =models.CharField(max_length=100,unique=True)
     url=models.TextField(null = True)
     def __str__(self):
         return self.name
@@ -22,7 +22,7 @@ class MedicalTestType(models.Model):
         return self.type
 
 class City(models.Model):
-    name =models.CharField(max_length=100)
+    name =models.CharField(max_length=100,unique=True)
     def __str__(self):
         return self.name
 
@@ -34,7 +34,8 @@ class AppointmentStatus(models.Model):
 class Hospital(models.Model):
     name =models.CharField(max_length=100)
     city = models.ForeignKey(City,on_delete=models.PROTECT,null=True)
-
+    specialities = models.ManyToManyField(Speciality)
+    #url = models.TextField(null =True)
     def __str__(self):
         return self.name
 

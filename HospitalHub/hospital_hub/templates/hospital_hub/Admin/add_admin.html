@@ -22,21 +22,23 @@
     <header>
         <div class="topbar">
             <div class="row">
-                <div class="col-sm-8 text-sm">
+                <div class="col-md-15 text-sm">
                     <div class="site-info">
+                         <a href="{%url 'admin_home'%}"><span class="mai-home text-primary"></span> Home</a>
+                    <span class="divider">|</span>
                         <a href="#"><span class="mai-call text-primary"></span> +20 1013421486</a>
                         <span class="divider">|</span>
                         <a href="#"><span class="mai-mail text-primary"></span> HospitalHub@gmail.com</a>
                     </div>
                 </div>
-                <div class="col-sm-4 text-right text-sm">
+                <!--<div class="col-md-10 text-right text-sm" >
                     <div class="social-mini-button">
                         <a href="#"><span class="mai-logo-facebook-f"></span></a>
                         <a href="#"><span class="mai-logo-twitter"></span></a>
                         <a href="#"><span class="mai-logo-dribbble"></span></a>
                         <a href="#"><span class="mai-logo-instagram"></span></a>
                     </div>
-                </div>
+                </div>-->
             </div> <!-- .row -->
         </div> <!-- .container -->
     </header>
@@ -57,8 +59,8 @@
                     </center>
                 </legend><br>
                 {%if alreadyused%}
-                     <h6 style="color:darkred">{{alreadyused}}</h6>
-                 {%endif%}
+                        <h6 style="color:darkred">{{alreadyused}}</h6>
+                    {%endif%}
                 <div class="form-group">
                     <label class="col-md-4 control-label">Username</label>
                     <div class="col-md-4 inputGroupContainer">

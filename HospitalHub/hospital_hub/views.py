@@ -152,9 +152,43 @@ class Admin:
                  "cities":cities,
                  })
 
+    def AddSpeciality(request):
+        # Redirect users to login page if they are not signed in as admins
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('admin_login'))
+        elif not request.user.is_admin:
+        #may add later "you have no access to this page :( "
+            return HttpResponseRedirect(reverse('home'))
 
 
+        specialities=Speciality.objects.all()
+        if request.method == "POST":
+            #check if input is valid
+            speciality=Speciality.objects.filter(id=request.POST["speciality"]).first()
+            if speciality is not None:
+                hospital=request.user.my_admin.first().hospital
+                #check if hospital haven't already added this speciality
+                if hospital.specialities.filter(name=speciality.name).count()==0:
+                    hospital.specialities.add(speciality)
+                    hospital.save()
+                    return HttpResponseRedirect(reverse("admin_home"))            
+                else:
+                   return render(request,"hospital_hub/Admin/add_speciality.html",{
+                       "specialities":specialities,
+                       "provided_spec":hospital.specialities.filter(name=speciality.name).first(),
+                       "message":"This speciality is already added to yout hospital"})
+            else:
+                   return render(request,"hospital_hub/Admin/add_speciality.html",{
+                       "specialities":specialities,
+                       "message":"Invalid Input"})
 
+        return render(request,"hospital_hub/Admin/add_speciality.html",{
+            "specialities":specialities,
+            })
+        
+
+
+     
 
 
 

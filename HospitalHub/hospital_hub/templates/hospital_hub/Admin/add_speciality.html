@@ -1,0 +1,96 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Baloo+Paaji" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{% static 'hospital_hub/assets/css/bootstrap.css' %}">
+<link rel="stylesheet" href="{% static 'hospital_hub/assets/css/maicons.css'%} ">
+<link rel="stylesheet" href="{% static 'hospital_hub/assets/css/add_doctor2.css'%}">
+<link rel="stylesheet" href="{% static 'hospital_hub/assets/css/specializations preview-1.css'%}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!-- Back to top button -->
+<div class="back-to-top"></div>
+<header>
+    <div class="topbar">
+        <div class="row">
+            <div class="col-sm-8 text-sm">
+                <div class="site-info">
+                    <a href="{%url 'admin_home'%}"><span class="mai-home text-primary"></span> Home</a>
+                    <span class="divider">|</span>
+                    <a href="#"><span class="mai-call text-primary"></span> +20 1013421486</a>
+                    <span class="divider">|</span>
+                    <a href="#"><span class="mai-mail text-primary"></span> HospitalHub@gmail.com</a>
+                </div>
+            </div>
+            <!--<div class="col-sm-4 text-right text-sm">
+                <div class="social-mini-button">
+                    <a href="#"><span class="mai-logo-facebook-f"></span></a>
+                    <a href="#"><span class="mai-logo-twitter"></span></a>
+                    <a href="#"><span class="mai-logo-dribbble"></span></a>
+                    <a href="#"><span class="mai-logo-instagram"></span></a>
+                </div>
+            </div>-->
+        </div> <!-- .row -->
+    </div> <!-- .container -->
+    </div> <!-- .topbar -->
+    <div class="container">
+
+        <form class="well form-horizontal" action=" " method="post" id="contact_form">
+            {% csrf_token %}
+            <fieldset>
+                <legend><center><h2><b>Add new specialization</b></h2></center></legend><br>
+
+
+                <br>
+                <div>
+                    <label for="exampleFormControlSelect1" class="col-md-4 control-label">Specilaization</label>
+                    <div class="form-group">
+                        <div class="col-md-8 inputGroupContainer">
+                            <div class="input-group">
+
+                                <select class="form-control" style="width:100%" id="inputState" name="speciality" required>
+                                    {%for speciality in specialities%}
+
+                                    {% if speciality.id == provided_spec.id %}
+                                    <option value="{{speciality.id}}" selected>{{speciality}}</option>
+                                    {%else%}
+                                    <option value="{{speciality.id}}">{{speciality}}</option>
+                                    {%endif%}
+                                    {%empty%}
+                                    <option>
+                                        No Specialities Avaalreadyaddedilable
+                                    </option>
+                                    {%endfor%}
+                                </select>
+                                {%if message %}
+                                <h6 style="color:red">{{message}}</h6>
+                                {%endif%}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              
+
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label"></label>
+                    <div class="col-md-4">
+                        <br>
+                        <button type="submit" class="btn btn-warning">SUBMIT <span class="glyphicon glyphicon-send"></span></button>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+    </div><!-- /.container -->
+    </body>
+</html>
