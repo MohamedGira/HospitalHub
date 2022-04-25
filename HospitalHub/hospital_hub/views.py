@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 
 from .models import *
 from .models import Admin as AdminModel
+from .utils import *
 
 User= get_user_model()
 # Create your views here.
@@ -47,7 +48,7 @@ class Admin:
 
 
 
-#Admin signin/signout methods__________________________________________________________________________________
+    #Admin signin/signout methods__________________________________________________________________________________
 
     def AdminLogin(request):
         # Redirect users to home page if they are already signed in as admins
@@ -85,6 +86,8 @@ class Admin:
         logout(request)
         return HttpResponseRedirect(reverse('admin_login'))
 
+    
+
 
     #Admin main methods__________________________________________________________________________________
 
@@ -96,6 +99,7 @@ class Admin:
         #may add later "you have no access to this page :( "
             return HttpResponseRedirect(reverse('home'))
         return render(request, "hospital_hub/Admin/admin_home.html")
+
 
     def AddAdmin(request):#register new admin to my hospital
          # Redirect users to login page if they are not signed in as admins
@@ -151,6 +155,7 @@ class Admin:
              return render(request,"hospital_hub/admin/add_admin.html",{
                  "cities":cities,
                  })
+
 
     def AddSpeciality(request):
         # Redirect users to login page if they are not signed in as admins

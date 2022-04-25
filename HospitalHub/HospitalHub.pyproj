@@ -44,6 +44,9 @@
     <Compile Include="hospital_hub\urls.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="hospital_hub\utils.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="hospital_hub\views.py" />
     <Compile Include="hospital_hub\__init__.py" />
     <Compile Include="manage.py" />
