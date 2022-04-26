@@ -9,6 +9,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='home'),
+    path('logout', views.Logout, name='user_logout'),
     #########################
     #paths for owner
 

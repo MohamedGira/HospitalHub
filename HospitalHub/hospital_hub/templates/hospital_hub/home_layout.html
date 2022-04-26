@@ -81,14 +81,24 @@
             <li class="nav-item">
                 <a class="nav-link" href="contact.html">Contact</a>
             </li>
-            <div class="dropdown">
+
+            {% if  user.is_authenticated and user.is_patient %}
+                
+                <li class="nav-item">
+                <a class="nav-link" href="{%url 'user_logout'%}">Logout</a>
+                
+            </li>
+            {% else %}
+                <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Login / Register
                 <span class="caret"></span></button>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="{%url 'patient_register'%}">ٌRegister</a></li>
-                  <li><a class="nav-link" href="{%url 'patient_login'%}">Login</a></li>
+                  <li><a class="nav-link" href="{%url 'admin_login'%}">Login</a></li>
                 </ul>
               </div>
+            
+            {%endif%}
             <!-- <li class="nav-item">
                 <a class="btn btn-primary ml-lg-3" href="{%url 'patient_login'%}">Login / Register</a>
             </li> -->

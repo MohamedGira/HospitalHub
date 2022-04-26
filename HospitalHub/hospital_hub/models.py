@@ -13,6 +13,27 @@ User = settings.AUTH_USER_MODEL
 class Speciality(models.Model):
     name =models.CharField(max_length=100,unique=True)
     url=models.TextField(null = True)
+   # image = models.ImageField(null=True, default=None)
+    
+    #def save(self, *args, **kwargs):
+    #  im = Image.open(self.image)
+    #  # Convert Image to RGB color mode
+    #  im = image.convert('RGB')
+    #  # auto_rotate image according to EXIF data
+    #  im = ImageOps.exif_transpose(im)
+    #  # save image to BytesIO object
+    #  im_io = BytesIO() 
+    #  # save image to BytesIO object
+    #  im.save(im_io, 'JPEG', quality=60) 
+    #  # create a django-friendly Files object
+    #  new_image = File(im_io, name=image.name)
+    #  # Change to new image
+    #  self.image = new_image
+    #  super().save(*args, **kwargs)
+
+
+
+
     def __str__(self):
         return self.name
 
