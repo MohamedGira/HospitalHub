@@ -192,9 +192,8 @@ class Admin:
 
 
 
-
-
-
+    def ViewSpecialities(request):
+        return render(request, "hospital_hub/Admin/view_specialities.html")
 
 
 
@@ -288,96 +287,98 @@ class Patient:
         return render(request, "hospital_hub/Admin/admin_home.html") """
 
 
-     """    def AdminLogin(request):
-        # Redirect users to home page if they are already signed in as admins
-        if request.user.is_authenticated:
-            if request.user.is_admin:
-                return HttpResponseRedirect(reverse('admin_home'))
+#     """ 
+#  def adminlogin(request):
+#        # redirect users to home page if they are already signed in as admins
+#        if request.user.is_authenticated:
+#            if request.user.is_admin:
+#                return httpresponseredirect(reverse('admin_home'))
 
-        if request.method=="POST":
-             # Attempt to sign user in
-            username = request.POST["username"]
-            password = request.POST["password"]
-            user = authenticate(request, username=username, password=password)
+#        if request.method=="post":
+#             # attempt to sign user in
+#            username = request.post["username"]
+#            password = request.post["password"]
+#            user = authenticate(request, username=username, password=password)
 
-            # Check if authentication successful
-            if user is not None:
-                # Check if the user is admin
-                if user.is_admin:
-                    login(request, user)
-                    return HttpResponseRedirect(reverse("admin_home"))
-                else:
-                    return render(request,"hospital_hub/admin/admin_login.html",{
-                        "message":"Invald username or password",
-                        "submitted_username":username,
-                        })   
-            else:
-                return render(request,"hospital_hub/Admin/admin_login.html",{
-                        "message":"Invald username or password",
-                        "submitted_username":username,
-                        })
-        else:   
-            return render(request, "hospital_hub/Admin/admin_login.html")
-
-
-    def AdminLogout(request):
-        logout(request)
-        return HttpResponseRedirect(reverse('admin_login')) """
+#            # check if authentication successful
+#            if user is not none:
+#                # check if the user is admin
+#                if user.is_admin:
+#                    login(request, user)
+#                    return httpresponseredirect(reverse("admin_home"))
+#                else:
+#                    return render(request,"hospital_hub/admin/admin_login.html",{
+#                        "message":"invald username or password",
+#                        "submitted_username":username,
+#                        })   
+#            else:
+#                return render(request,"hospital_hub/admin/admin_login.html",{
+#                        "message":"invald username or password",
+#                        "submitted_username":username,
+#                        })
+#        else:   
+#            return render(request, "hospital_hub/admin/admin_login.html")
 
 
-""" 
-          def AddAdmin(request):#register new admin to my hospital
-         # Redirect users to login page if they are not signed in as admins
-        if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('admin_login'))
-        elif not request.user.is_admin:
-        #may add later "you have no access to this page :( "
-            return HttpResponseRedirect(reverse('home'))
+#    def adminlogout(request):
+#        logout(request)
+#        return httpresponseredirect(reverse('admin_login')) 
+#        """
 
-        cities=City.objects.all();
 
-        if(request.method=="POST"):
-            username        =request.POST["username"]
-            full_name       =request.POST["full_name"]
-            email           =request.POST["email"]
-            password        =request.POST["password"]
-            confirm_password=request.POST["confirm_password"]
-            city            =request.POST["city"]
-            phone_number    =request.POST["phone_number"]
-            hospital        =request.user.my_admin.first().hospital ##only one admin related to this account
+#""" 
+#          def addadmin(request):#register new admin to my hospital
+#         # redirect users to login page if they are not signed in as admins
+#        if not request.user.is_authenticated:
+#            return httpresponseredirect(reverse('admin_login'))
+#        elif not request.user.is_admin:
+#        #may add later "you have no access to this page :( "
+#            return httpresponseredirect(reverse('home'))
 
-            if password != confirm_password:
-                return render(request, "hospital_hub/admin/add_admin.html", {
-                "mustmatch": "Passwords must match.",
-                "username":username,
-                "email":email,
-                "full_name":full_name,
-                "password":password,
-                "cities":cities,
-                "provided_city":city,
-                 "phone":phone_number,
-                })
+#        cities=city.objects.all();
 
-            # Attempt to create new user
-            try:
-                cit=City.objects.get(id=city)
-                user = User.objects.create_user(username, email,full_name,
-                password,is_admin=True,city=cit,phone_number=phone_number)
-                user.save()
-                admin= AdminModel(my_account=user,hospital=hospital) #links admin toadmin object
-                admin.save()
-            except IntegrityError:
-                return render(request,  "hospital_hub/admin/add_admin.html", {
-                    "alreadyused": "Username or email are already taken.",
-                    "full_name":full_name,
-                    "cities":cities,
-                    "city":city,
-                    "phone":phone_number,
-                })
-            return HttpResponseRedirect(reverse("admin_home"))            
-        else:
+#        if(request.method=="post"):
+#            username        =request.post["username"]
+#            full_name       =request.post["full_name"]
+#            email           =request.post["email"]
+#            password        =request.post["password"]
+#            confirm_password=request.post["confirm_password"]
+#            city            =request.post["city"]
+#            phone_number    =request.post["phone_number"]
+#            hospital        =request.user.my_admin.first().hospital ##only one admin related to this account
+
+#            if password != confirm_password:
+#                return render(request, "hospital_hub/admin/add_admin.html", {
+#                "mustmatch": "passwords must match.",
+#                "username":username,
+#                "email":email,
+#                "full_name":full_name,
+#                "password":password,
+#                "cities":cities,
+#                "provided_city":city,
+#                 "phone":phone_number,
+#                })
+
+#            # attempt to create new user
+#            try:
+#                cit=city.objects.get(id=city)
+#                user = user.objects.create_user(username, email,full_name,
+#                password,is_admin=true,city=cit,phone_number=phone_number)
+#                user.save()
+#                admin= adminmodel(my_account=user,hospital=hospital) #links admin toadmin object
+#                admin.save()
+#            except integrityerror:
+#                return render(request,  "hospital_hub/admin/add_admin.html", {
+#                    "alreadyused": "username or email are already taken.",
+#                    "full_name":full_name,
+#                    "cities":cities,
+#                    "city":city,
+#                    "phone":phone_number,
+#                })
+#            return httpresponseredirect(reverse("admin_home"))            
+#        else:
              
-             return render(request,"hospital_hub/admin/add_admin.html",{
-                 "cities":cities,
-                 })
- """
+#             return render(request,"hospital_hub/admin/add_admin.html",{
+#                 "cities":cities,
+#                 })
+# """

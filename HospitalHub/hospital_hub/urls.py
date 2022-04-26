@@ -25,8 +25,10 @@ urlpatterns = [
     path('admin/logout', views.Admin.AdminLogout,name='admin_logout'),
     path('admin/add_admin', views.Admin.AddAdmin,name='admin_add_admin'),
     path('admin/add_speciality', views.Admin.AddSpeciality,name='add_speciality'),
-    path('patient/login', views.Patient.login,name='patient_login'),
-    path('patient/register', views.Patient.register,name='patient_register'),
+    path('admin/specialities',views.Admin.ViewSpecialities,name='view_specialities'),
+    path('admin/admins',views.Admin.AdminHome,name='admin_view_admins'),
+    path('admin/doctors',views.Admin.AdminHome,name='admin_view_doctors'),
+   
 
     #########################
     #paths for doctor
@@ -38,5 +40,6 @@ urlpatterns = [
     #########################
     #paths for patient
 
-
+     path('patient/login', views.Patient.login,name='patient_login'),
+     path('patient/register', views.Patient.register,name='patient_register'),
 ]

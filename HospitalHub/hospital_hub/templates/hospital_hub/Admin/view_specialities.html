@@ -1,0 +1,173 @@
+{%extends 'hospital_hub/Admin/admin_layout.html'%}
+{%load static%}
+{%block body%}
+
+<header>
+
+    <!--the home/doctors/admins/logout header-->
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+        <div class="container">
+            <img src="../assets/img/logo2.png" alt="" style="width:20px;">
+            <a style="color:#81C2D6" class="navbar-brand" href="#"><span class="text-primary2">Hospital</span>Hub </a>
+
+
+
+            <div class="collapse navbar-collapse" id="navbarSupport">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{%url 'admin_home'%}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%url 'admin_view_doctors'%}">Doctors</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%url 'admin_view_admins'%}">Admins</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%url 'admin_logout'%}">Logout</a>
+                    </li>
+                </ul>
+            </div> <!-- .navbar-collapse -->
+        </div> <!-- .container -->
+    </nav>
+</header>
+
+<div class="page-hero bg-image overlay-dark" style="background-image: url(../../../static/hospital_hub/assets/img/bg_image_1.jpg)">
+    <div class="hero-section">
+        <div class="container text-center wow zoomIn">
+            <span class="subhead">Make your life more healthy</span>
+            <br>
+            <h style="color:white; font-size:60px;" class="navbar-brand"><span class="text-primary">Available </span>Specilaizations </h>
+            <br>
+        </div>
+    </div>
+</div>
+
+<div class="page-section pb-0">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{%static 'hospital_hub/assets/img/cardilogy.jpg'%}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h3 class="Cardiology">Cardiology</h3>
+                        <p class="card-text">
+                            <header>
+                                <h4>
+                                    Doctors
+                                </h4>
+                            </header>
+                        <p class="card-text">Dr. Komsry</p>
+                        <h4>
+                            Clinical time
+                        </h4>
+                        <p class="card-text">2:00 PM / 4:00 PM</p>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{%static ''%}hospital_hub/assets/img/Dentistry.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h3 class="">Dentistry</h3>
+                        <p class="card-text">
+                            <header>
+                                <h4>
+                                    Doctors
+                                </h4>
+                            </header>
+                        <p class="card-text">Dr. Yasser</p>
+                        <h4>
+                            Clinical time
+                        </h4>
+                        <p class="card-text">No time as our department is under construction</p>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{%static ''%}hospital_hub/assets/img/Gastroenterology.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h3 class="card-title">Gastroenterology</h3>
+                        <p class="card-text">
+                            <header>
+                                <h4>
+                                    Doctors
+                                </h4>
+                            </header>
+                        <p class="card-text">Dr. Gira</p>
+                        <h4>
+                            Clinical time
+                        </h4>
+                        <p class="card-text">12:00 PM / 3:00 PM </p>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="hospital_hub/assets/img/neurology.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h3 class="card-title">Neurology</h3>
+                        <header>
+                            <h4>
+                                Doctors
+                            </h4>
+                        </header>
+                        <p class="card-text">Dr. Assuity</p>
+                        <h4>
+                            Clinical time
+                        </h4>
+                        <p class="card-text">10:00 PM / 12:00 AM </p>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="hospital_hub/assets/img/vet.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h3 class="card-title">Veterinary</h3>
+                        <header>
+                            <h4>
+                                Doctors
+                            </h4>
+                        </header>
+                        <p class="card-text">Dr. Anas</p>
+                        <h4>
+                            Clinical time
+                        </h4>
+                        <p class="card-text">11:00 AM / 1:00 PM </p>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <img src="hospital_hub/assets/img/Psychiatry-Careers.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h3 class="card-title">Psychiatry</h3>
+                        <header>
+                            <h4>
+                                Doctors
+                            </h4>
+                        </header>
+                        <p class="card-text">Dr. Farah</p>
+                        <h4>
+                            Clinical time
+                        </h4>
+                        <p class="card-text">No Available times as our doctor needs a doctor </p>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+</html>

@@ -1,0 +1,258 @@
+* {
+    box-sizing:border-box;
+    padding:0;
+  }
+
+  
+  div#content {
+      background-image: url(../assets/img/banner-pattern.svg);
+      background-color: rgba(255,255,255,0.6);
+      background-blend-mode: lighten;
+  }
+  
+  body {
+    display:grid;
+    place-items:center;
+    background-image:url('../img/medical-physician-doctor-man\ \(1\).jpg');
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+  }
+  
+  
+  .container {
+    width:600px;
+    height: 1000px;
+    aspect-ratio:1;
+    overflow:hidden;
+    box-shadow:0 0 15px 3px hsl(0, 0%, 0%, 0.7);
+    border-radius:10px;
+    margin-top: 50px;
+    margin-left:800px;
+     display: flex;
+  flex-wrap: wrap;
+  }
+  
+  .bg {
+    background-image:url('../img/medical-physician-doctor-man\ \(1\).jpg');
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+    height:100%;
+    filter:blur(10px);
+  }
+  
+  .page-login{
+      margin-top: 9.5em;
+      max-width: 450px;
+  }
+  /** LOGIN TABS**/
+  .tabs .tab a.active {
+      background-color: white;
+      color: #81C2D6;
+  }
+  .tabs .tab a {
+      color: #bbb;
+      border-bottom: none !important;
+      background-color: transparent;
+  }
+  
+  #tabs-login .indicator {
+      background-color: #fff !important;
+      height: 55px;
+      z-index: -1;
+  }
+  
+  #tabs-login {
+      width: 100%;;
+      float: left;
+      bottom: 48px;
+      overflow:hidden;
+      background: transparent !important;
+      box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),
+      0 3px 1px -2px rgba(0,0,0,0.12),
+      0 1px 5px 0 rgba(0,0,0,0.2);
+  }
+  
+  #tabs-login .material-icons {
+      font-size: 45px !important;
+  }
+  
+  #tab1, #tab2{
+      z-index: 2;
+      background: transparent !important;
+  }
+  
+  
+  #login-content {
+      width: 400px;
+      margin-top: 40px;
+  }
+  
+  div#test1, #test2 {
+      padding-top: 25px;
+      background-color: transparent;
+      position: relative;
+      box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),
+      0 3px 1px -2px rgba(0,0,0,0.12),
+      0 1px 5px 0 rgba(0,0,0,0.2);
+  }
+  
+  input.form-control {
+      position: relative;
+      top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+  }
+  
+  
+  .input-field.col.s12.login1 {
+      position: relative;
+      top: -20px;
+  }
+  
+  .input-field.col.s12.login1, .input-field.col.s12.login2 {
+      margin-top: 50px;
+  }
+  
+  .form-group label.control-label {
+      top: 1.5rem !important;
+  }
+  
+  #login-content h5 {
+      font-family: 'Raleway', sans-serif;
+      font-weight: lighter;
+      position: absolute;
+      left: 130px;
+      top: 10px;
+  }
+  
+  form.login-form {
+      border-bottom: none !important;
+  }
+  
+  #btn-login{
+      margin-top: auto;
+      height: 45px;
+      font-size: 1.3rem;
+      line-height: 45px;
+      text-transform: capitalize;
+  }
+  
+  #register{
+      position: absolute;
+      left: 145px;
+  }
+  
+  #register a {
+      box-shadow: none;
+      color: #fff;
+  }
+  
+  #register p{
+      font-size: 1.2rem;
+      color: #81C2D6;
+  }
+  
+  /**Modal**/
+  .modal{
+      max-height: 90% !important;
+      width: 450px !important;
+  }
+  
+  .modal-content h4 {
+      width: 100%;
+      margin: 0px !important;
+      text-indent: 18px;
+      text-align: left;
+      font-size: 1.8rem;
+      padding-bottom: 40px;
+      padding-top: 25px;
+  }
+  
+  .modal .modal-content {
+      height: 300px;
+      padding: 10px !important;
+  }
+  
+  .modal .modal-content .form-group {
+      top: 30px;
+  }
+  
+  .modal .modal-content .form {
+      width: 95%;
+  }
+  
+  .modal .modal-footer{
+      position: relative;
+      top: -12px;
+      float: none;
+      width: 50%;
+      margin: auto;
+  }
+  
+  a.modal-trigger {
+      position: relative;
+      top: 2px;
+      left: 0px;
+  }
+  
+  span.margin.right-align.medium-small {
+      position: relative;
+      float: right;
+      top: -20px;
+      right: 12px;
+  }
+  
+  .form-forgot{
+      border-bottom: none !important;
+      width: 90%;
+      margin: auto;
+      margin-top: 15px;
+  }
+  
+  .form-forgot .input-field.col.s12 {
+      margin-top: 0;
+      padding: 0px !important;
+  }
+  .form-forgot .input-field label {
+      left: 0;
+  }
+  
+  a#btn-login:hover {
+      color: white !important;
+  }
+  
+  input.btn.btn-forgot{
+      color: white !important;
+      width: 100%;
+      margin-top: 5px;
+      height: 45px;
+      font-size: 1.3rem;
+      text-transform: initial;
+  }
+  
+  #login-content #modal1 h5 {
+      position: absolute;
+      left: 30px;
+      top: 69px;
+      font-size: 1rem;
+  }
+  #login-content #modal2 h5 {
+      position: absolute;
+      left: 30px;
+      top: 69px;
+      font-size: 1rem;
+  }
+  
+  a#cancel-btn:hover {
+      color: #CF484C;
+  }
+  
+  a#cancel-btn {
+      width: 100%;
+      margin: auto;
+      float: none;
+      text-align: center;
+  }
+  
