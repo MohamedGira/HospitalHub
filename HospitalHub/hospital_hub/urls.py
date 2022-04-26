@@ -41,7 +41,7 @@ urlpatterns = [
     #########################
     #paths for patient
 
-     path('patient/login', views.Patient.login,name='patient_login'),
-     path('patient/register', views.Patient.register,name='patient_register'),
+     path('patient/login', views.Patient.PatientLogin,name='patient_login'),
+     path('patient/register', views.Patient.PatientRegister,name='patient_register'),
      path('patient/home', views.Patient.PatientHome,name='patient_home'),
 ]

@@ -12,12 +12,12 @@ from .utils import *
 User= get_user_model()
 # Create your views here.
 def index(request):
-     return render(request, "hospital_hub/index.html")
+        return render(request, "hospital_hub/index.html")
 
  
 def Logout(request):
-       logout(request)
-       return HttpResponseRedirect(reverse('home'))
+        logout(request)
+        return HttpResponseRedirect(reverse('home'))
 
     
 
@@ -59,7 +59,7 @@ class Admin:
                 return HttpResponseRedirect(reverse('admin_home'))
 
         if request.method=="POST":
-             # Attempt to sign user in
+                # Attempt to sign user in
             username = request.POST["username"]
             password = request.POST["password"]
             user = authenticate(request, username=username, password=password)
@@ -104,7 +104,7 @@ class Admin:
 
 
     def AddAdmin(request):#register new admin to my hospital
-         # Redirect users to login page if they are not signed in as admins
+            # Redirect users to login page if they are not signed in as admins
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('admin_login'))
         elif not request.user.is_admin:
@@ -132,7 +132,7 @@ class Admin:
                 "password":password,
                 "cities":cities,
                 "provided_city":city,
-                 "phone":phone_number,
+                    "phone":phone_number,
                 })
 
             # Attempt to create new user
@@ -154,9 +154,9 @@ class Admin:
             return HttpResponseRedirect(reverse("admin_home"))            
         else:
              
-             return render(request,"hospital_hub/admin/add_admin.html",{
-                 "cities":cities,
-                 })
+                return render(request,"hospital_hub/admin/add_admin.html",{
+                    "cities":cities,
+                    })
 
 
     def AddSpeciality(request):
@@ -180,14 +180,14 @@ class Admin:
                     hospital.save()
                     return HttpResponseRedirect(reverse("admin_home"))            
                 else:
-                   return render(request,"hospital_hub/Admin/add_speciality.html",{
-                       "specialities":specialities,
-                       "provided_spec":hospital.specialities.filter(name=speciality.name).first(),
-                       "message":"This speciality is already added to yout hospital"})
+                    return render(request,"hospital_hub/Admin/add_speciality.html",{
+                        "specialities":specialities,
+                        "provided_spec":hospital.specialities.filter(name=speciality.name).first(),
+                        "message":"This speciality is already added to yout hospital"})
             else:
-                   return render(request,"hospital_hub/Admin/add_speciality.html",{
-                       "specialities":specialities,
-                       "message":"Invalid Input"})
+                    return render(request,"hospital_hub/Admin/add_speciality.html",{
+                        "specialities":specialities,
+                        "message":"Invalid Input"})
 
         return render(request,"hospital_hub/Admin/add_speciality.html",{
             "specialities":specialities,
@@ -249,7 +249,7 @@ class Admin:
 #patient app
 class Patient:
     
-    def register(request):
+    def PatientRegister(request):
         if request.method == "POST":
             username        =request.POST["username"]
             full_name       =request.POST["full_name"]
@@ -278,53 +278,55 @@ class Patient:
 
 
 
-""" 
+
     def PatientHome(request): 
         # Redirect PATIENTS to login page if they are not signed in as admins
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('patient_login'))
         elif not request.user.is_patient:
         #may add later "you have no access to this page :( "
-            return HttpResponseRedirect(reverse('home'))
-        return render(request, "hospital_hub/Admin/a_home.html") """
+            logout(request)
+            return HttpResponseRedirect(reverse('patient_login'))
+
+        return render(request, "hospital_hub/Admin/patient_home.html") 
 
 
     
- def Patientlogin(request):
-       # redirect users to home page if they are already signed in as patients
-       if request.user.is_authenticated:
-           if request.user.is_patient:
-               return httpresponseredirect(reverse('patient_home'))
+    def PatientLogin(request):
+        # redirect users to home page if they are already signed in as patients
+        if request.user.is_authenticated:
+            if request.user.is_patient:
+                return httpresponseredirect(reverse('patient_home'))
 
-       if request.method=="post":
+        if request.method=="post":
             # attempt to sign user in
-           username = request.post["username"]
-           password = request.post["password"]
-           user = authenticate(request, username=username, password=password)
+            username = request.post["username"]
+            password = request.post["password"]
+            user = authenticate(request, username=username, password=password)
 
-           # check if authentication successful
-           if user is not none:
-               # check if the user is patient
-               if user.is_patient:
-                   login(request, user)
-                   return httpresponseredirect(reverse("patient_home"))
-               else:
-                   return render(request,"hospital_hub/Patient/patient_login.html",{
-                       "message":"invald username or password",
-                       "submitted_username":username,
-                       })   
-           else:
-               return render(request,"hospital_hub/Patient/patient_login.html",{
-                       "message":"invald username or password",
-                       "submitted_username":username,
-                       })
-       else:   
-           return render(request, "hospital_hub/Patient/patient_login.html")
+            # check if authentication successful
+            if user is not none:
+                # check if the user is patient
+                if user.is_patient:
+                    login(request, user)
+                    return httpresponseredirect(reverse("patient_home"))
+                else:
+                    return render(request,"hospital_hub/Patient/patient_login.html",{
+                        "message":"invald username or password",
+                        "submitted_username":username,
+                        })   
+            else:
+                return render(request,"hospital_hub/Patient/patient_login.html",{
+                        "message":"invald username or password",
+                        "submitted_username":username,
+                        })
+        else:   
+            return render(request, "hospital_hub/Patient/patient_login.html")
 
 
-   def patientlogout(request):
-       logout(request)
-       return httpresponseredirect(reverse('patient_login')) 
+    def patientlogout(request):
+        logout(request)
+        return httpresponseredirect(reverse('patient_login')) 
      
 
 #          def addadmin(request):#register new admin to my hospital
