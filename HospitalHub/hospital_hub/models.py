@@ -45,7 +45,7 @@ class UserManager(BaseUserManager):
                    password=None, is_owner=False,
                   is_admin=False, is_doctor=False,is_staff=False,
                   is_patient=False,city=None,phone_number=None):
-        if not (username and password and full_name and email ):
+        if not (username and password and full_name and email ): #checks if all requirements are complete 
             raise ValueError("Users must have all required data")
         
         user_obj = self.model(
@@ -89,7 +89,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    username    = models.CharField(max_length=255, unique=True)
+    username    = models.CharField(max_length=255, unique=True) # unique checks existance with respect to save function
     email       = models.EmailField(verbose_name = 'email address',max_length = 255,unique = True,)
     full_name   = models.CharField(max_length=255, blank=True, null=True)
     phone_number= models.IntegerField()

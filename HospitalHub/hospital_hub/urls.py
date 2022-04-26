@@ -26,6 +26,7 @@ urlpatterns = [
     path('admin/add_admin', views.Admin.AddAdmin,name='admin_add_admin'),
     path('admin/add_speciality', views.Admin.AddSpeciality,name='add_speciality'),
     path('patient/login', views.Patient.login,name='patient_login'),
+    path('patient/register', views.Patient.register,name='patient_register'),
 
     #########################
     #paths for doctor

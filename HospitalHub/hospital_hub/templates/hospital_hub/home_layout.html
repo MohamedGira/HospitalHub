@@ -81,9 +81,17 @@
             <li class="nav-item">
                 <a class="nav-link" href="contact.html">Contact</a>
             </li>
-            <li class="nav-item">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">LOGIN/REGISTER
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="{%url 'patient_register'%}">ٌRegister</a></li>
+                  <li><a class="nav-link" href="{%url 'patient_login'%}">Login</a></li>
+                </ul>
+              </div>
+            <!-- <li class="nav-item">
                 <a class="btn btn-primary ml-lg-3" href="{%url 'patient_login'%}">Login / Register</a>
-            </li>
+            </li> -->
             </ul>
         </div> <!-- .navbar-collapse -->
         </div> <!-- .container -->
