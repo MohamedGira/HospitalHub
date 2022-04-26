@@ -285,10 +285,9 @@ class Patient:
             return HttpResponseRedirect(reverse('patient_login'))
         elif not request.user.is_patient:
         #may add later "you have no access to this page :( "
-            logout(request)
-            return HttpResponseRedirect(reverse('patient_login'))
+           return HttpResponseRedirect(reverse('home'))
 
-        return render(request, "hospital_hub/Admin/patient_home.html") 
+        return render(request, "hospital_hub/Patient/patient_home.html") 
 
 
     
@@ -296,20 +295,20 @@ class Patient:
         # redirect users to home page if they are already signed in as patients
         if request.user.is_authenticated:
             if request.user.is_patient:
-                return httpresponseredirect(reverse('patient_home'))
+                return HttpResponseRedirect(reverse('home'))
 
-        if request.method=="post":
+        if request.method=="POST":
             # attempt to sign user in
-            username = request.post["username"]
-            password = request.post["password"]
+            username = request.POST["username"]
+            password = request.POST["password"]
             user = authenticate(request, username=username, password=password)
 
             # check if authentication successful
-            if user is not none:
+            if user is not None:
                 # check if the user is patient
                 if user.is_patient:
                     login(request, user)
-                    return httpresponseredirect(reverse("patient_home"))
+                    return HttpResponseRedirect(reverse("patient_home"))
                 else:
                     return render(request,"hospital_hub/Patient/patient_login.html",{
                         "message":"invald username or password",
