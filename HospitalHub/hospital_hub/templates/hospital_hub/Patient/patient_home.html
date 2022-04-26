@@ -1,47 +1,5 @@
 {%extends 'hospital_hub/Patient/patient_layout.html'%}
 
 {%block body%}
- <header><!--the home/doctors/admins/logout header-->
-        <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
-            <div class="container">
-                <img src="../assets/img/logo2.png" alt="" style="width:20px;">
-                <a style="color:#81C2D6" class="navbar-brand" href="#"><span class="text-primary2">Hospital</span>Hub </a>
 
-
-
-                <div class="collapse navbar-collapse" id="navbarSupport">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item ">
-                            <a class="nav-link active" href="{%url 'admin_home'%}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{%url 'admin_view_doctors'%}">Doctors</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{%url 'admin_view_admins'%}">Admins</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{%url 'admin_logout'%}">Logout</a>
-                        </li>
-                    </ul>
-                </div> <!-- .navbar-collapse -->
-            </div> <!-- .container -->
-        </nav>
-    </header>
-<div class="page-hero bg-image overlay-dark" style="background-image: url(../../../static/hospital_hub/assets/img/bg_image_1.jpg);">
-        <div class="hero-section">
-            <div class="container text-center wow zoomIn">
-                <span class="subhead">🏥-Welcome to your dashboard-🏥</span>
-                <br>
-                <h style="color:white; font-size:60px;" class="navbar-brand"><span class="text-primary">Hospital</span>Hub </h>
-                <br>
-                <a href="add_doctor.html" class="btn btn-primary">Add doctor</a>
-                <a href="{% url 'add_speciality' %}" class="btn btn-primary">Add Speciality</a>
-                <a href="{% url 'admin_add_admin'%}" class="btn btn-primary">Add admin</a>
-                <a href="{% url 'view_specialities'%}" class="btn btn-primary">Preview Specialities</a>
-            </div>
-        </div>
-    </div>
 {%endblock%}
