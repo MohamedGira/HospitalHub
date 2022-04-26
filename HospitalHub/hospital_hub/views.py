@@ -14,7 +14,12 @@ User= get_user_model()
 def index(request):
      return render(request, "hospital_hub/index.html")
 
+ 
+def Logout(request):
+       logout(request)
+       return HttpResponseRedirect(reverse('home'))
 
+    
 
 ############################################################################
 #owner app
