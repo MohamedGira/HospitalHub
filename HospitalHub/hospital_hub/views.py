@@ -296,7 +296,7 @@ class Patient:
         # redirect users to home page if they are already signed in as patients
         if request.user.is_authenticated:
             if request.user.is_patient:
-                return httpresponseredirect(reverse('patient_home'))
+                return HttpResponseRedirect(reverse('patient_home'))
 
         if request.method=="post":
             # attempt to sign user in
