@@ -333,11 +333,10 @@ class Patient:
         # redirect users to home page if they are already signed in as patients
         if request.user.is_authenticated:
             if request.user.is_patient:
-<<<<<<< HEAD
+
                 return HttpResponseRedirect(reverse('patient_home'))
-=======
-                return HttpResponseRedirect(reverse('home'))
->>>>>>> a412fc525d5e4c6d15801fb568d08bf6d8d67c0f
+             
+
 
         if request.method=="POST":
             # attempt to sign user in
