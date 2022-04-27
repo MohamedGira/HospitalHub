@@ -151,10 +151,12 @@
     <Content Include="hospital_hub\static\hospital_hub\assets\vendor\owl-carousel\js\owl.carousel.min.js" />
     <Content Include="hospital_hub\static\hospital_hub\assets\vendor\wow\wow.min.js" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\add_admin.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\add_doctor.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\add_speciality.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\admin_layout.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\admin_login.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\admin_home.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\view_doctors.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\view_specialities.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Doctor\doctor_registration.html" />
     <Content Include="hospital_hub\templates\hospital_hub\home_layout.html" />

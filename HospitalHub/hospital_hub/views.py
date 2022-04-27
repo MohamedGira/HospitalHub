@@ -198,9 +198,47 @@ class Admin:
 
 
     def ViewSpecialities(request):
-        return render(request, "hospital_hub/Admin/view_specialities.html")
+         # Redirect users to login page if they are not signed in as admins
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('admin_login'))
+        elif not request.user.is_admin:
+        #may add later "you have no access to this page :( "
+            return HttpResponseRedirect(reverse('home'))
+
+        hospital=request.user.my_admin.first().hospital
+        specialities=hospital.specialities.all()
+        if specialities.count()==0:
+            return render(request, "hospital_hub/Admin/view_specialities.html",{
+                   "specialities":None,
+                #   "hospital_name":hospital.name,
+                })
+        else:
+            return render(request, "hospital_hub/Admin/view_specialities.html",{
+               "specialities":specialities,
+            #   "hospital_name":hospital.name,
+            })
 
 
+
+
+
+
+    def ViewSpeciality(request,speciality):
+        hospital=request.user.my_admin.first().hospital
+        spec=Speciality.objects.filter(name=speciality)
+        if spec.count()==1:
+            doctors=Doctor.objects.filter(speciality=spec.first(),hospital=hospital)
+            return render(request,"hospital_hub/admin/view_doctors.html",{
+                "doctors":doctors,
+                })
+        else:
+            specialities=hospital.specialities.all()
+          
+
+            return render(request,"hospital_hub/admin/view_specialities.html",{
+                "message":"Requested specialitiy doesn't exitst",
+                 "specialities":specialities,
+                })
 
 
 
