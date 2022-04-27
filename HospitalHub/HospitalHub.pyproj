@@ -44,6 +44,9 @@
     <Compile Include="hospital_hub\urls.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="hospital_hub\utils.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="hospital_hub\views.py" />
     <Compile Include="hospital_hub\__init__.py" />
     <Compile Include="manage.py" />
@@ -147,14 +150,20 @@
     <Content Include="hospital_hub\static\hospital_hub\assets\vendor\owl-carousel\js\owl.carousel.js" />
     <Content Include="hospital_hub\static\hospital_hub\assets\vendor\owl-carousel\js\owl.carousel.min.js" />
     <Content Include="hospital_hub\static\hospital_hub\assets\vendor\wow\wow.min.js" />
-    <Content Include="hospital_hub\templates\hospital_hub\Admin\add_specialization.html" />
-    <Content Include="hospital_hub\templates\hospital_hub\Admin\login_admin.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\add_admin.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\add_doctor.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\add_speciality.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\admin_layout.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\admin_login.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\admin_home.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\view_doctors.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\view_specialities.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Doctor\doctor_registration.html" />
     <Content Include="hospital_hub\templates\hospital_hub\home_layout.html" />
     <Content Include="hospital_hub\templates\hospital_hub\index.html" />
     <Content Include="hospital_hub\templates\hospital_hub\login.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Owner\add admin.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_login.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\preview_specializations.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />

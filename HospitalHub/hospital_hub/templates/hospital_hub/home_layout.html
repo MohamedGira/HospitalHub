@@ -81,9 +81,27 @@
             <li class="nav-item">
                 <a class="nav-link" href="contact.html">Contact</a>
             </li>
-            <li class="nav-item">
-                <a class="btn btn-primary ml-lg-3" href="../login">Login / Register</a>
+
+            {% if  user.is_authenticated and user.is_patient %}
+                
+                <li class="nav-item">
+                <a class="nav-link" href="{%url 'user_logout'%}">Logout</a>
+                
             </li>
+            {% else %}
+                <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Login / Register
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="{%url 'patient_register'%}">ٌRegister</a></li>
+                  <li><a class="nav-link" href="{%url 'patient_login'%}">Login</a></li>
+                </ul>
+              </div>
+            
+            {%endif%}
+            <!-- <li class="nav-item">
+                <a class="btn btn-primary ml-lg-3" href="{%url 'patient_login'%}">Login / Register</a>
+            </li> -->
             </ul>
         </div> <!-- .navbar-collapse -->
         </div> <!-- .container -->
@@ -102,8 +120,8 @@
     </div>
     </div>
 
-
-    {#<div class="bg-light">
+ 
+    <div class="bg-light">
     <div class="page-section py-3 mt-md-n5 custom-index">
         <div class="container">
         <div class="row justify-content-center">
@@ -133,7 +151,8 @@
             </div>
         </div>
         </div>
-    </div>#} <!-- .page-section -->
+    </div> <!-- .page-section --> 
+
 
     <div class="page-section pb-0">
         <div class="container">

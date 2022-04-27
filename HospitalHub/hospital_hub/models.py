@@ -1,6 +1,9 @@
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
 from django.db import models
 from django.conf import settings
+from PIL import Image, ImageOps
+from io import BytesIO
+from django.core.files import File
 
 from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager
@@ -9,10 +12,39 @@ from django.contrib.auth.models import (
 User = settings.AUTH_USER_MODEL
 
 
+
+
+    
+
 # all of this is used as options lists througout the app
 class Speciality(models.Model):
-    name =models.CharField(max_length=100)
+    name =models.CharField(max_length=100,unique=True)
     url=models.TextField(null = True)
+    image           = models.ImageField(upload_to = "media/",null=True, default=None)
+    
+    def save(self, *args, **kwargs):
+      
+        im = Image.open(self.image)
+      #compress if image is grater than 1 MB
+        if len(im.fp.read())>1000000:
+            # Convert Image to RGB color mode
+            im = im.convert('RGB')
+            # auto_rotate image according to EXIF data
+            im = ImageOps.exif_transpose(im)
+            # save image to BytesIO object
+            im_io = BytesIO() 
+            # save image to BytesIO object
+            im.save(im_io, 'JPEG', quality=60) 
+            # create a django-friendly Files object
+            new_image = File(im_io, name=self.image.name)
+            # Change to new image
+            self.image = new_image
+
+        super().save(*args, **kwargs)
+
+
+
+
     def __str__(self):
         return self.name
 
@@ -22,7 +54,7 @@ class MedicalTestType(models.Model):
         return self.type
 
 class City(models.Model):
-    name =models.CharField(max_length=100)
+    name =models.CharField(max_length=100,unique=True)
     def __str__(self):
         return self.name
 
@@ -31,16 +63,42 @@ class AppointmentStatus(models.Model):
     def __str__(self):
         return self.name
 
+class Hospital(models.Model):
+    name            =models.CharField(max_length=100)
+    city            = models.ForeignKey(City,on_delete=models.PROTECT,null=True)
+    specialities    = models.ManyToManyField(Speciality)
+    image           = models.ImageField(upload_to = "media/",null=True, default=None)
+    
+    def save(self, *args, **kwargs):
+      
+        im = Image.open(self.image)
+      #compress if image is grater than 1 MB
+        if len(im.fp.read())>1000000:
+            # Convert Image to RGB color mode
+            im = im.convert('RGB')
+            # auto_rotate image according to EXIF data
+            im = ImageOps.exif_transpose(im)
+            # save image to BytesIO object
+            im_io = BytesIO() 
+            # save image to BytesIO object
+            im.save(im_io, 'JPEG', quality=60) 
+            # create a django-friendly Files object
+            new_image = File(im_io, name=self.image.name)
+            # Change to new image
+            self.image = new_image
 
-
+        super().save(*args, **kwargs)
+    #url = models.TextField(null =True)
+    def __str__(self):
+        return self.name
 
 
 class UserManager(BaseUserManager):
     def create_user(self, username, email,full_name=None,
-                   password=None, is_owner=True,
+                   password=None, is_owner=False,
                   is_admin=False, is_doctor=False,is_staff=False,
-                  is_patient=False,city=None,phone_number=None):
-        if not (username and password and full_name and email ):
+                  is_patient=False,city=None,phone_number=None,image=None):
+        if not (username and password and full_name and email ): #checks if all requirements are complete 
             raise ValueError("Users must have all required data")
         
         user_obj = self.model(
@@ -56,6 +114,8 @@ class UserManager(BaseUserManager):
         user_obj.staff  = is_staff
         user_obj.city= city
         user_obj.phone_number=phone_number
+        user_obj.image=image
+
         user_obj.save(using=self._db)
 
         return user_obj
@@ -84,7 +144,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    username    = models.CharField(max_length=255, unique=True)
+    username    = models.CharField(max_length=255, unique=True) # unique checks existance with respect to save function
     email       = models.EmailField(verbose_name = 'email address',max_length = 255,unique = True,)
     full_name   = models.CharField(max_length=255, blank=True, null=True)
     phone_number= models.IntegerField()
@@ -95,6 +155,8 @@ class User(AbstractBaseUser):
     patient     = models.BooleanField(default=False) # superuser
     staff       = models.BooleanField(default=False) # necessary
     created_at  = models.DateTimeField(null=True)
+    image       = models.ImageField(upload_to = "media/",null=True, default=None)
+
     # confirm     = models.BooleanField(default=False)
     # confirmed_date     = models.DateTimeField(default=False)
 
@@ -143,6 +205,29 @@ class User(AbstractBaseUser):
     def is_patient(self):
         return self.patient
 
+    ##image 
+
+    
+    def save(self, *args, **kwargs):
+      
+        im = Image.open(self.image)
+      #compress if image is grater than 1 MB
+        if len(im.fp.read())>1000000:
+            # Convert Image to RGB color mode
+            im = im.convert('RGB')
+            # auto_rotate image according to EXIF data
+            im = ImageOps.exif_transpose(im)
+            # save image to BytesIO object
+            im_io = BytesIO() 
+            # save image to BytesIO object
+            im.save(im_io, 'JPEG', quality=60) 
+            # create a django-friendly Files object
+            new_image = File(im_io, name=self.image.name)
+            # Change to new image
+            self.image = new_image
+
+        super().save(*args, **kwargs)
+
 
 
 # main users models
@@ -152,6 +237,9 @@ class Owner(models.Model):
     
 class Admin(models.Model):
     my_account= models.ForeignKey(User,on_delete= models.CASCADE,related_name="my_admin")
+    hospital= models.ForeignKey(Hospital, on_delete=models.CASCADE,related_name="my_admins")
+    def __str__(self):
+        return "Hospital of "+str(self.hospital)+" - Admin "+str(self.id)
 
 class Patient(models.Model):  
     my_account= models.ForeignKey(User,on_delete= models.CASCADE,related_name="my_patient")
@@ -160,7 +248,7 @@ class Doctor(models.Model):
     my_account= models.ForeignKey(User,on_delete= models.CASCADE,related_name="my_doctor")
     is_employed= models.BooleanField(default=False)
     speciality= models.ForeignKey(Speciality, on_delete=models.CASCADE,related_name="doctors")
-
+    hospital= models.ForeignKey(Hospital, on_delete=models.SET_NULL,related_name="my_doctors",null=True)
 
 # Organizational classes
 
