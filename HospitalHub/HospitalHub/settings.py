@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'hospital_hub',
     'app',
+
     # Add your apps here to enable them
     'django.contrib.admin',
     'django.contrib.auth',
