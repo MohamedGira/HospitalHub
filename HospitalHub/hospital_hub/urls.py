@@ -20,6 +20,8 @@ urlpatterns = [
 
     #########################
     #paths for admin
+    path('a', views.Admin.AdminLogin,name='admin_login'),
+
     path('admin', views.Admin.AdminLogin,name='admin_login'),
     path('admin/login', views.Admin.AdminLogin,name='admin_login'),
     path('admin/home', views.Admin.AdminHome,name='admin_home'),
@@ -29,7 +31,7 @@ urlpatterns = [
     path('admin/specialities',views.Admin.ViewSpecialities,name='view_specialities'),
     path('admin/admins',views.Admin.AdminHome,name='admin_view_admins'),
     path('admin/doctors',views.Admin.AdminHome,name='admin_view_doctors'),
-   
+    path('admin/specialities/<str:speciality>',views.Admin.ViewSpeciality,name='view_speciality'),
 
     #########################
     #paths for doctor

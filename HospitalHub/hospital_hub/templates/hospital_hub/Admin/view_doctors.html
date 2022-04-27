@@ -47,36 +47,31 @@
 
 <div class="page-section pb-0"style="margin-bottom:5%">
     <div class="container">
-        {%if message %}
-                <h3 class="text-primary2">{{message}}</h3>
-        {%endif%}
         {%if specialities%}
         <div class="row row-cols-1 row-cols-md-3 g-4">
 
-          
-
-            {%for speciality in specialities%}
+            {%for doctor in doctors%}
             <a href="{%url 'view_speciality' speciality=speciality.name %}">
             <div class="col">
                 <div class="card h-100">
-                    {%if speciality.image%}
-                    <img src="{{speciality.image.url}}" class="card-img-top" alt="...">
+                    {%if doctor.image%}
+                    <img src="{{doctor.image.url}}" class="card-img-top" alt="...">
                     {%else%}
-                    <img src="{%static 'hospital_hub\assets\img\No_img_avail.png'%}" class="card-img-top" alt="...">
+                    <img src="{%static 'hospital_hub\assets\img\no_profile_img.png'%}" class="card-img-top" alt="...">
                     {%endif%}
                     <div class="card-body">
-                        <h3 class="Cardiology">{{speciality.name}}</h3>
+                        <h3 class="Cardiology">{{doctor.name}}</h3>
                     </div>
                 </div>
-            </div>
-            </a>
+            </div></a>
             
             
             {%endfor%}
           
         </div>
         {%else%}
-        <h1 style="color:grey;" >Your hospital has no specialites added yet.</h1>
+        <h1  style="display:inline-block;color:grey;" >This speciality has no doctors yet.</h1>
+        <h4 style="display:inline-block"><a  href="{%url 'admin_home'%}"> Add doctors </a></h4>
         {%endif%}
         
     </div>

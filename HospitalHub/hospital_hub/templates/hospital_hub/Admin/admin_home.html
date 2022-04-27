@@ -1,10 +1,12 @@
 {%extends 'hospital_hub/Admin/admin_layout.html'%}
-
+{%load static%}
 {%block body%}
  <header><!--the home/doctors/admins/logout header-->
         <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
             <div class="container">
-                <img src="../assets/img/logo2.png" alt="" style="width:20px;">
+            
+            
+                <img src="{%static 'hospital_hub/assets/img/logo2.png'%}" alt="t" style="width:20px;">
                 <a style="color:#81C2D6" class="navbar-brand" href="#"><span class="text-primary2">Hospital</span>Hub </a>
 
 
