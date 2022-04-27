@@ -305,6 +305,9 @@ class Patient:
                 user = User.objects.create_user(username, email,full_name,password, 
                     is_patient=True,city=None,phone_number=phone_number)
                 user.save()
+                patient = PatientModel(my_account=user)
+                patient.save()
+
             except IntegrityError:
                 return render(request, "hospital_hub/Patient/patient_register.html", {
                     "message": "Username already taken."
@@ -331,9 +334,8 @@ class Patient:
     
     def PatientLogin(request):
         # redirect users to home page if they are already signed in as patients
-        if request.user.is_authenticated:
+        if request.user.is_authenticated: # if already signed in
             if request.user.is_patient:
-
                 return HttpResponseRedirect(reverse('patient_home'))
              
 
@@ -368,59 +370,3 @@ class Patient:
         logout(request)
         return httpresponseredirect(reverse('patient_login')) 
      
-
-#          def addadmin(request):#register new admin to my hospital
-#         # redirect users to login page if they are not signed in as admins
-#        if not request.user.is_authenticated:
-#            return httpresponseredirect(reverse('admin_login'))
-#        elif not request.user.is_admin:
-#        #may add later "you have no access to this page :( "
-#            return httpresponseredirect(reverse('home'))
-
-#        cities=city.objects.all();
-
-#        if(request.method=="post"):
-#            username        =request.post["username"]
-#            full_name       =request.post["full_name"]
-#            email           =request.post["email"]
-#            password        =request.post["password"]
-#            confirm_password=request.post["confirm_password"]
-#            city            =request.post["city"]
-#            phone_number    =request.post["phone_number"]
-#            hospital        =request.user.my_admin.first().hospital ##only one admin related to this account
-
-#            if password != confirm_password:
-#                return render(request, "hospital_hub/admin/add_admin.html", {
-#                "mustmatch": "passwords must match.",
-#                "username":username,
-#                "email":email,
-#                "full_name":full_name,
-#                "password":password,
-#                "cities":cities,
-#                "provided_city":city,
-#                 "phone":phone_number,
-#                })
-
-#            # attempt to create new user
-#            try:
-#                cit=city.objects.get(id=city)
-#                user = user.objects.create_user(username, email,full_name,
-#                password,is_admin=true,city=cit,phone_number=phone_number)
-#                user.save()
-#                admin= adminmodel(my_account=user,hospital=hospital) #links admin toadmin object
-#                admin.save()
-#            except integrityerror:
-#                return render(request,  "hospital_hub/admin/add_admin.html", {
-#                    "alreadyused": "username or email are already taken.",
-#                    "full_name":full_name,
-#                    "cities":cities,
-#                    "city":city,
-#                    "phone":phone_number,
-#                })
-#            return httpresponseredirect(reverse("admin_home"))            
-#        else:
-             
-#             return render(request,"hospital_hub/admin/add_admin.html",{
-#                 "cities":cities,
-#                 })
-# """
