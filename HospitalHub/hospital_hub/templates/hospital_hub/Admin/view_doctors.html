@@ -54,13 +54,13 @@
             <a href="{%url 'view_speciality' speciality=speciality.name %}">
             <div class="col">
                 <div class="card h-100">
-                    {%if speciality.img%}
+                    {%if doctor.image%}
                     <img src="{{doctor.image.url}}" class="card-img-top" alt="...">
                     {%else%}
                     <img src="{%static 'hospital_hub\assets\img\no_profile_img.png'%}" class="card-img-top" alt="...">
                     {%endif%}
                     <div class="card-body">
-                        <h3 class="Cardiology">{{Doctor.name}}</h3>
+                        <h3 class="Cardiology">{{doctor.name}}</h3>
                     </div>
                 </div>
             </div></a>
