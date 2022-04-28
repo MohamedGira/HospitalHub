@@ -238,13 +238,13 @@ class Doctor:
                 })
             login(request, user)
             # why not doctor home
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("doctor_home"))
 
     def DoctorLogin(request):
         # redirect users to home page if they are already signed in as patients
         if request.user.is_authenticated:  # if already signed in
-            if request.user.is_patient:
-                return HttpResponseRedirect(reverse('patient_home'))
+            if request.user.is_doctor:
+                return HttpResponseRedirect(reverse('doctor_home'))
 
         if request.method == 'POST':
             username = request.POST["username"]
@@ -255,9 +255,21 @@ class Doctor:
                 if user.is_doctor:
                     return HttpResponseRedirect(reverse("doctor_home"))
                 else:
+                    return render(request, "doctor_login", {
+                        "message": "Invalid username or password"
+                    })
+            else:
+                return render(request, "doctor_login", {
+                    "message": "Invalid username or password"
+                })
+        else:
+            return render(request, "doctor_login")
 
     def DoctorHome(request):
-        pass
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('docotr_login'))
+        elif not request.user.is_patient:
+            return HttpResponseRedirect(reverse('doctor_home'))
 
     def Doctorlogout(request):
         logout(request)
