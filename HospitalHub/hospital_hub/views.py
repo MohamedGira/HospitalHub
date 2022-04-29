@@ -454,7 +454,7 @@ class Admin:
         return HttpResponseRedirect(reverse('view_specialities'))
 
     def RemoveDoctorFromSpeciality(request, doctor_id):
-        doctorset=Doctor.objects.filter(id=doctor_id)
+        doctorset=DoctorModel.objects.filter(id=doctor_id)
         if doctorset.count()==1:
             doctor=doctorset.first()
             doctor.is_employed=False
@@ -465,7 +465,7 @@ class Admin:
         return HttpResponseRedirect(reverse('view_speciality',kwargs={'speciality':doctor.speciality}))
    
     def RemoveDoctorFromDoctors(request, doctor_id):
-        doctorset=Doctor.objects.filter(id=doctor_id)
+        doctorset=DoctorModel.objects.filter(id=doctor_id)
         if doctorset.count()==1:
             doctor=doctorset.first()
             doctor.is_employed=False
