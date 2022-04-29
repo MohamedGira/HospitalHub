@@ -10,6 +10,7 @@ from .models import Admin as AdminModel
 from .models import Doctor as DoctorModel
 from .models import Owner as OwnerModel
 from .models import Speciality as SpecialityModel
+from .models import Hospital as HospitalModel
 from .models import City as CityModel
 from .utils import *
 import re
@@ -652,5 +653,21 @@ class Patient:
                     "message": "Invalid characters"
                 })
 
-
         return render(request, "hospital_hub/Patient/searchbyspeciality.html")
+
+    def find_hospitals_by_speciality(request):
+        if request.method == "POST":
+            speciality=request.POST["speciality"] #assuming key of the search bar is search_here
+
+            print('hospital search')
+            # it is a valid search string
+            """ hospitals=HospitalModel.objects.filter(specialities__in=speciality) """
+            hospitals=HospitalModel.objects.filter(specialities__in=[])
+            logging.debug(hospitals)
+            if len(hospitals) == 0:
+                return render(request, "hospital_hub/Patient/hospitals_by_speciality.html", {
+                "message": "No results found"
+            })
+
+
+        return render(request, "hospital_hub/Patient/hospitals_by_speciality.html")
