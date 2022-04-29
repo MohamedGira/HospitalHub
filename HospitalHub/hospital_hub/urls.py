@@ -41,7 +41,7 @@ urlpatterns = [
     #########################
     # paths for doctor
     path('doctor/register', views.Doctor.DoctorRegister, name='doctor_register'),
-    path('doctor/login', views.Doctor.DoctorLogin, name='doctor_login'),
+    path('patient/login', views.Doctor.DoctorLogin, name='doctor_login'),
     # displaying schedual and some other data
     path('doctor/home', views.Doctor.DoctorHome, name='doctor_home'),
 

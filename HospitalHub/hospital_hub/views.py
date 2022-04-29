@@ -534,7 +534,7 @@ class Doctor:
     def DoctorHome(request):
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('docotr_login'))
-        elif not request.user.is_doctor:
+        elif not request.user.is_patient:
             return HttpResponseRedirect(reverse('doctor_home'))
 
     def DoctorLogout(request):
