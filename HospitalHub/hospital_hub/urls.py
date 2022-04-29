@@ -54,4 +54,5 @@ urlpatterns = [
     path('patient/login', views.Patient.PatientLogin, name='patient_login'),
     path('patient/register', views.Patient.PatientRegister, name='patient_register'),
     path('patient/home', views.Patient.PatientHome, name='patient_home'),
+    path('patient/searchbyspeciality', views.Patient.searchbyspeciality, name='specialities_search'),
 ]

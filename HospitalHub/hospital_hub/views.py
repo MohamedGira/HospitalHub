@@ -9,7 +9,13 @@ from .models import Patient as PatientModel
 from .models import Admin as AdminModel
 from .models import Doctor as DoctorModel
 from .models import Owner as OwnerModel
+from .models import Speciality as SpecialityModel
 from .utils import *
+import re
+
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 User = get_user_model()
 # Create your views here.
@@ -601,3 +607,25 @@ class Patient:
     def patientlogout(request):
         logout(request)
         return HttpResponseRedirect(reverse('patient_login'))
+
+    def searchbyspeciality(request):
+        if request.method == "POST":
+            search_item=request.POST["username"] #assuming key of the search bar is search_here
+            regex = '^[a-zA-Z ]+$' #accept these symbols
+
+            print('search by specialities')
+            if re.findall(regex, search_item):
+                # it is a valid search string
+                specialities=SpecialityModel.objects.filter(name__contains=search_item)
+                logging.debug(specialities)
+                if len(specialities) == 0:
+                    return render(request, "hospital_hub/Patient/searchbyspeciality.html", {
+                    "message": "No results found"
+                })
+            else:
+                    return render(request, "hospital_hub/Patient/searchbyspeciality.html", {
+                    "message": "Invalid characters"
+                })
+
+
+        return render(request, "hospital_hub/Patient/searchbyspeciality.html")

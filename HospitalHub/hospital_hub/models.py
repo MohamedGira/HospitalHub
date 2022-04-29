@@ -20,7 +20,7 @@ User = settings.AUTH_USER_MODEL
 class Speciality(models.Model):
     name =models.CharField(max_length=100,unique=True)
     #url=models.TextField(null = True)
-    image           = models.ImageField(upload_to = "media/",null=True, default=None)
+    image = models.ImageField(upload_to = "media/",null=True, default=None)
     
     def save(self, *args, **kwargs):
       
