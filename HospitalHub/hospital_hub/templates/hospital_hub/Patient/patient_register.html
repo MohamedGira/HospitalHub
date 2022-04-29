@@ -48,7 +48,7 @@
     <div class="container">
             
             
-        <form class="well form-horizontal" action="{%url 'admin_add_admin'%}" method="post" id="contact_form">
+        <form class="well form-horizontal" method="post" id="contact_form">
               
             {% csrf_token %}
 
@@ -115,7 +115,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                             <input name="confirm_password" placeholder="Confirm Password" class="form-control"
-                                type="password" required
+                                type="password" required >
                         </div>
                         
                     </div>

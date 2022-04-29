@@ -10,6 +10,7 @@ from .models import Admin as AdminModel
 from .models import Doctor as DoctorModel
 from .models import Owner as OwnerModel
 from .models import Speciality as SpecialityModel
+from .models import City as CityModel
 from .utils import *
 import re
 
@@ -567,8 +568,9 @@ class Patient:
 
         # Attempt to create new user
             try:
+                selectedCity = CityModel.objects.filter(id=city).first()
                 user = User.objects.create_user(username, email, full_name, password,
-                                                is_patient=True, city=city, phone_number=phone_number)
+                                                is_patient=True, city=selectedCity, phone_number=phone_number)
                 user.save()
                 patient = PatientModel(my_account=user)
                 patient.save()
@@ -580,7 +582,11 @@ class Patient:
             login(request, user)  # Checks authentication
             return HttpResponseRedirect(reverse("patient_home"))
         else:
-            return render(request, "hospital_hub/Patient/patient_register.html")
+            cities = CityModel.objects.all()
+            return render(request, 
+            "hospital_hub/Patient/patient_register.html", {
+                "cities": cities
+            })
 
     def PatientHome(request):
         # Redirect PATIENTS to login page if they are not signed in as admins
