@@ -173,7 +173,10 @@
     <Content Include="hospital_hub\templates\hospital_hub\index.html" />
     <Content Include="hospital_hub\templates\hospital_hub\login.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Owner\add admin.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_home.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_layout.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_login.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_register.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\preview_specializations.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />

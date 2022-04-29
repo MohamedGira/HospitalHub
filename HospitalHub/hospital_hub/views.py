@@ -28,6 +28,28 @@ def Logout(request):
 # owner app
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ############################################################################
 # Admin app
 
@@ -204,12 +226,11 @@ class Admin:
             })
 
 
-
     def ViewSpeciality(request,speciality):
         hospital=request.user.my_admin.first().hospital
         spec=Speciality.objects.filter(name=speciality)
         if spec.count()==1:
-            doctors=Doctor.objects.filter(speciality=spec.first(),hospital=hospital)
+            doctors=DoctorModel.objects.filter(speciality=spec.first(),hospital=hospital)
             doctorsaccs=[]
             for doc in doctors:
                 doctorsaccs.append([doc,doc.my_account])
@@ -248,7 +269,7 @@ class Admin:
 
     def ViewDoctors(request):
         hospital=request.user.my_admin.first().hospital
-        doctors=Doctor.objects.filter(hospital=hospital)
+        doctors=DoctorModel.objects.filter(hospital=hospital)
         doctorsaccs=[]
         for doc in doctors:
             doctorsaccs.append([doc,doc.my_account])
@@ -258,7 +279,6 @@ class Admin:
         "hospital_name":request.user.my_admin.first().hospital.name,
         "flag":"all"
         })
-
 
 
     def AddDoctor(request):
@@ -338,7 +358,6 @@ class Admin:
                             "days":days,
                             "message":"Invalid doctor input"
                             })
-
 
 
     def ViewAdmins(request):
