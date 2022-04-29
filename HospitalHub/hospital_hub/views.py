@@ -635,7 +635,7 @@ class Patient:
 
     def searchbyspeciality(request):
         if request.method == "POST":
-            search_item=request.POST["username"] #assuming key of the search bar is search_here
+            search_item=request.POST["search_item"] #assuming key of the search bar is search_here
             regex = '^[a-zA-Z ]+$' #accept these symbols
 
             print('search by specialities')
