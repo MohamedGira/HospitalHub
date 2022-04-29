@@ -19,7 +19,7 @@ User = settings.AUTH_USER_MODEL
 # all of this is used as options lists througout the app
 class Speciality(models.Model):
     name =models.CharField(max_length=100,unique=True)
-    url=models.TextField(null = True)
+    #url=models.TextField(null = True)
     image           = models.ImageField(upload_to = "media/",null=True, default=None)
     
     def save(self, *args, **kwargs):
@@ -41,9 +41,6 @@ class Speciality(models.Model):
             self.image = new_image
 
         super().save(*args, **kwargs)
-
-
-
 
     def __str__(self):
         return self.name
@@ -67,30 +64,35 @@ class Hospital(models.Model):
     name            =models.CharField(max_length=100)
     city            = models.ForeignKey(City,on_delete=models.PROTECT,null=True)
     specialities    = models.ManyToManyField(Speciality)
-    image           = models.ImageField(upload_to = "media/",null=True, default=None)
+    image           = models.ImageField(upload_to = "media/",null=True, default=None,blank=True)
     
     def save(self, *args, **kwargs):
-      
-        im = Image.open(self.image)
-      #compress if image is grater than 1 MB
-        if len(im.fp.read())>1000000:
-            # Convert Image to RGB color mode
-            im = im.convert('RGB')
-            # auto_rotate image according to EXIF data
-            im = ImageOps.exif_transpose(im)
-            # save image to BytesIO object
-            im_io = BytesIO() 
-            # save image to BytesIO object
-            im.save(im_io, 'JPEG', quality=60) 
-            # create a django-friendly Files object
-            new_image = File(im_io, name=self.image.name)
-            # Change to new image
-            self.image = new_image
+        try:
+            im = Image.open(self.image)
+          #compress if image is grater than 1 MB
+            if len(im.fp.read())>1000000:
+                # Convert Image to RGB color mode
+                im = im.convert('RGB')
+                # auto_rotate image according to EXIF data
+                im = ImageOps.exif_transpose(im)
+                # save image to BytesIO object
+                im_io = BytesIO() 
+                # save image to BytesIO object
+                im.save(im_io, 'JPEG', quality=60) 
+                # create a django-friendly Files object
+                new_image = File(im_io, name=self.image.name)
+                # Change to new image
+                self.image = new_image
+        except:
+            pass 
+
 
         super().save(*args, **kwargs)
     #url = models.TextField(null =True)
     def __str__(self):
         return self.name
+
+
 
 
 class UserManager(BaseUserManager):
@@ -129,13 +131,14 @@ class UserManager(BaseUserManager):
     #    )
     #    return user
 
-    def create_superuser(self, username,email, full_name=None, password=None,phone_number=None):
+    def create_superuser(self, username,email, full_name=None, password=None,phone_number=None, image=None):
         user = self.create_user(
                 username,
                 full_name=full_name,
                 password=password,
                 email=email,
                 phone_number=phone_number,
+                image=image,
                 is_owner=True,
                 is_staff=True,
                 is_admin=False
@@ -155,7 +158,7 @@ class User(AbstractBaseUser):
     patient     = models.BooleanField(default=False) # superuser
     staff       = models.BooleanField(default=False) # necessary
     created_at  = models.DateTimeField(null=True)
-    image       = models.ImageField(upload_to = "media/",null=True, default=None)
+    image       = models.ImageField(upload_to = "media/", default=None)
 
     # confirm     = models.BooleanField(default=False)
     # confirmed_date     = models.DateTimeField(default=False)
@@ -209,23 +212,24 @@ class User(AbstractBaseUser):
 
     
     def save(self, *args, **kwargs):
-      
-        im = Image.open(self.image)
-      #compress if image is grater than 1 MB
-        if len(im.fp.read())>1000000:
-            # Convert Image to RGB color mode
-            im = im.convert('RGB')
-            # auto_rotate image according to EXIF data
-            im = ImageOps.exif_transpose(im)
-            # save image to BytesIO object
-            im_io = BytesIO() 
-            # save image to BytesIO object
-            im.save(im_io, 'JPEG', quality=60) 
-            # create a django-friendly Files object
-            new_image = File(im_io, name=self.image.name)
-            # Change to new image
-            self.image = new_image
-
+        try:
+            im = Image.open(self.image)
+            #compress if image is grater than 1 MB
+            if len(im.fp.read())>1000000:
+                # Convert Image to RGB color mode
+                im = im.convert('RGB')
+                # auto_rotate image according to EXIF data
+                im = ImageOps.exif_transpose(im)
+                # save image to BytesIO object
+                im_io = BytesIO() 
+                # save image to BytesIO object
+                im.save(im_io, 'JPEG', quality=60) 
+                # create a django-friendly Files object
+                new_image = File(im_io, name=self.image.name)
+                # Change to new image
+                self.image = new_image
+        except:
+            pass
         super().save(*args, **kwargs)
 
 
@@ -248,7 +252,10 @@ class Doctor(models.Model):
     my_account= models.ForeignKey(User,on_delete= models.CASCADE,related_name="my_doctor")
     is_employed= models.BooleanField(default=False)
     speciality= models.ForeignKey(Speciality, on_delete=models.CASCADE,related_name="doctors")
-    hospital= models.ForeignKey(Hospital, on_delete=models.SET_NULL,related_name="my_doctors",null=True)
+    hospital= models.ForeignKey(Hospital, on_delete=models.SET_NULL,related_name="my_doctors",null=True,blank=True)
+
+    def __str__(self):
+        return str(self.my_account)
 
 # Organizational classes
 
@@ -259,6 +266,11 @@ class Schedule(models.Model):
     end_time=models.TimeField()
     price=models.IntegerField()
     patient_count=models.IntegerField()
+    
+    def __str__(self):
+        return (str(self.doctor.my_account) +" on "+ self.day+ " from " +str(self.start_time)+" to "+str(self.end_time))
+
+
 
 class Appointment(models.Model):
     doctor=models.ForeignKey(Doctor,on_delete= models.CASCADE,related_name="appointments")

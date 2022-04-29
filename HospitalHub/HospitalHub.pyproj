@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="hospital_hub\static\hospital_hub\assets\css\add admin.css" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\css\add_admin_to_hospital.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\add_doctor.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\add_doctor2.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\bootstrap.css" />
@@ -141,8 +142,10 @@
     <Content Include="hospital_hub\static\hospital_hub\assets\img\young-female-doctor-posing-corridor-hospital.jpg" />
     <Content Include="hospital_hub\static\hospital_hub\assets\js\bootstrap.bundle.min.js" />
     <Content Include="hospital_hub\static\hospital_hub\assets\js\google-maps.js" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\js\filter.js" />
     <Content Include="hospital_hub\static\hospital_hub\assets\js\jquery-3.5.1.min.js" />
     <Content Include="hospital_hub\static\hospital_hub\assets\js\login.js" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\js\ScheduleManager.js" />
     <Content Include="hospital_hub\static\hospital_hub\assets\js\theme.js" />
     <Content Include="hospital_hub\static\hospital_hub\assets\vendor\animate\animate.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\vendor\owl-carousel\ajax-loader.gif" />
@@ -151,13 +154,20 @@
     <Content Include="hospital_hub\static\hospital_hub\assets\vendor\owl-carousel\js\owl.carousel.min.js" />
     <Content Include="hospital_hub\static\hospital_hub\assets\vendor\wow\wow.min.js" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\add_admin.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\add_admin_old.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\add_doctor.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\add_speciality.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\add_speciality_old.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\admin_layout.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\admin_login.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\admin_home.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\admin_view_doctor_profile.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\view_admins.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\view_doctors_old.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\view_doctors.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\view_specialities_old.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\view_specialities.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\view_speciality.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Doctor\doctor_registration.html" />
     <Content Include="hospital_hub\templates\hospital_hub\home_layout.html" />
     <Content Include="hospital_hub\templates\hospital_hub\index.html" />

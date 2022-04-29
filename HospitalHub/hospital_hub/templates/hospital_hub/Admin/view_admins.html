@@ -1,0 +1,173 @@
+{%extends 'hospital_hub/Admin/admin_layout.html'%}
+{%load static%}
+{%block body%}
+
+<header>
+
+    <!--the home/doctors/admins/logout header-->
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+        <div class="container">
+            <img src="{%static 'hospital_hub/assets/img/logo2.png'%}" alt="" style="width:20px;">
+            <a style="color:#81C2D6" class="navbar-brand" href="#"><span class="text-primary2">Hospital</span>Hub </a>
+
+
+
+            <div class="collapse navbar-collapse" id="navbarSupport">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{%url 'admin_home'%}">Home</a>
+                    </li>
+                       <li class="nav-item">
+                            <a class="nav-link" href="{%url 'view_specialities'%}">Specialities</a>
+                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="{%url 'admin_view_doctors'%}">Doctors</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{%url 'admin_view_admins'%}">Admins</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%url 'admin_logout'%}">Logout</a>
+                    </li>
+                </ul>
+            </div> <!-- .navbar-collapse -->
+        </div> <!-- .container -->
+    </nav>
+</header>
+
+<div class="page-banner overlay-dark bg-image"
+     style="background-image: url(../../../../static/hospital_hub/assets/img/bg_image_1.jpg)">
+    <div class="banner-section">
+        <div class="container text-center wow fadeInUp">
+            <span class="subhead">🏥{{hospital_name}}🏥</span>
+
+            <nav aria-label="Breadcrumb">
+                <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
+                    <li class="breadcrumb-item"><a href="{%url 'admin_home'%}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Admins
+                    </li>
+                </ol>
+            </nav>
+            <h1 class="font-weight-normal">
+                {%if speciality%}{{speciality}}{%else%}Current Admins{%endif%}
+            </h1>
+
+
+
+
+        </div>
+        <!-- .container -->
+    </div>
+    <!-- .banner-section -->
+</div>
+<!-- .page-banner -->
+
+
+
+<div class="page-section bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                {%if message%}
+                    <p>
+                        {{message}}
+                    </p>
+                {%endif%}
+                <div class="row">
+                    
+                        {% for admin, account in higher_admins %}
+
+                        <div class="col-md-6 col-lg-3 py-3 wow zoomIn">
+                            <div class="card-doctor">
+                                <div class="header">
+                                    
+                                    {% if account.image %}
+                                    <img src="{{account.image.url}}" alt="" height="260" style="object-fit: cover;">
+                                    {% else %}
+                                    <img src="{%static 'hospital_hub/assets/img/no_profile_img.png' %}" alt="" height="260" style="object-fit: cover;">
+                                    {% endif %}
+
+                                    <div class="meta" style="text-align:center;">
+                                        <a href="#">
+                                        <span class="mai-person"></span></a>
+                                    </div>
+                                </div>
+                                <div class="body">
+                                    <p class="text-x2 mb-0" style="text-align:left;">
+                                        {{account.username}}
+                                    </p>
+                                    <p  style="text-align:left; color:darkgray; font-size:small">
+                                        Higher Rank
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                        {%endfor%}
+
+                    {% for admin, account in lower_admins %}
+
+                        <div class="col-md-6 col-lg-3 py-3 wow zoomIn">
+                            <div class="card-doctor">
+                                <div class="header">
+                                    {% if account.image %}
+                                    <img src="{{account.image.url}}" alt="" height="260" style="object-fit: cover;">
+                                    {% else %}
+                                    <img src="{%static 'hospital_hub/assets/img/no_profile_img.png' %}" alt="" height="260" style="object-fit: cover;">
+                                    {% endif %}
+                                    <div class="meta" style="text-align:center;">
+                                        <a href="#">
+                                        <span class="mai-person"></span>
+                                        </a>
+                                        <a href="{% url 'remove_admin' removed_admin_id=admin.id %}">
+                                        <span class="mai-close"></span>
+                                        </a>
+                                    </div>
+                                    <div class="meta" style="text-align:center;">
+                                        
+                                    </div>
+                                </div>
+                                <div class="body">
+                                    <p class="text-x2 mb-0" style="text-align:left;">
+                                        {{account.username}}
+                                    </p>
+                                    <p  style="text-align:left; color:darkgray; font-size:small">
+                                        Lower Rank
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                        {%endfor%}
+                    
+                    {%if empty%}
+                    <p>{{empty}}</p>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- .container -->
+</div>
+<!-- .page-section -->
+
+<div class="page-section banner-home bg-image" style="background-image: url(../assets/img/banner-pattern.svg)">
+    <div class="container py-5 py-lg-0">
+        <div class="row align-items-center">
+            <div class="col-lg-12 wow zoomIn">
+                <div class="img-banner d-none d-lg-block">
+                    <p><img src="../assets/img/logo3.png" alt="Logo" /></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- .banner-home -->
+{%endblock%}
+
+
+
+
