@@ -28,11 +28,16 @@ urlpatterns = [
     path('admin/logout', views.Admin.AdminLogout,name='admin_logout'),
     path('admin/add_admin', views.Admin.AddAdmin,name='admin_add_admin'),
     path('admin/add_speciality', views.Admin.AddSpeciality,name='add_speciality'),
+    path('admin/add_doctor', views.Admin.AddDoctor,name='add_doctor'),
+    path('admin/admins',views.Admin.ViewAdmins,name='admin_view_admins'),
+    path('admin/admins/remove/<int:removed_admin_id>',views.Admin.RemoveAdmin,name='remove_admin'),
+    path('admin/doctors',views.Admin.ViewDoctors,name='admin_view_doctors'),
+    path('admin/doctors/remove/<int:doctor_id>',views.Admin.RemoveDoctorFromDoctors ,name='remove_doctor_from_doctors'),
+    path('admin/doctors/<str:doctor>',views.Admin.ViewDoctorProfile,name='admin_view_doctor'),
     path('admin/specialities',views.Admin.ViewSpecialities,name='view_specialities'),
-    path('admin/admins',views.Admin.AdminHome,name='admin_view_admins'),
-    path('admin/doctors',views.Admin.AdminHome,name='admin_view_doctors'),
+    path('admin/specialities/remove/<int:speciality_id>',views.Admin.RemoveSpeciality,name='remove_speciality'),
     path('admin/specialities/<str:speciality>',views.Admin.ViewSpeciality,name='view_speciality'),
-
+    path('admin/specialities/speciality/remove_doctor/<int:doctor_id>',views.Admin.RemoveDoctorFromSpeciality ,name='remove_doctor_from_speciality'),
     #########################
     #paths for doctor
 

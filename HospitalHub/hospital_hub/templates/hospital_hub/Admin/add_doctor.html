@@ -1,19 +1,270 @@
-<!DOCTYPE html>
+{%load static%}
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <title></title>
+
+    <link rel="stylesheet" href="{%static 'hospital_hub/assets/css/bootstrap.css'%}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Paaji" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:600'>
+    <link rel="stylesheet" href="{%static 'hospital_hub/assets/css/add_doctor_to_hospital.css'%}">
+    <link rel="stylesheet" href="{%static 'hospital_hub/assets/css/maicons.css'%}">
+
+    <script src="{%static 'hospital_hub/assets/js/ScheduleManager.js'%}"></script>
+    <script src="{%static 'hospital_hub/assets/js/filter.js'%}"></script>
+
+
+
+    <meta charset="UTF-8">
+    <title>Add Doctor</title>
+
 </head>
+
 <body>
-    <!--<form>
-  <select onchange="form.submit()" class="form-control" style="width:100%" id="testinput" name="speciality" required>            
-      <option value="1" selected>1</option>
-      <option value="2" >2</option>
-      <option value="3" >3</option>
-  </select>
-    <h1 id="result">r</h1>
-</form>
-    -->
+    <div class="back-to-top"></div>
+    <header>
+    <div class="topbar">
+        <div class="row">
+        <div class="col-sm-6 text-sm">
+            <div class="site-info">
+            <a href="#"><span class="mai-call text-primary"></span> +20 1013421486</a>
+            <span class="divider">|</span>
+            <a href="#"><span class="mai-mail text-primary"></span> HospitalHub@gmail.com</a>
+            </div>
+        </div>
+        <div class="col-sm-3   text-right text-sm">
+            <div class="social-mini-button">
+            <a href="{%url 'admin_home'%}"><span class="mai-logo-facebook-f"></span></a>
+            <a href="#"><span class="mai-logo-twitter"></span></a>
+            <a href="#"><span class="mai-logo-dribbble"></span></a>
+            <a href="#"><span class="mai-logo-instagram"></span></a>
+            </div>
+        </div>
+        </div> <!-- .row -->
+    </div> <!-- .container -->
+    </div> <!-- .topbar -->
+    <!-- partial:index.partial.html -->
+    <div class="login-wrap">
+        <div class="login-html">
+        <input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Add
+            doctor</label>
+        <div class="login-form">
+            <div class="sign-up-htm">
+
+            {%if message%}
+            <h4 style="color:red">{{message}}</h4>
+            {%endif%}
+
+            <form method="get">
+                <!--Specialities list-->
+
+                <div class="group">
+                <label for="user" class="label">Doctor's Specialty</label>
+                <select onchange="form.submit()" id="speciality" class="input" style=" color: white;" name="speciality">
+                    <option value="" disabled selected style="background: transparent; color: black;"> Choose Specialty</option>
+                    {%for speciality in specialities%}
+
+                    {%if submitted_speciality_name == speciality.name %}
+                    <option value="{{speciality.name}}" style="background: transparent; color: black;" selected>
+                    {{speciality}}</option>
+                    {%else%}
+                    <option value="{{speciality.name}}" style="background: transparent; color: black;">{{speciality}}
+                    </option>
+                    {%endif%}
+
+                    {%empty%}
+                    <option>
+                    You have No Specialities in your hospital.
+                    </option>
+                    {%endfor%}
+                </select>
+                </div>
+
+
+
+            </form>
+
+            <!--Doctors list-->
+
+
+            <form method="post">
+
+                {% csrf_token %}
+
+
+                <!------------------------------------------------------------------------------------->
+                <div class="group">
+                <label for="user" class="label">Doctor Full Name</label>
+                <input name="doctor_email" id="docinput" list="doctors" class="input" >
+                <datalist id="doctors">
+                    {%if doctor_list_message%}
+                    <option value="No matches">{{doctor_list_message}}</option>
+                    {%else%}
+                
+                    {%for doc in doctors %}
+                    <option value="{{doc.email}}"> {{doc.full_name}}</option>
+                    <!--<option value="Doctor_2 Full Name"> Doctor_2 specialty</option>>-->
+
+                    {%endfor%}
+                    {%endif%}
+                </datalist>
+                </div>
+
+                <!--Price input-->
+                <div class="group">
+                <label for="user"  class="label">Price</label>
+                <input type="number" name="price" min="0" max="1000" step="5" class="input" />
+                </div>
+
+
+                            <!--------------Schedule-------------->
+
+                <div class="group">
+                <label for="user" class="label" style="font-size:120%; text-align:center">Schedule</label>
+                </div>
+
+
+                {%for day in days%}
+
+                <div class="group" style="color: rgba(255,255,255,.5);">
+                <label for="user" class="label" style="text-align:center;">
+
+                <input name="{{day}}" type="checkbox" id="{{day}}" class="input"
+                    onclick='EnableThis(this,"{{day}}")' style="width:5%" /> {{day}} </label>
+                from
+                <input class="input" type="time" id="{{day}}1" name="{{day}}1" min="09:00" max="18:00" disabled required
+                    style="width:40%;">
+                to
+                <input class="input" type="time" id="{{day}}2" name="{{day}}2" min="09:00" max="18:00" disabled required
+                    style="width:40%;" />
+                </div>
+                {%endfor%}
+
+
+            <!--
+                <div class="group" style="color: rgba(255,255,255,.5);">
+                <label for="user" class="label" style="text-align:center;">
+
+                    <input name="Saturday" type="checkbox" id="saturday" class="input"
+                    onclick='EnableThis(this,"saturday")' style="width:5%" /> Saturday </label>
+                from
+                <input class="input" type="time" id="saturday1" name="appt" min="09:00" max="18:00" disabled required
+                    style="width:40%;">
+                to
+                <input class="input" type="time" id="saturday2" name="appt" min="09:00" max="18:00" disabled required
+                    style="width:40%;">
+
+                </div>
+
+
+                <div class="group" style="color: rgba(255,255,255,.5);">
+
+                <label for="user" class="label" style="text-align:center;">
+                    <input type="checkbox" id="sunday" class="input" onclick="EnableSunday(this)" style="width:5%" />
+                    Sunday</label>
+                from
+                <input class="input" type="time" id="sunday1" name="appt" min="09:00" max="18:00" disabled required
+                    style="width:40%;">
+                to
+                <input class="input" type="time" id="sunday2" name="appt" min="09:00" max="18:00" disabled required
+                    style="width:40%;">
+
+                </div>
+
+
+                <div class="group" style="color: rgba(255,255,255,.5);">
+                <label for="user" class="label" style="text-align:center;"> <input type="checkbox" id="monday"
+                    class="input" onclick="EnableMonday(this)" style="width:5%" /> Monday</label>
+                from
+                <input class="input" type="time" id="monday1" name="appt" min="09:00" max="18:00" disabled required
+                    style="width:40%;">
+                to
+                <input class="input" type="time" id="monday2" name="appt" min="09:00" max="18:00" disabled required
+                    style="width:40%;">
+                </div>
+                <div class="group" style="color: rgba(255,255,255,.5);">
+                <label for="user" class="label" style="text-align:center;"> <input type="checkbox" id="tuesday"
+                    class="input" onclick="EnableTuesday(this)" style="width:5%" /> Tuesday</label>
+                from
+                <input class="input" type="time" id="tuesday1" name="appt" min="09:00" max="18:00" disabled required
+                    style="width:40%;">
+                to
+                <input class="input" type="time" id="tuesday2" name="appt" min="09:00" max="18:00" disabled required
+                    style="width:40%;">
+                </div>
+                <div class="group" style="color: rgba(255,255,255,.5);">
+                <label for="user" class="label" style="text-align:center;"> <input type="checkbox" id="wednesday"
+                    class="input" onclick="EnableWednesday(this)" style="width:5%" /> Wednesday</label>
+                from
+                <input class="input" type="time" id="wednesday1" name="appt" min="09:00" max="18:00" disabled required
+                    style="width:40%;">
+                to
+                <input class="input" type="time" id="wednesday2" name="appt" min="09:00" max="18:00" disabled required
+                    style="width:40%;">
+                </div>
+                <div class="group" style="color: rgba(255,255,255,.5);">
+                <label for="user" class="label" style="text-align:center;"> <input type="checkbox" id="thursday"
+                    class="input" onclick="EnableThursday(this)" style="width:5%" /> Thursday</label>
+                from
+                <input class="input" type="time" id="thursday1" name="appt" min="09:00" max="18:00" disabled required
+                    style="width:40%;">
+                to
+                <input class="input" type="time" id="thursday2" name="appt" min="09:00" max="18:00" disabled required
+                    style="width:40%;">
+                </div>
+                <div class="group" style="color: rgba(255,255,255,.5);">
+                <label for="user" class="label" style="text-align:center;"> <input type="checkbox" id="friday"
+                    class="input" onclick="EnableFriday(this)" style="width:5%" /> Friday</label>
+                from
+                <input class="input" type="time" id="friday1" name="appt" min="09:00" max="18:00" disabled required
+                    style="width:40%;">
+                to
+                <input class="input" type="time" id="friday2" name="appt" min="09:00" max="18:00" disabled required
+                    style="width:40%;">
+                </div>-->
+                <div class="group">
+                <input type="submit" class="button" value="Add Doctor">
+                </div>
+                <div class="hr"></div>
+            </form>
+            </div>
+
+        </div>
+        </div>
+    </div>
+    <!-- partial -->
+
 </body>
+
 </html>
+
+<!--
+    
+    <form>
+            <select  onchange="changelist()"class="form-control" style="width:100%" id="speciality"
+                    name="speciality" required>            
+                <option value="0" selected >Choose speciality</option>
+                <option   value="1" >1</option>
+                <option   value="2" >2</option>
+                <option   value="3" >3</option>
+            </select>
+    
+    </form>
+     
+    <form>
+        <select class="form-control" style="width:100%" id="doctors_list" name="speciality" required>            
+            <option disabled selected > -- select an option -- </option>
+            <option value="11"><div>
+                <p class="spec">1</p>
+                <p id="s">r</p>
+                </div></option>
+            <option value="2" >2</option>
+            <option value="3"">3</option>
+        </select>
+    
+    </form>
+    -->
