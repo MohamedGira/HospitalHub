@@ -197,7 +197,7 @@ class User(AbstractBaseUser):
     
     @property
     def is_staff(self):
-        return self.owner
+        return self.staff
 
 
     @property
