@@ -25,7 +25,7 @@ User = get_user_model()
 
 def index(request):
     if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('admin_login'))
+        return render(request, "hospital_hub/index.html")
     else:
         if request.user.is_admin:
             return HttpResponseRedirect(reverse('admin_home'))
@@ -600,7 +600,6 @@ class Patient:
             })
 
     def PatientHome(request):
-        
 
 
         # Redirect PATIENTS to login page if they are not signed in as admins
@@ -622,7 +621,7 @@ class Patient:
             search_item=request.POST['search_item']
             resspecialities=SpecialityModel.objects.filter(name__contains=search_item)
             reshospitals=HospitalModel.objects.filter(name__contains=search_item)
-            resdoctors=User.objects.filter(full_name__contains=search_item, doctor=True)
+            resdoctors=User.objects.filter(full_name__contains=search_item, doctor=True) 
             docacclist=[]
 
             for doc in resdoctors:
@@ -649,9 +648,9 @@ class Patient:
       
 
         return render(request, "hospital_hub/Patient/patient_home.html", {
-                    "specialities": specialities,
-                    "hospitals":hospitals,
-                    "doctors":doclist
+                    "allspecialities": allspecialities,
+                    "allhospitals":allhospitals,
+                    "alldoctors":doclist
                 })
 
     def PatientLogin(request):
