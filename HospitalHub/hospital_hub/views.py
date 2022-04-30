@@ -24,6 +24,16 @@ User = get_user_model()
 
 
 def index(request):
+    if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('admin_login'))
+    else:
+        if request.user.is_admin:
+            return HttpResponseRedirect(reverse('admin_home'))
+        elif request.user.is_patient:
+            return HttpResponseRedirect(reverse('patient_home'))
+#       elif request.user.is_doctor:
+#            return HttpResponseRedirect(reverse('admin_home'))
+
     return render(request, "hospital_hub/index.html")
 
 
@@ -590,14 +600,59 @@ class Patient:
             })
 
     def PatientHome(request):
+        
+
+
         # Redirect PATIENTS to login page if they are not signed in as admins
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('patient_login'))
         elif not request.user.is_patient:
             # may add later "you have no access to this page :( "
+            logout(request)
             return HttpResponseRedirect(reverse('patient_home'))
 
-        return render(request, "hospital_hub/Patient/patient_home.html")
+        allspecialities=SpecialityModel.objects.all()
+        allhospitals=HospitalModel.objects.all()
+        alldoctors=DoctorModel.objects.all()
+        doclist=[]
+        for doc in alldoctors:
+            doclist.append(doc.my_account)
+
+        if request.method=="POST":
+            search_item=request.POST['search_item']
+            resspecialities=SpecialityModel.objects.filter(name__contains=search_item)
+            reshospitals=HospitalModel.objects.filter(name__contains=search_item)
+            resdoctors=User.objects.filter(full_name__contains=search_item, doctor=True)
+            docacclist=[]
+
+            for doc in resdoctors:
+                docacclist.append([doc.my_doctor.first(),doc])
+            if resspecialities.count()+reshospitals.count()+resdoctors.count()==0:
+                return render(request, "hospital_hub/Patient/search_results.html", {
+                    "search_key":search_item,
+                    "message": "No results found",
+                    "allspecialities": allspecialities,
+                    "allhospitals":allhospitals,
+                    "alldoctors":doclist
+                })
+            else:
+                return render(request, "hospital_hub/Patient/search_results.html", {
+                    "search_key":search_item,
+                    "allspecialities": allspecialities,
+                    "allhospitals":allhospitals,
+                    "alldoctors":doclist,
+                    "specialities": resspecialities,
+                    "hospitals":reshospitals,
+                    "doctors":docacclist
+                })
+        
+      
+
+        return render(request, "hospital_hub/Patient/patient_home.html", {
+                    "specialities": specialities,
+                    "hospitals":hospitals,
+                    "doctors":doclist
+                })
 
     def PatientLogin(request):
         # redirect users to home page if they are already signed in as patients

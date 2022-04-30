@@ -1,5 +1,25 @@
 {%extends 'hospital_hub/Patient/patient_layout.html'%}
-
+{%load static %}
 {%block body%}
-
+<div class="page-section pb-0">
+        <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 py-3 wow fadeInUp">
+            <h1>Welcome to Your Health <br> Center</h1>
+            <p class="text-grey mb-4">The main specific purpose of the project is to facilitate the communication between patients and
+            hospitals, and to be an initiative to improve the e-medicine base in Egypt.
+            Its main Idea is to connect different hospitals with patients through a website, so that users can choose
+            and book appointments in the hospital that fit their needs (location, specialties, price ranges).
+            </p>
+            <a href="../about" class="btn btn-primary">Learn More</a>
+            </div>
+            <div class="col-lg-6 wow fadeInRight" data-wow-delay="400ms">
+            <div class="img-place custom-img-1">
+                <img src="{%static 'hospital_hub/assets/img/bg-doctor.png'%}" alt="">
+            </div>
+            </div>
+        </div>
+        </div>
+    </div> <!-- .bg-light -->
+    </div> <!-- .bg-light -->
 {%endblock%}

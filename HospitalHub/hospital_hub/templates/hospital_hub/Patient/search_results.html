@@ -1,0 +1,222 @@
+{%extends 'hospital_hub/Patient/patient_layout.html'%}
+{%load static%}
+{%block body%}
+
+
+
+<div class="page-banner overlay-dark bg-image"
+     style="background-image: url(../../../static/hospital_hub/assets/img/bg_image_1.jpg)">
+    <div class="banner-section">
+        <div class="container text-center wow fadeInUp">
+            
+            <nav aria-label="Breadcrumb">
+                <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
+                    <li class="breadcrumb-item"><a href="{%url 'patient_home'%}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Search</li>
+                </ol>
+            </nav>
+            <h1 class="font-weight-normal">{{search_key}}</h1>
+        </div>
+        <!-- .container -->
+    </div>
+    <!-- .banner-section -->
+</div>
+<!-- .page-banner -->
+
+
+
+<div class="page-section bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                 {%if specialities%}
+                         <h1 class="font-weight-normal">Specialities</h1>
+                {%endif%}
+                <div class="row">
+
+                    {%if message %}
+                    <h3 class="text-primary2">{{message}}</h3>
+                    {%endif%}
+
+                    {%if specialities%}
+                    
+          
+                        {%for speciality in specialities%}
+
+                        <div class="col-md-6 col-lg-3 py-3 wow zoomIn">
+                            <div class="card-doctor">
+
+                                <div class="header">
+
+                                    {% if speciality.image %}
+                                    <img src="{{speciality.image.url}}" alt="" height="260" style="object-fit: cover;">
+                                    {% else %}
+                                    <img src="{%static 'hospital_hub/assets/img/no_hospital_img.png' %}" alt="" height="260" style="object-fit: cover;">
+                                    {% endif %}
+
+
+                                    <div class="meta" style="text-align:center;">
+                                        <a href="#">
+                                            <span class="mai-people"></span>
+                                        </a>
+                                     
+                                    </div>
+                                </div>
+                                <div class="body">
+                                    <p class="text-x2 mb-0" style="text-align: center">
+                                        {{speciality.name}}
+                                    </p>
+                                </div>
+                            </div>
+                         </div>
+                        {%endfor%}
+                    {%endif%}
+            
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+ <div class="page-section bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                {%if doctors%}
+                         <h1 class="font-weight-normal">Doctors</h1>
+                {%endif%}
+                <div class="row">
+                    
+                    {%if doctors%}
+                    
+                  
+                        {% for doctor, account in doctors %}
+
+                        <div class="col-md-6 col-lg-3 py-3 wow zoomIn">
+                            <div class="card-doctor">
+                                <div class="header">
+
+                                    {% if account.image %}
+                                    <img src="{{account.image.url}}" alt="" height="260" style="object-fit: cover;">
+                                    {% else %}
+                                    <img src="{%static 'hospital_hub/assets/img/no_profile_img.png' %}" alt="" height="260" style="object-fit: cover;">
+                                    {% endif %}
+
+                                    <div class="meta" style="text-align:center;">
+                                        <a href="#">
+                                        <span class="mai-person"></span></a>
+
+                                        
+                                    </div>
+                                </div>
+                                <div class="body">
+                                    <p class="text-x2 mb-0" style="text-align:left;">
+                                        {{account.full_name}}
+                                    </p>
+                                    <p  style="text-align:left; color:darkgray; font-size:small">
+                                        {{doctor.speciality}}
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                        {%endfor%}
+                    {%endif%}
+
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+ <div class="page-section bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                 {%if hospitals%}
+                         <h1 class="font-weight-normal">Hospitals</h1>
+                {%endif%}
+                <div class="row">
+                    {%if hospitals%}
+                           
+                        {%for hospital in hospitals%}
+
+                        <div class="col-md-6 col-lg-3 py-3 wow zoomIn">
+                            <div class="card-doctor">
+
+                                <div class="header">
+
+
+
+                                    {% if hospital.image %}
+                                    <img src="{{hospital.image.url}}" alt="" height="260" style="object-fit: cover;">
+                                    {% else %}
+                                    <img src="{%static 'hospital_hub/assets/img/no_hospital_img.png' %}" alt="" height="260" style="object-fit: cover;">
+                                    {% endif %}
+
+
+                                      <div class="meta" style="text-align:center;">
+
+                                        <a href="#">
+                                            <span class="mai-people"></span>
+                                        </a>
+                                        
+                                    </div>
+                                </div>
+                                <div class="body">
+                                    <p class="text-x2 mb-0" style="text-align: center">
+                                        {{hospital.name}}
+                                    </p>
+                                </div>
+                            </div>
+                       </div>
+
+                        {%endfor%}
+                    {%endif%}
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-section banner-home bg-image" style="background-image: url(../assets/img/banner-pattern.svg)">
+    <div class="container py-5 py-lg-0">
+        <div class="row align-items-center">
+            <div class="col-lg-12 wow zoomIn">
+                <div class="img-banner d-none d-lg-block">
+                    <p><img src="../assets/img/logo3.png" alt="Logo" /></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- .banner-home -->
+
+{%endblock%}
+
+
+
+
+<!--
+    card item
+
+            <div class="col">
+                <div class="card h-100">
+                    <img src="src" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h3 class="Cardiology">Cardiology</h3>
+                        <p class="card-text">
+                            <header>
+                                <h4>
+                                    Doctors
+                                </h4>
+                            </header>
+                        <p class="card-text">Dr. Komsry</p>
+                        <h4>
+                            Clinical time
+                        </h4>
+                        <p class="card-text">2:00 PM / 4:00 PM</p>
+                        </p>
+                    </div>
+                </div>
+            </div>-->

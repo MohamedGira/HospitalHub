@@ -175,11 +175,14 @@
     <Content Include="hospital_hub\templates\hospital_hub\index.html" />
     <Content Include="hospital_hub\templates\hospital_hub\login.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Owner\add admin.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Patient\hospitals_by_speciality.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_home.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_layout.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_login.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_register.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\preview_specializations.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Patient\searchbyspeciality.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Patient\search_results.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />
