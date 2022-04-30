@@ -84,11 +84,8 @@
                             <div class="card-doctor">
                                 <div class="header">
                                     
-                                    {% if account.image %}
                                     <img src="{{account.image.url}}" alt="" height="260" style="object-fit: cover;">
-                                    {% else %}
-                                    <img src="{%static 'hospital_hub/assets/img/no_profile_img.png' %}" alt="" height="260" style="object-fit: cover;">
-                                    {% endif %}
+                                    
 
                                     <div class="meta" style="text-align:center;">
                                         <a href="#">

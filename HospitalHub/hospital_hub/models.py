@@ -64,7 +64,7 @@ class Hospital(models.Model):
     name            =models.CharField(max_length=100)
     city            = models.ForeignKey(City,on_delete=models.PROTECT,null=True)
     specialities    = models.ManyToManyField(Speciality)
-    image           = models.ImageField(upload_to = "media/",null=True, default=None,blank=True)
+    image           = models.ImageField(upload_to = "media/",null=True, default="media/no_hospital_img.png")
     
     def save(self, *args, **kwargs):
         try:
@@ -116,7 +116,8 @@ class UserManager(BaseUserManager):
         user_obj.staff  = is_staff
         user_obj.city= city
         user_obj.phone_number=phone_number
-        user_obj.image=image
+        if image is not None:
+            user_obj.image=image
 
         user_obj.save(using=self._db)
 
@@ -158,7 +159,7 @@ class User(AbstractBaseUser):
     patient     = models.BooleanField(default=False) # superuser
     staff       = models.BooleanField(default=False) # necessary
     created_at  = models.DateTimeField(null=True)
-    image       = models.ImageField(upload_to = "media/", default=None)
+    image       = models.ImageField(default="media/no_profile_img.png",upload_to = "media/")
 
     # confirm     = models.BooleanField(default=False)
     # confirmed_date     = models.DateTimeField(default=False)

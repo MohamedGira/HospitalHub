@@ -13,6 +13,7 @@ from .models import Speciality as SpecialityModel
 from .models import Hospital as HospitalModel
 from .models import City as CityModel
 from .utils import *
+
 import re
 
 import logging
@@ -156,6 +157,7 @@ class Admin:
                 
                 
             image=request.FILES.get('image',None)
+            print(image)
       
             # Attempt to create new user
             try:
@@ -176,7 +178,8 @@ class Admin:
                     "full_name":full_name,
                     "cities":cities,
                     "city":city,
-                    "phone":phone_number,
+                    "phone_number":phone_number,
+                    "email":email,
                 })
             return HttpResponseRedirect(reverse("admin_home"))
         else:
@@ -575,6 +578,8 @@ class Patient:
             confirm_password = request.POST["confirm_password"]
             city = request.POST["city"]
             phone_number = request.POST["phone_number"]
+            image=request.FILES.get('image',None)
+
             if password != confirm_password:
                 return render(request, "hospital_hub/Patient/patient_register.html", {
                     "message": "Passwords must match.",
@@ -590,8 +595,14 @@ class Patient:
         # Attempt to create new user
             try:
                 selectedCity = CityModel.objects.filter(id=city).first()
-                user = User.objects.create_user(username, email, full_name, password,
-                                                is_patient=True, city=selectedCity, phone_number=phone_number)
+
+                if image is not None:
+                    user = User.objects.create_user(username, email,full_name,
+                    password,is_patient=True,city=selectedCity,phone_number=phone_number,image=image)
+                else:
+                    user = User.objects.create_user(username, email,full_name,
+                     password,is_patient=True,city=selectedCity,phone_number=phone_number)
+
                 user.save()
                 patient = PatientModel(my_account=user)
                 patient.save()
