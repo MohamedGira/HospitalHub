@@ -63,7 +63,7 @@ class AppointmentStatus(models.Model):
 class Hospital(models.Model):
     name            =models.CharField(max_length=100)
     city            = models.ForeignKey(City,on_delete=models.PROTECT,null=True)
-    specialities    = models.ManyToManyField(Speciality)
+    specialities    = models.ManyToManyField(Speciality, blank=True)
     image           = models.ImageField(upload_to = "media/",null=True, default="media/no_hospital_img.png")
     
     def save(self, *args, **kwargs):

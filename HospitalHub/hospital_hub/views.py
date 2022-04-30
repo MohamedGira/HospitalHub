@@ -69,7 +69,7 @@ class Owner:
             try:
                 selectedCity = CityModel.objects.filter(id=city).first()
                 user = User.objects.create_user(username, email, full_name, password,
-                                                is_patient=True, city=selectedCity, phone_number=phone_number)
+                                                is_owner=True, city=selectedCity, phone_number=phone_number)
                 user.save()
                 owner = OwnerModel(my_account=user)
                 owner.save()
