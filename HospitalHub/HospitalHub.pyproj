@@ -104,6 +104,7 @@
     <Content Include="hospital_hub\static\hospital_hub\assets\css\specializations preview-1.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\specializations.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\theme.css" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\css\user-register.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\fonts\maicons.eot" />
     <Content Include="hospital_hub\static\hospital_hub\assets\fonts\maicons.svg" />
     <Content Include="hospital_hub\static\hospital_hub\assets\fonts\maicons.ttf" />
@@ -180,6 +181,7 @@
     <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_layout.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_login.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_register.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_register_old.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\preview_specializations.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\searchbyspeciality.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\search_results.html" />

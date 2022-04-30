@@ -148,7 +148,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     username    = models.CharField(max_length=255, unique=True) # unique checks existance with respect to save function
-    email       = models.EmailField(verbose_name = 'email address',max_length = 255,unique = True,)
+    email       = models.EmailField(verbose_name = 'email address',max_length = 255,unique = True)
     full_name   = models.CharField(max_length=255, blank=True, null=True)
     phone_number= models.IntegerField()
     city        = models.ForeignKey(City,on_delete=models.PROTECT,null=True)
@@ -243,10 +243,12 @@ class Admin(models.Model):
     my_account= models.ForeignKey(User,on_delete= models.CASCADE,related_name="my_admin")
     hospital= models.ForeignKey(Hospital, on_delete=models.CASCADE,related_name="my_admins")
     def __str__(self):
-        return "Hospital of "+str(self.hospital)+" - Admin "+str(self.id)
+        return "Hospital of "+str(self.hospital)+" - Admin "+str(self.id)+" : "+ self.my_account.username
 
 class Patient(models.Model):  
     my_account= models.ForeignKey(User,on_delete= models.CASCADE,related_name="my_patient")
+    def __str__(self):
+        return self.my_account.username
 
 class Doctor(models.Model):
     my_account= models.ForeignKey(User,on_delete= models.CASCADE,related_name="my_doctor")
