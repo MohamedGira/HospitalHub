@@ -25,11 +25,11 @@ User = get_user_model()
 
 def index(request):
     if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('admin_login'))
+                return render(request, "hospital_hub/index.html")
     else:
         if request.user.is_admin:
             return HttpResponseRedirect(reverse('admin_home'))
-        elif request.user.is_patient:
+        else:
             return HttpResponseRedirect(reverse('patient_home'))
 #       elif request.user.is_doctor:
 #            return HttpResponseRedirect(reverse('admin_home'))
@@ -565,6 +565,8 @@ class Doctor:
 class Patient:
 
     def PatientRegister(request):
+        cities = CityModel.objects.all()
+
         if request.method == "POST":
             username = request.POST["username"]
             full_name = request.POST["full_name"]
@@ -574,8 +576,16 @@ class Patient:
             city = request.POST["city"]
             phone_number = request.POST["phone_number"]
             if password != confirm_password:
-                return render(request, "patient_register", {
-                    "message": "Passwords must match."})
+                return render(request, "hospital_hub/Patient/patient_register.html", {
+                    "message": "Passwords must match.",
+                    "cities": cities,
+                    "full_name":full_name,
+                    "cities":cities,
+                    "city":city,
+                    "username":username,
+                    "email":email,
+                    "phone_number":phone_number})
+            
 
         # Attempt to create new user
             try:
@@ -588,15 +598,21 @@ class Patient:
 
             except IntegrityError:
                 return render(request, "hospital_hub/Patient/patient_register.html", {
-                    "message": "Username already taken."
+                    "message": "Username or Email already taken.",
+                    "full_name":full_name,
+                    "cities":cities,
+                    "city":city,
+                    "phone_number":phone_number,
+                    "username":username,
+                    "email":email
+                    
                 })
             login(request, user)  # Checks authentication
             return HttpResponseRedirect(reverse("patient_home"))
         else:
-            cities = CityModel.objects.all()
             return render(request, 
             "hospital_hub/Patient/patient_register.html", {
-                "cities": cities
+                "cities": cities,
             })
 
     def PatientHome(request):
@@ -613,7 +629,7 @@ class Patient:
 
         allspecialities=SpecialityModel.objects.all()
         allhospitals=HospitalModel.objects.all()
-        alldoctors=DoctorModel.objects.all()
+        alldoctors=DoctorModel.objects.filter(is_employed=True)
         doclist=[]
         for doc in alldoctors:
             doclist.append(doc.my_account)
@@ -626,7 +642,9 @@ class Patient:
             docacclist=[]
 
             for doc in resdoctors:
-                docacclist.append([doc.my_doctor.first(),doc])
+                if doc.my_doctor.first().is_employed:
+                    docacclist.append([doc.my_doctor.first(),doc])
+
             if resspecialities.count()+reshospitals.count()+resdoctors.count()==0:
                 return render(request, "hospital_hub/Patient/search_results.html", {
                     "search_key":search_item,
@@ -649,9 +667,9 @@ class Patient:
       
 
         return render(request, "hospital_hub/Patient/patient_home.html", {
-                    "specialities": specialities,
-                    "hospitals":hospitals,
-                    "doctors":doclist
+                    "specialities": allspecialities,
+                    "hospitals":allhospitals,
+                    "doctors":alldoctors
                 })
 
     def PatientLogin(request):
