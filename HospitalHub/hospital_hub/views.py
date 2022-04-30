@@ -85,12 +85,12 @@ class Admin:
                     return HttpResponseRedirect(reverse("admin_home"))
                 else:
                     return render(request, "hospital_hub/admin/admin_login.html", {
-                        "message": "Invald username or password",
+                        "message": "Invalid username or password",
                         "submitted_username": username,
                     })
             else:
                 return render(request, "hospital_hub/Admin/admin_login.html", {
-                    "message": "Invald username or password",
+                    "message": "Invalid  username or password",
                     "submitted_username": username,
                 })
         else:
