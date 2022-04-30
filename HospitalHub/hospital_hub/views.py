@@ -15,6 +15,9 @@ from .models import City as CityModel
 from .utils import *
 import re
 
+##
+from django.contrib import messages
+##
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
@@ -33,8 +36,94 @@ def Logout(request):
 
 
 ############################################################################
-# owner app
+# Owner app
 
+class Owner:
+
+
+    def OwnerRegister(request):
+        if request.method == "POST":
+            username = request.POST["username"]
+            full_name = request.POST["full_name"]
+            email = request.POST["email"]
+            password = request.POST["password"]
+            confirm_password = request.POST["confirm_password"]
+            city = request.POST["city"]
+            phone_number = request.POST["phone_number"]
+            if password != confirm_password:
+                return render(request, "owner_register", {
+                    "message": "Passwords must match."})
+
+        # Attempt to create new user
+            try:
+                selectedCity = CityModel.objects.filter(id=city).first()
+                user = User.objects.create_user(username, email, full_name, password,
+                                                is_patient=True, city=selectedCity, phone_number=phone_number)
+                user.save()
+                owner = OwnerModel(my_account=user)
+                owner.save()
+
+            except IntegrityError:
+                return render(request, "hospital_hub/Owner/owner_register.html", {
+                    "message": "Username already taken."
+                })
+            login(request, user)  # Checks authentication
+            return HttpResponseRedirect(reverse("owner_home"))
+        else:
+            cities = CityModel.objects.all()
+            return render(request, 
+            "hospital_hub/Owner/owner_register.html", {
+                "cities": cities
+            })
+
+    # Owner Owner signin/signout methods__________________________________________________________________________________
+
+    def OwnerLogin(request):
+        # Redirect users to home page if they are already signed in as owners
+        if request.user.is_authenticated:
+            if request.user.is_owner:
+                return HttpResponseRedirect(reverse('owner_home'))
+
+        if request.method == "POST":
+            # Attempt to sign user in
+            username = request.POST["username"]
+            password = request.POST["password"]
+            user = authenticate(request, username=username, password=password)
+
+            # Check if authentication successful
+            if user is not None:
+                # Check if the user is owner
+                if user.is_owner:
+                    login(request, user)
+                    return HttpResponseRedirect(reverse("owner_home"))
+                else:
+                    return render(request, "hospital_hub/owner/owner_login.html", {
+                        "message": "Invalid username or password",
+                        "submitted_username": username,
+                    })
+            else:
+                return render(request, "hospital_hub/Owner/owner_login.html", {
+                    "message": "Invalid  username or password",
+                    "submitted_username": username,
+                })
+        else:
+            return render(request, "hospital_hub/Owner/owner_login.html")
+
+
+
+    def OwnerLogout(request):
+        logout(request)
+        return HttpResponseRedirect(reverse('owner_login'))
+
+    # Owner main methods__________________________________________________________________________________
+
+    def OwnerHome(request):
+        # Redirect users to login page if they are not signed in as owners
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('owner_login'))
+        elif not request.user.is_owner:
+            return HttpResponseRedirect(reverse('home'))
+        return render(request, "hospital_hub/Owner/owner_home.html")
 
 
 
