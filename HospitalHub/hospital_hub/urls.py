@@ -10,11 +10,22 @@ from . import views
 urlpatterns = [
     path('', views.index, name='home'),
     path('logout', views.Logout, name='user_logout'),
+
+
+    
     #########################
     # paths for owner
 
-    # example :        path('/Onwer/Hoapitals', views.logowner, name='onwer_login'),
-    # example :        path('/Onwer/home', views.index, name='onwer_home'),
+    path('owner/register', views.Owner.OwnerRegister, name='owner_register'),
+    path('owner/login', views.Owner.OwnerLogin, name='owner_login'),
+    path('owner/home', views.Owner.OwnerHome, name='owner_home'),
+
+
+
+
+
+
+
 
 
 
@@ -38,6 +49,8 @@ urlpatterns = [
     path('admin/specialities/remove/<int:speciality_id>',views.Admin.RemoveSpeciality,name='remove_speciality'),
     path('admin/specialities/<str:speciality>',views.Admin.ViewSpeciality,name='view_speciality'),
     path('admin/specialities/speciality/remove_doctor/<int:doctor_id>',views.Admin.RemoveDoctorFromSpeciality ,name='remove_doctor_from_speciality'),
+    
+    
     #########################
     # paths for doctor
     path('doctor/register', views.Doctor.DoctorRegister, name='doctor_register'),
