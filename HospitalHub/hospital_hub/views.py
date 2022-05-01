@@ -1,3 +1,4 @@
+import site
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
@@ -136,6 +137,123 @@ class Owner:
             return HttpResponseRedirect(reverse('home'))
         return render(request, "hospital_hub/Owner/owner_home.html")
 
+
+    def OwnerAddAdmin(request):  # register new admin to my hospital
+        # Redirect users to login page if they are not signed in as admins
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('owner_login'))
+        elif not request.user.is_owner:
+            # may add later "you have no access to this page :( "
+            return HttpResponseRedirect(reverse('home'))
+
+        cities = City.objects.all()
+
+        if(request.method == "POST"):
+            username = request.POST["username"]
+            full_name = request.POST["full_name"]
+            email = request.POST["email"]
+            password = request.POST["password"]
+            confirm_password = request.POST["confirm_password"]
+            city = request.POST["city"]
+            phone_number = request.POST["phone_number"]
+
+
+            if password != confirm_password:
+                return render(request, "hospital_hub/admin/add_admin.html", {
+                "mustmatch": "Passwords must match.",
+                "username":username,
+                "email":email,
+                "full_name":full_name,
+                "password":password,
+                "cities":cities,
+                "provided_city":city,
+                "phone":phone_number,
+                })
+                
+                
+            image=request.FILES.get('image',None)
+            print(image)
+      
+            # Attempt to create new user
+            try:
+                cit=City.objects.get(id=city)
+                if image is not None:
+                    user = User.objects.create_user(username, email,full_name,
+                    password,is_admin=True,city=cit,phone_number=phone_number,image=image)
+                else:
+                    user = User.objects.create_user(username, email,full_name,
+                     password,is_admin=True,city=cit,phone_number=phone_number)
+                admin = AdminModel(my_account=user)                
+                user.save()
+                # links admin toadmin object
+                admin.save()
+            except IntegrityError:
+                return render(request,  "hospital_hub/admin/add_admin.html", {
+                    "mustmatch": "Username or email are already taken.",
+                    "full_name":full_name,
+                    "cities":cities,
+                    "city":city,
+                    "phone_number":phone_number,
+                    "email":email,
+                })
+            return HttpResponseRedirect(reverse("owner_home"))
+        else:
+
+            return render(request, "hospital_hub/admin/add_admin.html", {
+                "cities": cities,
+            })
+
+
+    def OwnerAddHospital(request):  # register new  hospital
+        # Redirect users to login page if they are not signed in as admins
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('owner_login'))
+        elif not request.user.is_owner:
+            # may add later "you have no access to this page :( "
+            return HttpResponseRedirect(reverse('home'))
+
+        cities = City.objects.all()
+        admins=AdminModel.objects.filter(hospital=None)
+        adminaccounts = []
+        for admin in admins: adminaccounts.append(admin.my_account)
+    
+        if(request.method == "POST"):
+            hospital_name = request.POST["hospital_name"]
+            city = request.POST["city"]
+            admin_id = request.POST["admin_id"]
+
+                
+            image=request.FILES.get('image',None)
+      
+            # Attempt to create new hospital
+        
+            cit=City.objects.get(id=city)
+            if image is not None:
+                hospital=HospitalModel(name=hospital_name,city=cit,image=image)
+            else:
+                hospital=HospitalModel(name=hospital_name,city=cit)
+                
+            hospital.save()
+            admin_set=AdminModel.objects.filter(id=int(admin_id))
+            if  admin_set.count()==1:
+                admin=admin_set.first()
+                admin.hospital=hospital
+                admin.save()
+                return HttpResponseRedirect(reverse("owner_home"))
+            else:
+                return render(request, "hospital_hub/owner/add_hospital.html", {
+                    "admins": adminaccounts,
+                    "message": "Admin Doesn't exist",
+                    "cities": cities,
+                    #"provided_admin": 
+                })                
+        else:
+            
+            return render(request, "hospital_hub/owner/add_hospital.html", {
+                "admins": adminaccounts,
+                "cities": cities,
+            })
+        
 
 
 

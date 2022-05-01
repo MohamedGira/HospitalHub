@@ -19,7 +19,9 @@ urlpatterns = [
     path('owner/register', views.Owner.OwnerRegister, name='owner_register'),
     path('owner/login', views.Owner.OwnerLogin, name='owner_login'),
     path('owner/home', views.Owner.OwnerHome, name='owner_home'),
-
+    path('owner/add_admin', views.Owner.OwnerAddAdmin,name='owner_add_admin'),
+    path('owner/add_hospital', views.Owner.OwnerAddHospital,name='owner_add_hospital'),
+    
 
 
 

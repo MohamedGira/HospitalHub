@@ -63,7 +63,7 @@ class AppointmentStatus(models.Model):
 class Hospital(models.Model):
     name            =models.CharField(max_length=100)
     city            = models.ForeignKey(City,on_delete=models.PROTECT,null=True)
-    specialities    = models.ManyToManyField(Speciality, blank=True)
+    specialities    = models.ManyToManyField(Speciality, blank=True, null=True)
     image           = models.ImageField(upload_to = "media/",null=True, default="media/no_hospital_img.png")
     
     def save(self, *args, **kwargs):
@@ -242,7 +242,7 @@ class Owner(models.Model):
     
 class Admin(models.Model):
     my_account= models.ForeignKey(User,on_delete= models.CASCADE,related_name="my_admin")
-    hospital= models.ForeignKey(Hospital, on_delete=models.CASCADE,related_name="my_admins")
+    hospital= models.ForeignKey(Hospital, on_delete=models.CASCADE,related_name="my_admins",blank=True,null=True)
     def __str__(self):
         return "Hospital of "+str(self.hospital)+" - Admin "+str(self.id)+" : "+ self.my_account.username
 

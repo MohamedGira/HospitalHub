@@ -1,0 +1,128 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Baloo+Paaji" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap" rel="stylesheet">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:600'>
+<link rel="stylesheet" href="{% static 'hospital_hub/assets/css/bootstrap.css' %}">
+<link rel="stylesheet" href="{% static 'hospital_hub/assets/css/maicons.css'%} ">
+<link rel="stylesheet" href="{% static 'hospital_hub/assets/css/add_admin_to_hospital.css'%}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add Hospital</title>
+
+</head>
+
+<body>
+    <div class="back-to-top"></div>
+    <header>
+        <div class="topbar">
+            <div class="row">
+                <div class="col-sm-6 text-sm">
+                    <div class="site-info">
+                        <a href="#"><span class="mai-call text-primary"></span> +20 1013421486</a>
+                        <span class="divider">|</span>
+                        <a href="#"><span class="mai-mail text-primary"></span> HospitalHub@gmail.com</a>
+                    </div>
+                </div>
+                <div class="col-sm-3   text-right text-sm">
+                    <div class="social-mini-button">
+                        <a href="#"><span class="mai-logo-facebook-f"></span></a>
+                        <a href="#"><span class="mai-logo-twitter"></span></a>
+                        <a href="#"><span class="mai-logo-dribbble"></span></a>
+                        <a href="#"><span class="mai-logo-instagram"></span></a>
+                    </div>
+                </div>
+            </div> <!-- .row -->
+        </div> <!-- .container -->
+        </header> <!-- .topbar -->
+        <!-- partial:index.partial.html -->
+
+
+        <div class="login-wrap">
+            <div class="login-html">
+                <form method="post" enctype="multipart/form-data">
+
+                        {% csrf_token %}
+                    <input id="tab-2" type="radio" name="tab" class="sign-up" checked>
+                    <label for="tab-2" class="tab">Add Admin</label>
+                    <div class="login-form">
+                        <div class="sign-up-htm">
+                            <div class="group">
+                                <label for="user" class="label">Hospital Name</label>
+                                <input id="user" value="{{username}}" type="text" name="hospital_name" class="input">
+                            </div>
+                      
+                            <!--
+            <div class="group">
+            <label for="user" class="label">Username</label>
+            <input id="user" type="text" class="input"> </div>
+            -->
+
+
+
+                            <div class="group">
+                                <label for="user" class="label">City</label>
+                                <select id="speciality" value="{{provided_city}}" class="input" name="city" style=" color: white;" name="speciality">
+                                    {%for city in cities%}
+                                    {% if city.id == provided_city.id %}
+                                    <option value="{{city.id}}" style="background: transparent; color: black;" selected>
+                                        {{city}}
+                                    </option>
+                                    {%else%}
+                                    <option value="{{city.id}}" style="background: transparent; color: black;">
+                                        {{city}}
+                                    </option>
+                                    {%endif%}
+                                    {%empty%}
+                                    <option>No Cities Available</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="group">
+                                <label for="user" class="label">Admin</label>
+                                <select id="speciality" value="{{provided_city}}" class="input" name="admin_id" style=" color: white;" name="speciality">
+                                    {%for admin in admins%}
+                                    {% if admin.id == provided_admin.id %}
+                                    <option value="{{admin.id}}" style="background: transparent; color: black;" selected>
+                                        {{admin.username}}
+                                    </option>
+                                    {%else%}
+                                    <option value="{{admin.id}}" style="background: transparent; color: black;">
+                                        {{admin.username}}
+                                    </option>
+                                    {%endif%}
+                                    {%empty%}
+                                    <option>No admins Available</option>
+                                    {% endfor %}
+                                </select>
+                            </div>                            
+
+                            <div class="group">
+                                <label for="img" class="label">Profile Image</label>
+                                <input id="img" type="file" name="image" class="input"   accept="image/* ">
+                            </div>
+
+                            {%if mustmatch %}
+                            <h6 style="color:#CF484C;margin-bottom:-6.8%;margin-top:-2%">{{mustmatch}}</h6>
+                            {%endif%}
+                            <div class="hr"></div>
+
+                            <div class="group">
+                                <input type="submit" class="button" value="Add Admin">
+                            </div>
+                            <div class="hr"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- partial -->
+
+</body>
+
+</html>
