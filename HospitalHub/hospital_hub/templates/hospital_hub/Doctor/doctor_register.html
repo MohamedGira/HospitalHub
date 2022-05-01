@@ -1,0 +1,117 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en" >
+<link rel="stylesheet" href={%static "hospital_hub/assets/css/bootstrap.css"%}>
+<link rel="stylesheet" href={%static "hospital_hub/assets/css/maicons.css"%}>
+<link rel="stylesheet" href={%static "hospital_hub/assets/css/doctor-register.css"%}>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Baloo+Paaji">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap">
+<link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Open+Sans:600'>
+<head>
+  <meta charset="UTF-8">
+  <title>Doctor Register</title>
+</head>
+<body>
+  <div class="back-to-top"></div>
+  <header>
+    <div class="topbar">
+        <div class="row">
+          <div class="col-sm-6 text-sm">
+            <div class="site-info">
+              <a href="#"><span class="mai-call text-primary"></span> +20 1013421486</a>
+              <span class="divider">|</span>
+              <a href="#"><span class="mai-mail text-primary"></span> HospitalHub@gmail.com</a>
+            </div>
+          </div>
+          <div class="col-sm-3   text-right text-sm">
+            <div class="social-mini-button">
+              <a href="#"><span class="mai-logo-facebook-f"></span></a>
+              <a href="#"><span class="mai-logo-twitter"></span></a>
+              <a href="#"><span class="mai-logo-dribbble"></span></a>
+              <a href="#"><span class="mai-logo-instagram"></span></a>
+            </div>
+          </div>
+        </div> <!-- .row -->
+      </div> <!-- .container -->
+    </div> <!-- .topbar -->
+<!-- partial:index.partial.html -->
+<div class="login-wrap">
+	<div class="login-html">
+		<input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Register as Doctor</label>
+		<div class="login-form">
+      <div class="sign-up-htm">
+        <div class="group">
+          <label for="user" class="label">First Name</label>
+          <input id="user" type="text" class="input">
+        </div>
+        <div class="group">
+          <label for="user" class="label">Last Name</label>
+          <input id="user" type="text" class="input">
+        </div>
+        <div class="group">
+          <label for="user" class="label">Phone Number</label>
+          <input id="user" type="text" class="input">
+        </div>
+        <div class="group">
+          <label for="user" class="label">University</label>
+          <input id="user" type="text" class="input">
+        </div>
+        <div class="group">
+          <label for="user" class="label">Specialty</label>
+          <input list="specialties" class="input" placeholder="Choose Specialty">
+            <datalist id="specialties">
+                <option value="Allergy and immunology">Allergy and immunology</option>
+                <option value="Anesthesiology">Anesthesiology</option>
+                <option value="Dentistry">Dentistry</option>
+                <option value="Dermatology">Dermatology</option>
+                <option value="Diagnostic radiology">Diagnostic radiology</option>
+                <option value="Emergency medicine">Emergency medicine</option>
+                <option value="Family medicine">Family medicine</option>
+                <option value="Internal medicine">Internal medicine</option>
+                <option value="Medical genetics">Medical genetics</option>
+                <option value="Neurology">Neurology</option>
+                <option value="Nuclear medicine">Nuclear medicine</option>
+                <option value="Obstetrics and gynecology">Obstetrics and gynecology</option>
+                <option value="Ophthalmology">Ophthalmology</option>
+                <option value="Pathology">Pathology</option>
+                <option value="Pediatrics">Pediatrics</option>
+                <option value="Physical medicine and rehabilitation">Physical medicine and rehabilitation</option>
+                <option value="Preventive medicine">Preventive medicine</option>
+                <option value="Psychiatry">Psychiatry</option>
+                <option value="Radiation oncology">Radiation oncology</option>
+                <option value="Surgery">Surgery</option>
+                <option value="Urology">Urology</option>
+            </datalist>
+        </div>
+        <div class="group">
+          <label for="user" class="label">Email Address</label>
+          <input id="user" type="email" class="input">
+        </div>
+        <div class="group">
+          <label for="user" class="label">Username</label>
+          <input id="user" type="text" class="input">
+        </div>
+        <div class="group">
+          <label for="pass" class="label">Password</label>
+          <input id="pass" type="password" class="input" data-type="password">
+        </div>
+        <div class="group">
+          <label for="pass" class="label">Repeat Password</label>
+          <input id="pass" type="password" class="input" data-type="password">
+        </div>
+        <div class="group">
+          <input type="submit" class="button" value="Sign Up">
+        </div>
+        <div class="hr"></div>
+        <div class="foot-lnk">
+          <a href='login.html'> <label for="tab-1">Already Member?</a>
+        </div>
+      </div>
+		</div>
+	</div>
+</div>
+<!-- partial -->
+
+</body>
+</html>
