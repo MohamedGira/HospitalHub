@@ -96,9 +96,9 @@
     <Content Include="hospital_hub\static\hospital_hub\assets\css\add_doctor.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\add_doctor2.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\bootstrap.css" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\css\login.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\login2.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\login_admin.css" />
-    <Content Include="hospital_hub\static\hospital_hub\assets\css\login-general.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\maicons.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\specializations groups.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\specializations preview-1.css" />
@@ -191,6 +191,7 @@
     <Content Include="hospital_hub\templates\hospital_hub\Patient\searchbyspeciality.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\search_results.html" />
     <Content Include="requirements.txt" />
+    <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />
     <Content Include="app\static\app\content\bootstrap.min.css" />
     <Content Include="app\static\app\content\site.css" />
