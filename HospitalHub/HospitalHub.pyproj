@@ -96,6 +96,9 @@
     <Content Include="hospital_hub\static\hospital_hub\assets\css\add_doctor.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\add_doctor2.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\bootstrap.css" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\css\doctor_profile.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="hospital_hub\static\hospital_hub\assets\css\login.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\login2.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\login_admin.css" />

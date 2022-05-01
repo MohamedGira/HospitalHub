@@ -79,23 +79,23 @@
 
                     {%if doctors%}
 
-                        {% for doctorobj , doctor in doctors %}
+                        {% for doctor in doctors %}
 
                         <div class="col-md-6 col-lg-3 py-3 wow zoomIn">
                             <div class="card-doctor">
                                 <div class="header">
-                                    <img src="{{doctor.image.url}}" alt="" height="260" style="object-fit: cover;">
+                                    <img src="{{doctor.my_account.image.url}}" alt="" height="260" style="object-fit: cover;">
                                     <div class="meta" style="text-align:center;">
-                                        <a href="{%url 'admin_view_doctor' doctor=doctor.username%}">
+                                        <a href="{%url 'admin_view_doctor' doctor_name=doctor.my_account.username%}">
                                         <span class="mai-person"></span></a>
-                                        <a href="{% url 'remove_doctor_from_speciality' doctor_id=doctorobj.id %}">
+                                        <a href="{% url 'remove_doctor_from_speciality' doctor_id=doctor.id %}">
                                         <span class="mai-close"></span>
                                         </a>
                                     </div>
                                 </div>
                                 <div class="body">
                                     <p class="text-x2 mb-0" style="text-align:center;">
-                                        {{doctor.username}}
+                                        {{doctor.my_account.username}}
                                     </p>
                                 
                                 </div>

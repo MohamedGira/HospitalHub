@@ -58,7 +58,7 @@ class City(models.Model):
 class AppointmentStatus(models.Model):
     status =models.CharField(max_length=100)
     def __str__(self):
-        return self.name
+        return self.status
 
 class Hospital(models.Model):
     name            =models.CharField(max_length=100)
