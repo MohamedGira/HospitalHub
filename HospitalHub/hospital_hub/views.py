@@ -215,12 +215,13 @@ class Owner:
         cities = City.objects.all()
         admins=AdminModel.objects.filter(hospital=None)
         adminaccounts = []
-        for admin in admins: adminaccounts.append(admin.my_account)
+        for admin in admins:
+           adminaccounts.append(admin.my_account)
     
         if(request.method == "POST"):
             hospital_name = request.POST["hospital_name"]
             city = request.POST["city"]
-            admin_id = request.POST["admin_id"]
+            admin_account_id = request.POST["admin_account_id"]
 
                 
             image=request.FILES.get('image',None)
@@ -234,9 +235,9 @@ class Owner:
                 hospital=HospitalModel(name=hospital_name,city=cit)
                 
             hospital.save()
-            admin_set=AdminModel.objects.filter(id=int(admin_id))
+            admin_set=User.objects.filter(id=int(admin_account_id),admin=True)
             if  admin_set.count()==1:
-                admin=admin_set.first()
+                admin=admin_set.first().my_admin.first()
                 admin.hospital=hospital
                 admin.save()
                 return HttpResponseRedirect(reverse("owner_home"))
@@ -245,6 +246,8 @@ class Owner:
                     "admins": adminaccounts,
                     "message": "Admin Doesn't exist",
                     "cities": cities,
+                    "provided_name":hospital_name,
+                    "provided_city":cit,
                     #"provided_admin": 
                 })                
         else:
@@ -768,6 +771,16 @@ class Doctor:
     def DoctorLogout(request):
         logout(request)
         return HttpResponseRedirect(reverse('doctor_login'))
+
+
+
+
+
+
+
+
+
+
 
 
 ############################################################################

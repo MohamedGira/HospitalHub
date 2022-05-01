@@ -51,11 +51,14 @@
                     <label for="tab-2" class="tab">Add Admin</label>
                     <div class="login-form">
                         <div class="sign-up-htm">
+                            
+                            {%if message%}{{message}}{%endif%}
+                            
                             <div class="group">
                                 <label for="user" class="label">Hospital Name</label>
                                 <input id="user" value="{{username}}" type="text" name="hospital_name" class="input">
                             </div>
-                      
+                            
                             <!--
             <div class="group">
             <label for="user" class="label">Username</label>
@@ -85,7 +88,7 @@
 
                             <div class="group">
                                 <label for="user" class="label">Admin</label>
-                                <select id="speciality" value="{{provided_city}}" class="input" name="admin_id" style=" color: white;" name="speciality">
+                                <select id="speciality" value="{{provided_city}}" class="input" name="admin_account_id" style=" color: white;" name="speciality">
                                     {%for admin in admins%}
                                     {% if admin.id == provided_admin.id %}
                                     <option value="{{admin.id}}" style="background: transparent; color: black;" selected>
