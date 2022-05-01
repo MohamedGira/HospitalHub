@@ -1,0 +1,187 @@
+
+.test {
+    position: relative;
+}
+
+    .test::before {
+        border-radius: 10px;
+        content: "";
+        background: url(https://img.freepik.com/free-vector/clean-medical-patterned-background-vector_53876-140867.jpg?t=st=1651095193~exp=1651095793~hmac=b3c93edbeb698542600111de138b25dae0abe0992bc019bc2024d669bcc0d684&w=1060) no-repeat;
+        background-size: cover;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        opacity: 0.1;
+    }
+
+.time-panel {
+    -webkit-transition: all 0.35s;
+    -moz-transition: all 0.35s;
+    -ms-transition: all 0.35s;
+    -o-transition: all 0.35s;
+    transition: all 0.35s;
+    position: relative;
+    padding: 26px 0;
+    border: 1px solid rgba(207, 72, 76, 0.5);
+    border-radius: 10px;
+}
+
+    .time-panel::before {
+        border-radius: 10px;
+        content: "";
+        background: rgba(207, 72, 76, 0.15);
+        background-size: cover;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        opacity: 0.1;
+    }
+
+    .time-panel:hover {
+        -webkit-transform: translateY(-4px);
+        -moz-transform: translateY(-4px);
+        -ms-transform: translateY(-4px);
+        -o-transform: translateY(-4px);
+        transform: translateY(-4px);
+    }
+
+    .time-panel h3 {
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 1;
+        margin-bottom: 20px;
+        color: #81C2D6;
+        text-transform: capitalize;
+    }
+
+    .time-panel ul li {
+        font-size: 14px;
+        line-height: 24px;
+        font-weight: 400;
+        color: #fff;
+    }
+/* Custom, iPhone Retina */
+
+
+.heading h2 {
+    font-size: 28px;
+    position: relative;
+    color: #212121;
+    margin: 0px 0px 40px 0;
+}
+
+    .heading h2:before {
+        bottom: 0;
+        height: 17px;
+        width: 117px;
+        background: url(https://i.ibb.co/LCh7Hwv/line.png);
+        content: "";
+        display: inline-block;
+        background-repeat: no-repeat;
+        content: '';
+        position: absolute;
+        left: 50%;
+        -webkit-backface-visibility: hidden;
+        -webkit-transform: translate(-50%) rotate(45deg);
+        transform: translate(-50%);
+        top: 140%;
+    }
+
+.heading {
+    margin-bottom: 50px;
+}
+
+.working-time {
+    text-align: center;
+}
+
+    .working-time::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+    }
+
+    .working-time h2, .working-time p {
+        color: #fff;
+    }
+
+
+.text-secondary {
+    color: #CF484C !important;
+}
+
+.hr {
+    height: 2px;
+    margin: 10px 0 10px 0;
+    background: rgba(0,0,0,.2);
+}
+
+.checked {
+    color: orange;
+}
+
+.main-body {
+    padding: 15px;
+}
+
+.card {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: rgba(255,255,255,1);
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1rem;
+    width: 300px;
+}
+
+.card2-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1rem;
+}
+
+.gutters-sm {
+    margin-right: -8px;
+    margin-left: -8px;
+}
+
+    .gutters-sm > .col, .gutters-sm > [class*=col-] {
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+
+.mb-3, .my-3 {
+    margin-bottom: 1rem !important;
+}
+
+.bg-gray-300 {
+    background-color: #e2e8f0;
+}
+
+.h-100 {
+    height: 100% !important;
+}
+
+.shadow-none {
+    box-shadow: none !important;
+}

@@ -86,7 +86,7 @@
                                 <div class="header">
                                     <img src="{{doctor.my_account.image.url}}" alt="" height="260" style="object-fit: cover;">
                                     <div class="meta" style="text-align:center;">
-                                        <a href="{%url 'admin_view_doctor' doctor=doctor.my_account.username%}">
+                                        <a href="{%url 'admin_view_doctor' doctor_name=doctor.my_account.username%}">
                                         <span class="mai-person"></span></a>
                                         <a href="{% url 'remove_doctor_from_speciality' doctor_id=doctor.id %}">
                                         <span class="mai-close"></span>

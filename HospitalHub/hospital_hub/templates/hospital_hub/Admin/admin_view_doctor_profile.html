@@ -3,7 +3,7 @@
 {%block body%}
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+   <link rel="stylesheet" href="{%static 'hospital_hub/assets/css/doctor_profile.css'%}"/>
 <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
         <img src="../assets/img/logo2.png" alt="" style="width:20px;">
@@ -46,8 +46,10 @@
         <h1 class="font-weight-normal">🏥{{hospital.name}}🏥</h1>
         <nav aria-label="Breadcrumb">
           <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
-            <li class="breadcrumb-item"><a href="{%url 'admin_home'%}">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page"> <a href="{%url 'admin_view_doctors'%}"> Doctors </a></li>
+            <li class="breadcrumb-item">
+<a href="{%url 'admin_home'%}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page"> 
+<a href="{%url 'admin_view_doctors'%}"> Doctors </a></li>
             <li class="breadcrumb-item active" aria-current="page"> {{account.full_name}} </li>
           </ol>
         </nav>
@@ -88,23 +90,27 @@
                 <div class="card mt-3">
                   <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                      <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>Website</h6>
+                      <h6 class="mb-0">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>Website</h6>
                       <a class="text-secondary" href="https://hospitalhub/doctors/username">../doctors/helmy16</a>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                      <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter mr-2 icon-inline text-info"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>Twitter</h6>
+                      <h6 class="mb-0">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter mr-2 icon-inline text-info"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>Twitter</h6>
                       <a class="text-secondary" href="https://twitter.com/hforhelmy">@hforhelmy</a>
                     </li>
 
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                      <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                      <h6 class="mb-0">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
                                             stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram mr-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>Instagram</h6>
                       <a class="text-secondary" href="https://www.instagram.com/hforhelmy">@hforhelmy</a>
                     </li>
 
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                      <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook mr-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>Facebook</h6>
+                      <h6 class="mb-0">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook mr-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>Facebook</h6>
                       <a class="text-secondary" href="https://www.facebook.com/HForHelmy/">@HForHelmy</a>
                     </li>
                   </ul>
@@ -148,9 +154,14 @@
                         </div>
                       </div>
                     </section>-->
-                    
-                    <section id="working-time" class="working-time">
                       
+                    <section id="working-time" class="working-time">
+                            <div>
+                                <p class="text-primary">Weekly Schedule</p>
+                            </div>
+                        {%if request.GET.message%}
+                      <p class="text-secondary">{{request.GET.message}}</p>
+                      {%endif%}
                             <div class="container">
                                 <!-- .row end -->
                                 <div class="row">
@@ -218,10 +229,10 @@
                                                  </div>
                                                 <div class="group" style="color: rgba(255,255,255,.5);">
                                                 from
-                                                <input class="input" type="time" name="new_start" min="00:00" max="23:59"  required
+                                                <input class="input" type="time" value="{{schedule.start_time|time:"h:i"}}"  name="new_start" min="00:00" max="23:59"  required
                                                     style="width:40%;">
                                                 to
-                                                <input class="input" type="time"  name="new_end" min="00:00" max="23:59"  required
+                                                <input class="input" type="time" value="{{schedule.end_time|time:"h:i"}}"  name="new_end" min="00:00" max="23:59"  required
                                                     style="width:40%;" />
                                                 </div>
 
@@ -234,6 +245,14 @@
                                           
                                         </div>
                                       </div>
+                                    </div>
+                                    {% empty %}
+                                    <div>
+
+                                       <div class="col-sm-12" style="text-align:center;">
+                                        No scedule set. <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                                data-target="#add" >add now</button>
+                                            </div>
                                     </div>
 
                                     {%endfor%}
@@ -252,14 +271,154 @@
                         </section>
 
 
-                    <!-- ده اللي هتشال علشان تشيل زرار الايديت
+                    <!-- ده اللي هتشال علشان تشيل زرار الايديت-->
                     <hr>
                     <div class="row">
                       <div class="col-sm-12" style="text-align:center;">
-                        <input type="button" class="btn btn-primary " target="__blank" href="#" value="Edit">
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                data-target="#edit" >Edit</button>
                       </div>
                     </div>
-                     ده اللي هتشال علشان تشيل زرار الايديت-->
+                   <!--  ده اللي هتشال علشان تشيل زرار الايديت-->
+
+
+
+
+
+
+                      <!--add / remove shedule-->
+                                     <div class="modal fade" id="edit" tabindex="-1" 
+                                       role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                                      <div class="modal-dialog" role="document"  >
+                                        <div  class="modal-content" style="width:120% ;padding:5%">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit Schedule</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#CF484C;">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            Schedules for Dr. {{doctor.my_account.full_name}}
+                                          </div>
+                                            
+                                             <ul class="list-unstyled mb-0">
+                                                {%for schedule in schedules %}
+
+                                                <li>
+                                                    <section>
+                                                <div class ="container">
+                                                <div class="row">
+                                                       <div class="col-sm-3">
+                                                        <h6 calss ="mb-0">{{schedule.day}}</h6>
+                                                      </div>
+                                                    <form method="post">
+
+                                                     {% csrf_token %}
+                                                     <input type="hidden" name="command" value="remove_{{schedule.day}}"/>
+                                                      <div class="col-sm-9 text-secondary">
+                                                        <input type="submit" class="btn-primary"  style="background: rgba(207, 72, 76, 0.8)  "value="Remove"/>
+                                                      </div>
+                                                     </form>
+                                                    </div>
+                                                    </div>
+
+                                                </section>
+                                                
+                        
+                        
+                                                    <hr />
+                                                 </li>
+                                                 {%endfor%}
+
+                                                 
+
+                                            </ul>
+                                            
+                                                 <hr>
+
+                                                <div class="row">
+                                                  <div class="col-sm-12" style="text-align:center;">
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                                            data-target="#add" >Add new Day</button>
+                                                  </div>
+                                                </div>
+                         
+
+                                        </div>
+                                      </div>
+                                    </div>
+
+
+                                    
+
+                                    <div class="modal fade" id="add" tabindex="-2" 
+                                       role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog" role="document" >
+                                        <div class="modal-content" style="width:120%;padding:5%;">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit Schedule</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#CF484C;">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            Schedules for Dr. {{doctor.my_account.full_name}}
+                                          </div>
+                                            
+                                         
+                                                    <form style="margin:5%" method="post">
+                                                        {% csrf_token %}
+                                                     <input type="hidden" name ="command" value="add_day"/>
+
+                                                        <div>
+                                                        <label for="select_day" class="label"  style="text-align:center;">Choose day</label>
+                                                        <select name="to_add" id="select_day" class="input">
+                                                           {%for day in empty_days%}
+                                                            <option>{{day}}</option>
+                                                           {%endfor%}
+                                                        </select>
+                                                        </div>
+                                                        
+                                                        <hr />
+                                                        
+                                                        <label for="start_time" class="label"  style="text-align:center;">From</label>
+                                                        <input class="input" type="time" id="start_time" name="start_time" min="00:00" max="23:59"  required
+                                                            style="width:40%;">
+                                                        
+                                                        <label for="end_time" class="label"  style="text-align:center;">To</label>
+                                                        <input class="input" type="time" id="end_time" name="end_time" min="00:00" max="23:59"  required
+                                                            style="width:40%;" />
+                                                        <hr />
+                                                        <div class="group">
+                                                        <label for="price"  class="label">Price</label>
+                                                        <input type="number" id="price" name="price" min="0" max="1000" step="5" class="input" />
+                                                        </div>
+                                                        <hr />
+                                                        <label for="count"  class="label">Max number of patients per day</label>
+                                                        <input type="number" id="count" name="max_patient_count" min="0" max="25" step="5" class="input" />
+                                                        <hr />
+
+                                                      <div class="col-sm-9 text-secondary"  style="margin-top:5%">
+                                                        <input type="submit" class="btn btn-primary" value="Add"/>
+                                                      </div>
+
+                                                     </form>
+
+                                        </div>
+                                      </div>
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
                   </div>
                 </div>
@@ -366,232 +525,8 @@
     </div> <!-- .container -->
   </div> <!-- .page-section -->
 
-  <div class="page-section banner-home bg-image" style="background-image: url(../assets/img/banner-pattern.svg);">
-    <div class="container py-5 py-lg-0">
-      <div class="row align-items-center">
-        <div class="col-lg-12 wow zoomIn">
-          <div class="img-banner d-none d-lg-block">
-            <p><img src="../assets/img/logo3.png" alt="Logo"></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> <!-- .banner-home -->
-
-  <footer class="page-footer">
-    <div class="container">
-      <div class="row px-md-3">
-        <div class="col-sm-6 col-lg-4 py-3">
-          <h5>Company</h5>
-          <ul class="footer-menu">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Career</a></li>
-            <li><a href="#">Editorial Team</a></li>
-            <li><a href="#">Protection</a></li>
-          </ul>
-        </div>
-        <div class="col-sm-6 col-lg-4 py-3">
-          <h5>More</h5>
-          <ul class="footer-menu">
-            <li><a href="#">Terms & Condition</a></li>
-            <li><a href="#">Privacy</a></li>
-            <li><a href="#">Advertise</a></li>
-            <li><a href="#">Join as Doctors</a></li>
-          </ul>
-        </div>
-        <div class="col-sm-6 col-lg-4 py-3">
-          <h5>Contact</h5>
-          <p class="footer-link mt-2">Ain Shams University, Faculty of Engineering</p>
-          <a href="#" class="footer-link">HospitalHub@gmail.com</a>
-          <br>
-          <a href="#" class="footer-link">+20 1013421486</a>
-          <h5 class="mt-3">Social Media</h5>
-          <div class="footer-sosmed mt-3">
-            <a href="#" target="_blank"><span class="mai-logo-facebook-f"></span></a>
-            <a href="#" target="_blank"><span class="mai-logo-twitter"></span></a>
-            <a href="#" target="_blank"><span class="mai-logo-google-plus-g"></span></a>
-            <a href="#" target="_blank"><span class="mai-logo-instagram"></span></a>
-            <a href="#" target="_blank"><span class="mai-logo-linkedin"></span></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-
   <style type="text/css">
 
-  .test{
-    position: relative;
-  }
-
-  .test::before {
-    border-radius:10px;
-    content: "";
-    background:url(https://img.freepik.com/free-vector/clean-medical-patterned-background-vector_53876-140867.jpg?t=st=1651095193~exp=1651095793~hmac=b3c93edbeb698542600111de138b25dae0abe0992bc019bc2024d669bcc0d684&w=1060) no-repeat;
-    background-size:     cover;
-      position: absolute;
-      top: 0px;
-      right: 0px;
-      bottom: 0px;
-      left: 0px;
-      opacity: 0.1;
-  }
-
-  .time-panel {
-    -webkit-transition: all 0.35s;
-    -moz-transition: all 0.35s;
-    -ms-transition: all 0.35s;
-    -o-transition: all 0.35s;
-    transition: all 0.35s;
-    position: relative;
-    padding: 26px 0;
-    border: 1px solid rgba(207, 72, 76, 0.5) ;
-    border-radius:10px;
-  }
-  .time-panel::before {
-  	border-radius:10px;
-  	content: "";
-  	background: rgba(207, 72, 76, 0.15);
-  	background-size:     cover;
-  		position: absolute;
-  		top: 0px;
-  		right: 0px;
-  		bottom: 0px;
-  		left: 0px;
-  		opacity: 0.1;
-  	}
-  .time-panel:hover {
-    -webkit-transform: translateY(-4px);
-    -moz-transform: translateY(-4px);
-    -ms-transform: translateY(-4px);
-    -o-transform: translateY(-4px);
-    transform: translateY(-4px);
-  }
-  .time-panel h3 {
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 20px;
-    color: #81C2D6;
-    text-transform: capitalize;
-  }
-  .time-panel ul li {
-    font-size: 14px;
-    line-height: 24px;
-    font-weight: 400;
-    color: #fff;
-  }
-  /* Custom, iPhone Retina */
-
-
-  .heading h2 {
-      font-size: 28px;
-      position: relative;
-      color: #212121;
-      margin: 0px 0px 40px 0;
-  }
-  .heading h2:before {
-      bottom: 0;
-      height: 17px;
-      width: 117px;
-      background: url(https://i.ibb.co/LCh7Hwv/line.png);
-      content: "";
-      display: inline-block;
-      background-repeat: no-repeat;
-      content: '';
-      position: absolute;
-      left: 50%;
-      -webkit-backface-visibility: hidden;
-      -webkit-transform: translate(-50%) rotate(45deg);
-      transform: translate(-50%);
-      top: 140%;
-  }
-  .heading {
-      margin-bottom: 50px;
-  }
-  .working-time {
-    text-align: center;
-  }
-  .working-time::before {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-  }
-  .working-time h2, .working-time p{
-      color: #fff;
-  }
-
-
-  .text-secondary{
-    color:#CF484C !important;
-  }
-
-  .hr{
-  	height:2px;
-  	margin:10px 0 10px 0;
-  	background:rgba(0,0,0,.2);
-  }
-  .checked {
-  color: orange;
-}
-
-  .main-body {
-      padding: 15px;
-  }
-  .card {
-      box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
-  }
-
-  .card {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-      word-wrap: break-word;
-      background-color: rgba(255,255,255,1);
-      background-clip: border-box;
-      border: 0 solid rgba(0,0,0,.125);
-      border-radius: .25rem;
-  }
-
-  .card-body {
-      flex: 1 1 auto;
-      min-height: 1px;
-      padding: 1rem;
-      width: 300px;
-
-  }
-  .card2-body {
-      flex: 1 1 auto;
-      min-height: 1px;
-      padding: 1rem;
-  }
-
-  .gutters-sm {
-      margin-right: -8px;
-      margin-left: -8px;
-  }
-
-  .gutters-sm>.col, .gutters-sm>[class*=col-] {
-      padding-right: 8px;
-      padding-left: 8px;
-  }
-  .mb-3, .my-3 {
-      margin-bottom: 1rem!important;
-  }
-
-  .bg-gray-300 {
-      background-color: #e2e8f0;
-  }
-  .h-100 {
-      height: 100%!important;
-  }
-  .shadow-none {
-      box-shadow: none!important;
-  }
-
+  
   </style>
 {%endblock%}

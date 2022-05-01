@@ -56,7 +56,7 @@
             {%for doctor in doctors%}
             <!---->
 
-            <a href="{%url 'admin_view_doctor' doctor=doctor.username %}">
+            <a href="{%url 'admin_view_doctor' doctor_name=doctor.username %}">
                 <div class="col">
                     <div class="card h-100">
                         {%if doctor.image%}

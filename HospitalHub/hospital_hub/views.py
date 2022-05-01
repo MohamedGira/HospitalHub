@@ -477,37 +477,76 @@ class Admin:
 
                 })
 
-    def ViewDoctorProfile(request, doctor):
+    def ViewDoctorProfile(request, doctor_name):
+        days=['Sunday','Saturday','Monday','Teusday','Wednesday','Thursday','Friday']
         hospital=request.user.my_admin.first().hospital
-        doc_account=User.objects.filter(username=doctor, doctor=True)
+        doc_account=User.objects.filter(username=doctor_name, doctor=True)
         doctor =doc_account.first().my_doctor.first()
         if request.method=="POST":
             if request.POST.get("command",False):
-                days=['Sunday','Saturday','Monday','Teusday','Wednesday','Thursday','Friday']
+                
                 for day in days:
                     if request.POST['command']== "edit_"+day:
-                        schedule_day=schedules.object.filter(doctor=doctor)
+                        schedule_day=Schedule.objects.filter(doctor=doctor, day=day).first()
                         schedule_day.start_time=request.POST['new_start']
                         schedule_day.end_time=request.POST['new_end']
                         schedule_day.save()
-                        return HttpResponseRedirect(reverse('admin_view_doctor', args=[doctor]))
+                        return HttpResponseRedirect(reverse('admin_view_doctor', args=[doctor_name]))
                     
-            
+                
+                for day in days:
+                    if request.POST['command']== "remove_"+day:
+                        schedule_day=Schedule.objects.filter(doctor=doctor, day=day).first()
+                        if schedule_day.appointments.all().count()==0:
+                            schedule_day.delete()
+                            return HttpResponseRedirect(reverse('admin_view_doctor', args=[doctor]))
+                        else:
+                            return HttpResponseRedirect(reverse('admin_view_doctor', args=[doctor])+
+                                                       '?message=+'+day+' is busy, couldn\'t remove')
 
+                            
+                        
 
-        
+                if request.POST['command']== "add_day":
+                    if Schedule.objects.filter(doctor=doctor,day=request.POST['to_add']).count()==0:
+                        schedule=Schedule(doctor=doctor,day=request.POST['to_add'],
+                                            start_time=request.POST['start_time'],
+                                            end_time=request.POST['end_time'],
+                                            price=request.POST['price'],
+                                            patient_count=request.POST['max_patient_count'])
+                        schedule.save()
+                        return HttpResponseRedirect(reverse('admin_view_doctor', args=[doctor]))
+
+                    return HttpResponseRedirect(reverse('admin_view_doctor', args=[doctor])+
+                                                    '?message=A Schedule exists on day already, you can Edit it below')
+
+ 
         
         if doc_account.count()==1:
             doc= doc_account.first().my_doctor.first()
             account=doc_account.first()
             reviews=doc.my_reviews.all()
             schedules=doc.dailyschedule.all()
+
+            empty_days=[]
+            
+            for day in days:
+                dne=True
+                for schedule in schedules:
+                    if schedule.day==day:
+                        dne=False
+                        break
+                if dne==True:
+                    empty_days.append(day)
+
+
             return render(request,"hospital_hub/admin/admin_view_doctor_profile.html",{
                     "doctor":doc,
                     "account":account,
                     "hospital":hospital,
                     "schedules":schedules,
                     "reviews":reviews,
+                    "empty_days":empty_days,
                     })
         else:
             specialities=hospital.specialities.all()
