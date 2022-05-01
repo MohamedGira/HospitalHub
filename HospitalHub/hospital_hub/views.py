@@ -462,11 +462,9 @@ class Admin:
         spec=Speciality.objects.filter(name=speciality)
         if spec.count()==1:
             doctors=DoctorModel.objects.filter(speciality=spec.first(),hospital=hospital)
-            doctorsaccs=[]
-            for doc in doctors:
-                doctorsaccs.append([doc,doc.my_account])
+      
             return render(request,"hospital_hub/admin/view_speciality.html",{
-                "doctors":doctorsaccs,
+                "doctors":doctors,
                "hospital_name":request.user.my_admin.first().hospital.name,   
                 "speciality":spec.first().name
                 })
@@ -482,14 +480,34 @@ class Admin:
     def ViewDoctorProfile(request, doctor):
         hospital=request.user.my_admin.first().hospital
         doc_account=User.objects.filter(username=doctor, doctor=True)
+        doctor =doc_account.first().my_doctor.first()
+        if request.method=="POST":
+            if request.POST.get("command",False):
+                days=['Sunday','Saturday','Monday','Teusday','Wednesday','Thursday','Friday']
+                for day in days:
+                    if request.POST['command']== "edit_"+day:
+                        schedule_day=schedules.object.filter(doctor=doctor)
+                        schedule_day.start_time=request.POST['new_start']
+                        schedule_day.end_time=request.POST['new_end']
+                        schedule_day.save()
+                        return HttpResponseRedirect(reverse('admin_view_doctor', args=[doctor]))
+                    
+            
+
+
+        
         
         if doc_account.count()==1:
             doc= doc_account.first().my_doctor.first()
-            reviews=Review.objects.filter(doctor=doc)
+            account=doc_account.first()
+            reviews=doc.my_reviews.all()
+            schedules=doc.dailyschedule.all()
             return render(request,"hospital_hub/admin/admin_view_doctor_profile.html",{
                     "doctor":doc,
+                    "account":account,
+                    "hospital":hospital,
+                    "schedules":schedules,
                     "reviews":reviews,
-                    "account":doc_account.first()
                     })
         else:
             specialities=hospital.specialities.all()
@@ -501,12 +519,10 @@ class Admin:
     def ViewDoctors(request):
         hospital=request.user.my_admin.first().hospital
         doctors=DoctorModel.objects.filter(hospital=hospital)
-        doctorsaccs=[]
-        for doc in doctors:
-            doctorsaccs.append([doc,doc.my_account])
+        
         
         return render(request,"hospital_hub/admin/view_doctors.html",{
-        "doctors":doctorsaccs,
+        "doctors":doctors,
         "hospital_name":request.user.my_admin.first().hospital.name,
         "flag":"all"
         })
