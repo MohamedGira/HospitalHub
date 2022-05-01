@@ -451,7 +451,7 @@ class Admin:
             })
 
     def ViewDoctorProfile(request, doctor_name):
-        days=['Sunday','Saturday','Monday','Teusday','Wednesday','Thursday','Friday']
+        days=['Sunday','Saturday','Monday','Tuesday','Wednesday','Thursday','Friday']
         hospital=request.user.my_admin.first().hospital
         doc_account=User.objects.filter(username=doctor_name, doctor=True)
         doctor =doc_account.first().my_doctor.first()
@@ -500,6 +500,11 @@ class Admin:
             account=doc_account.first()
             reviews=doc.my_reviews.all()
             schedules=doc.dailyschedule.all()
+            schedule_abbreviation=[]
+
+            for schedule in schedules:
+                schedule_abbreviation.append([schedule,schedule.day[0:3]])
+
 
             empty_days=[]
             
@@ -517,9 +522,10 @@ class Admin:
                     "doctor":doc,
                     "account":account,
                     "hospital":hospital,
-                    "schedules":schedules,
+                    "schedules":schedule_abbreviation,
                     "reviews":reviews,
                     "empty_days":empty_days,
+                    
                     })
         else:
             specialities = hospital.specialities.all()
@@ -541,7 +547,7 @@ class Admin:
 
     def AddDoctor(request):
         days = ['Sunday', 'Saturday', 'Monday',
-                'Teusday', 'Wednesday', 'Thursday', 'Friday']
+                'Tuesday', 'Wednesday', 'Thursday', 'Friday']
         gdoctors = DoctorModel.objects.filter(is_employed=False)
         specialities = request.user.my_admin.first().hospital.specialities.all()
         gdoctors_accounts = []
