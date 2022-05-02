@@ -78,13 +78,17 @@
                 {%endif%}
                 <div class="row">
                     
-                        {% for admin, account in higher_admins %}
+                        {% for admin  in higher_admins %}
 
                         <div class="col-md-6 col-lg-3 py-3 wow zoomIn">
                             <div class="card-doctor">
                                 <div class="header">
                                     
-                                    <img src="{{account.image.url}}" alt="" height="260" style="object-fit: cover;">
+                                    {% if admin.my_account.image %}
+                                    <img src="{{admin.my_account.image.url}}" alt="" height="260" style="object-fit: cover;">
+                                    {% else %}
+                                    <img src="{%static 'hospital_hub/assets/img/no_profile_img.png' %}" alt="" height="260" style="object-fit: cover;">
+                                    {% endif %}
                                     
 
                                     <div class="meta" style="text-align:center;">
@@ -94,7 +98,7 @@
                                 </div>
                                 <div class="body">
                                     <p class="text-x2 mb-0" style="text-align:left;">
-                                        {{account.username}}
+                                        {{admin.my_account.username}}
                                     </p>
                                     <p  style="text-align:left; color:darkgray; font-size:small">
                                         Higher Rank
@@ -105,13 +109,13 @@
                         </div>
                         {%endfor%}
 
-                    {% for admin, account in lower_admins %}
+                    {% for admin in lower_admins %}
 
                         <div class="col-md-6 col-lg-3 py-3 wow zoomIn">
                             <div class="card-doctor">
                                 <div class="header">
-                                    {% if account.image %}
-                                    <img src="{{account.image.url}}" alt="" height="260" style="object-fit: cover;">
+                                    {% if admin.my_account.image %}
+                                    <img src="{{admin.my_account.image.url}}" alt="" height="260" style="object-fit: cover;">
                                     {% else %}
                                     <img src="{%static 'hospital_hub/assets/img/no_profile_img.png' %}" alt="" height="260" style="object-fit: cover;">
                                     {% endif %}
@@ -119,17 +123,16 @@
                                         <a href="#">
                                         <span class="mai-person"></span>
                                         </a>
-                                        <a href="{% url 'remove_admin' removed_admin_id=admin.id %}">
+                                        <a href="#remove_{{admin.id}}" data-toggle="modal">
                                         <span class="mai-close"></span>
                                         </a>
                                     </div>
                                     <div class="meta" style="text-align:center;">
-                                        
                                     </div>
                                 </div>
                                 <div class="body">
                                     <p class="text-x2 mb-0" style="text-align:left;">
-                                        {{account.username}}
+                                        {{admin.my_account.username}}
                                     </p>
                                     <p  style="text-align:left; color:darkgray; font-size:small">
                                         Lower Rank
@@ -138,6 +141,42 @@
                                 </div>
                             </div>
                         </div>
+
+
+
+
+                            <div class="modal fade" id="remove_{{admin.id}}" tabindex="-1" 
+                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document" >
+                            <div class="modal-content" style="width:120%;">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Remove Doctor</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#CF484C;">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                Are you sure you want to delete {{admin.my_account.full_name}}?
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                <a class="btn btn-primary" href="{% url 'remove_admin' removed_admin_id=admin.id %}"  value="Save" style="background: rgba(207, 72, 76, 0.8);" >Delete</a>
+                                
+
+                                </div>
+                                
+
+                                          
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
+
+
+
+
+
+
                         {%endfor%}
                     
                     {%if empty%}

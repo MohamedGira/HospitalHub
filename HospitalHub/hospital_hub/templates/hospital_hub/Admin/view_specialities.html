@@ -17,7 +17,7 @@
                     <li class="nav-item ">
                         <a class="nav-link" href="{%url 'admin_home'%}">Home</a>
                     </li>
-                       <li class="nav-item active">
+                        <li class="nav-item active">
                             <a class="nav-link " href="{%url 'view_specialities'%}">Specialities</a>
                         </li>
                     <li class="nav-item">
@@ -38,7 +38,7 @@
 </header>
 
 <div class="page-banner overlay-dark bg-image"
-     style="background-image: url(../../../static/hospital_hub/assets/img/bg_image_1.jpg)">
+        style="background-image: url(../../../static/hospital_hub/assets/img/bg_image_1.jpg)">
     <div class="banner-section">
         <div class="container text-center wow fadeInUp">
             <span class="subhead">🏥{{hospital_name}}🏥</span>
@@ -69,20 +69,21 @@
                     <h3 class="text-primary2">{{message}}</h3>
                     {%endif%}
                     {%if specialities%}
-                        {%for speciality in specialities%}
+                        {%for speciality , doctors in specialities%}
 
                         <div class="col-md-6 col-lg-3 py-3 wow zoomIn">
                             <div class="card-doctor">
 
                                 <div class="header">
                                     <img src="{{speciality.image.url}}" alt=""
-                                         height="260" style="object-fit: cover;">
+                                            height="260" style="object-fit: cover;">
                                     <div class="meta" style="text-align: center">
 
                                         <a href="{%url 'view_speciality' speciality=speciality.name %}">
                                             <span class="mai-people"></span>
                                         </a>
-                                        <a href="{% url 'remove_speciality' speciality_id=speciality.id %}">
+                                        <a data-toggle="modal"
+                                                data-target="#remove_{{speciality.id}}">
                                         <span class="mai-close"></span>
                                         </a>
                                     </div>
@@ -95,6 +96,60 @@
                             </div>
 
                         </div>
+
+
+                        <div class="modal fade" id="remove_{{speciality.id}}" tabindex="-1" 
+                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document" >
+                            <div class="modal-content" style="width:120%;">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Remove Speciality</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#CF484C;">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                Are you sure you want to delete {{speciality}}?
+                                {%if doctors%}
+                                    <br /><br />The following doctors (with all thier appointments and schedules)will be removed from your hospital
+                                {%endif%}
+                                </div>
+                                    <ul >           
+                                    {%for doctor in doctors %}
+                                        <li>
+                                            <div class="col-sm-9">
+                                            <h6 calss ="mb-0">Dr. {{doctor.my_account.full_name}}</h6>
+                                            </div>
+                                            <hr />
+                                        </li>
+                                    {%endfor%}            
+                                    </ul>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" >Cancel</button>
+                                <a class="btn btn-primary" href="{% url 'remove_speciality' speciality_id=speciality.id %}"  value="Save" style="background: rgba(207, 72, 76, 0.8)  ;">Delete</a>
+                                
+
+                                </div>
+                                
+
+                                          
+                            </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         {%endfor%}
 
                     {%else%}
@@ -121,6 +176,30 @@
     </div>
 </div>
 <!-- .banner-home -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {%endblock%}
 
 

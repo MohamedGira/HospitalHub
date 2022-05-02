@@ -415,6 +415,12 @@ class Admin:
 
         hospital = request.user.my_admin.first().hospital
         specialities = hospital.specialities.all()
+        
+        specialities_with_doctors_dependet=[]
+        for speciality in specialities:
+            doctors=DoctorModel.objects.filter(hospital=hospital,speciality=speciality)
+            specialities_with_doctors_dependet.append([speciality,doctors])
+
         if specialities.count() == 0:
             return render(request, "hospital_hub/Admin/view_specialities.html", {
                 "specialities": None,
@@ -423,7 +429,7 @@ class Admin:
             })
         else:
             return render(request, "hospital_hub/Admin/view_specialities.html", {
-                "specialities": specialities,
+                "specialities": specialities_with_doctors_dependet,
                 "hospital_name": request.user.my_admin.first().hospital.name,
 
                 #   "hospital_name":hospital.name,
@@ -435,9 +441,12 @@ class Admin:
         spec=Speciality.objects.filter(name=speciality)
         if spec.count()==1:
             doctors=DoctorModel.objects.filter(speciality=spec.first(),hospital=hospital)
-      
+            doctors_with_dependent_appointmens=[]
+            for doctor in doctors:
+                doctors_with_dependent_appointmens.append([doctor,doctor.appointments.all()])
+            
             return render(request,"hospital_hub/admin/view_speciality.html",{
-                "doctors":doctors,
+                "doctors":doctors_with_dependent_appointmens,
                "hospital_name":request.user.my_admin.first().hospital.name,   
                 "speciality":spec.first().name
                 })
@@ -537,10 +546,12 @@ class Admin:
     def ViewDoctors(request):
         hospital=request.user.my_admin.first().hospital
         doctors=DoctorModel.objects.filter(hospital=hospital)
-        
+        doctors_with_dependent_appointmens=[]
+        for doctor in doctors:
+            doctors_with_dependent_appointmens.append([doctor,doctor.appointments.all()])
         
         return render(request,"hospital_hub/admin/view_doctors.html",{
-        "doctors":doctors,
+        "doctors":doctors_with_dependent_appointmens,
         "hospital_name":request.user.my_admin.first().hospital.name,
         "flag":"all"
         })
@@ -628,13 +639,10 @@ class Admin:
     def ViewAdmins(request):
         hospital = request.user.my_admin.first().hospital
         admins = AdminModel.objects.filter(hospital=hospital)
-        lower_admins = []
-        higher_admins = []
-        for admin in admins:
-            if admin.id < request.user.my_admin.first().id:
-                higher_admins.append([admin, admin.my_account])
-            elif admin.id > request.user.my_admin.first().id:
-                lower_admins.append([admin, admin.my_account])
+        lower_admins = AdminModel.objects.filter(hospital=hospital, id__gt=request.user.my_admin.first().id)
+        higher_admins = AdminModel.objects.filter(hospital=hospital, id__lt=request.user.my_admin.first().id)
+        
+       
         if len(lower_admins)+len(higher_admins) == 0:
             return render(request, "hospital_hub/Admin/view_admins.html", {
                 "hospital_name": hospital.name,
