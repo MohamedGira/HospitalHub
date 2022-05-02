@@ -816,23 +816,27 @@ class Doctor:
                 return HttpResponseRedirect(reverse('doctor_home'))
 
         if request.method == 'POST':
-            username = request.POST["doctor_username"]
-            password = request.POST["doctor_password"]
+            username = request.POST.get("doctor_username", None)
+            password = request.POST.get("doctor_password", None)
             user = authenticate(request, username=username, password=password)
 
             if user is not None:
                 if user.is_doctor:
                     return HttpResponseRedirect(reverse("doctor_home"))
                 else:
-                    return render(request, "doctor_login", {
-                        "message": "Invalid username or password"
+                    return render(request, "hospital_hub\login.html", {
+                        "message": "Invalid username or password",
+                        "radio": "doctor"
                     })
             else:
-                return render(request, "doctor_login", {
-                    "message": "Invalid username or password"
+                return render(request, "hospital_hub\login.html", {
+                    "message": "Invalid username or password",
+                    "radio": "doctor"
                 })
         else:
-            return render(request, "hospital_hub\login.html")
+            return render(request, "hospital_hub\login.html", {
+                "radio": "doctor"
+            })
 
     def DoctorHome(request):
         if not request.user.is_authenticated:
