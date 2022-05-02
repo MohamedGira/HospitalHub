@@ -177,6 +177,9 @@
     <Content Include="hospital_hub\templates\hospital_hub\Doctor\doctor_registration.html" />
     <Content Include="hospital_hub\templates\hospital_hub\home_layout.html" />
     <Content Include="hospital_hub\templates\hospital_hub\index.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\login-general.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="hospital_hub\templates\hospital_hub\login.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Owner\add admin.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Owner\add_hospital.html" />

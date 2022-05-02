@@ -1,7 +1,7 @@
 import site
 from django.shortcuts import render
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse  
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.contrib.auth import get_user_model
@@ -45,6 +45,57 @@ def index(request):
 def Logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('home'))
+
+
+def Login(request):
+        # redirect users to home page if they are already signed in as patients
+        if request.user.is_authenticated:  # if already signed in
+            if request.user.is_doctor:
+                return HttpResponseRedirect(reverse('doctor_home'))
+            if request.user.is_patient:
+                return HttpResponseRedirect(reverse('patient_home'))
+            logout(request)
+            return HttpResponseRedirect(reverse('login'))
+            
+
+        if request.method == 'POST':
+            username = request.POST.get("username", None)
+            password = request.POST.get("password", None)
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                if request.POST['user_type']=="doctor":
+                    if user.is_doctor:
+                        login(request, user) 
+                        return HttpResponseRedirect(reverse("doctor_home"))
+                    else:
+                        return render(request, "hospital_hub\login-general.html", {
+                            "message": "Invalid username or password",
+                            "radio": "doctor"
+                        })
+                elif request.POST['user_type']=="patient":
+                    if user.is_patient:
+                        login(request, user) 
+                        return HttpResponseRedirect(reverse("patient_home"))
+                    else:
+                        return render(request, "hospital_hub\login-general.html", {
+                            "message": "Invalid username or password",
+                            "radio": "patient"
+                        })
+                else:
+                    return render(request, "hospital_hub\login-general.html", {
+                            "message": "Something went wrong, try again",
+                            "radio": "patient"
+                        })
+            else:
+                return render(request, "hospital_hub\login-general.html", {
+                    "message": "Invalid username or password",
+                    "radio": "patient"
+                })
+        else:
+            return render(request, "hospital_hub\login-general.html", {
+                "radio": "patient"
+            })
 
 
 ############################################################################
@@ -840,9 +891,11 @@ class Doctor:
 
     def DoctorHome(request):
         if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('docotr_login'))
+            return HttpResponseRedirect(reverse('doctor_login'))
         elif not request.user.is_doctor:
-            return HttpResponseRedirect(reverse('doctor_home'))
+            logout(request)
+            return HttpResponseRedirect(reverse('doctor_login'))
+        return HttpResponse("Hello, world!")
 
     def DoctorLogout(request):
         logout(request)
@@ -914,7 +967,7 @@ class Patient:
     def PatientHome(request):
         # Redirect PATIENTS to login page if they are not signed in as admins
         if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('patient_login'))
+            return HttpResponseRedirect(reverse('login'))
         elif not request.user.is_patient:
             # may add later "you have no access to this page :( "
             logout(request)
@@ -999,7 +1052,7 @@ class Patient:
 
     def patientlogout(request):
         logout(request)
-        return HttpResponseRedirect(reverse('patient_login'))
+        return HttpResponseRedirect(reverse('login'))
 
     def searchbyspeciality(request):
         if request.method == "POST":

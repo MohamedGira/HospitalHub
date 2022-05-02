@@ -10,7 +10,8 @@ from . import views
 urlpatterns = [
     path('', views.index, name='home'),
     path('logout', views.Logout, name='user_logout'),
-
+    path('login', views.Login, name='login'),
+    path('l', views.Login, name='login'),
 
 
     #########################
