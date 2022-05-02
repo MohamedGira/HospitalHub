@@ -37,72 +37,82 @@
     </div> <!-- .topbar -->
 <!-- partial:index.partial.html -->
 <div class="login-wrap">
-	<div class="login-html">
-		<input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Register as Doctor</label>
-		<div class="login-form">
-      <div class="sign-up-htm">
+  <form method = "POST" enctype="multipart/form-data">
+    {%csrf_token%}
+    <div class="login-html">
+      <input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Register as Doctor</label>
+      <div class="login-form">
+        <div class="sign-up-htm">
+        <div>{%if message%} {{message}} {%endif%}</div>
         <div class="group">
-          <label for="user" class="label">First Name</label>
-          <input id="user" type="text" class="input">
+          <label for="user" class="label">Username</label>
+          <input id="user" type="text" class="input" name = "username">
         </div>
         <div class="group">
-          <label for="user" class="label">Last Name</label>
-          <input id="user" type="text" class="input">
-        </div>
-        <div class="group">
-          <label for="user" class="label">Phone Number</label>
-          <input id="user" type="text" class="input">
-        </div>
-        <div class="group">
-          <label for="user" class="label">University</label>
-          <input id="user" type="text" class="input">
-        </div>
-        <div class="group">
-          <label for="user" class="label">Specialty</label>
-          <input list="specialties" class="input" placeholder="Choose Specialty">
-            <datalist id="specialties">
-                <option value="Allergy and immunology">Allergy and immunology</option>
-                <option value="Anesthesiology">Anesthesiology</option>
-                <option value="Dentistry">Dentistry</option>
-                <option value="Dermatology">Dermatology</option>
-                <option value="Diagnostic radiology">Diagnostic radiology</option>
-                <option value="Emergency medicine">Emergency medicine</option>
-                <option value="Family medicine">Family medicine</option>
-                <option value="Internal medicine">Internal medicine</option>
-                <option value="Medical genetics">Medical genetics</option>
-                <option value="Neurology">Neurology</option>
-                <option value="Nuclear medicine">Nuclear medicine</option>
-                <option value="Obstetrics and gynecology">Obstetrics and gynecology</option>
-                <option value="Ophthalmology">Ophthalmology</option>
-                <option value="Pathology">Pathology</option>
-                <option value="Pediatrics">Pediatrics</option>
-                <option value="Physical medicine and rehabilitation">Physical medicine and rehabilitation</option>
-                <option value="Preventive medicine">Preventive medicine</option>
-                <option value="Psychiatry">Psychiatry</option>
-                <option value="Radiation oncology">Radiation oncology</option>
-                <option value="Surgery">Surgery</option>
-                <option value="Urology">Urology</option>
-            </datalist>
+          <label for="user" class="label">Full name</label>
+          <input id="user" type="text" class="input" name = "full_name">
         </div>
         <div class="group">
           <label for="user" class="label">Email Address</label>
-          <input id="user" type="email" class="input">
+          <input id="user" type="email" class="input" name = "email">
         </div>
         <div class="group">
-          <label for="user" class="label">Username</label>
-          <input id="user" type="text" class="input">
+          <label for="user" class="label">Phone Number</label>
+          <input id="user" type="text" class="input" name = "phone_number">
+        </div>
+        <div class="group">
+          <label for="user" class="label">Specialty</label>
+          <select id="specialties" value = "{{provided_speciality}}" class="input" placeholder="Choose Specialty" name = "speciality">
+            {%for speciality in specialities%}
+            {% if speciality.id == provided_speciality.id %}
+            <option value="{{speciality.id}}" style="background: transparent; color: black;" selected>
+                {{speciality}}
+            </option>
+            {%else%}
+            <option value="{{speciality.id}}" style="background: transparent; color: black;">
+                {{speciality}}
+            </option>
+            {%endif%}
+            {%empty%}
+            <option>No specialties Available</option> 
+            {% endfor %}
+          </select>  
+        </div>
+
+        <div class="group">
+          <label for="user" class="label">City</label>
+          <select id="city" value="{{provided_city}}" class="input" name="city" style=" color: white;" name="city">
+              {%for city in cities%}
+              {% if city.id == provided_city.id %}
+              <option value="{{city.id}}" style="background: transparent; color: black;" selected>
+                  {{city}}
+              </option>
+              {%else%}s
+              <option value="{{city.id}}" style="background: transparent; color: black;">
+                  {{city}}
+              </option>
+              {%endif%}
+              {%empty%}
+              <option>No Cities Available</option>
+              {% endfor %}
+            </select>
         </div>
         <div class="group">
           <label for="pass" class="label">Password</label>
-          <input id="pass" type="password" class="input" data-type="password">
+          <input id="pass" type="password" class="input" data-type="password" name ="password">
         </div>
         <div class="group">
-          <label for="pass" class="label">Repeat Password</label>
-          <input id="pass" type="password" class="input" data-type="password">
+          <label for="pass" class="label">Confirm Password</label>
+          <input id="pass" type="password" class="input" data-type="password" name ="confirm_password">
+        </div>
+        <div class="group">
+          <label for="img" class="label">Profile Image</label>
+          <input id="img" type="file" name="image" class="input" accept="image/*">
         </div>
         <div class="group">
           <input type="submit" class="button" value="Sign Up">
         </div>
+      </form>
         <div class="hr"></div>
         <div class="foot-lnk">
           <a href='login.html'> <label for="tab-1">Already Member?</a>
