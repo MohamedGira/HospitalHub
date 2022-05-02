@@ -81,6 +81,8 @@ urlpatterns = [
          views.Patient.ViewDoctorProfile, name='book_appointment'),
     path('patient/view_doctors',views.Patient.ViewDoctors, name='patient_view_doctors'),
     path('patient/view_specialities',views.Patient.ViewSpecialities, name='patient_view_specialities'),
+    path('patient/appointments',views.Patient.ViewAppointments, name='patient_view_appointments'),
+    path('patient/appointments/<int:appt_id>',views.Patient.ViewAppointmentDocs, name='patient_view_appointments_docs'),
 
     
 ]

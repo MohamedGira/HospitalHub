@@ -15,6 +15,7 @@ from .models import Hospital as HospitalModel
 from .models import City as CityModel
 from .models import Schedule as ScheduleModel
 from .models import Appointment as AppointmentModel
+from .models import AppointmentDocument as AppointmentDocsModel
 from .utils import *
 
 import re
@@ -1194,7 +1195,38 @@ class Patient:
                 "specialities": specialities_with_doctors_dependet,
             })
 
-    # def appointment_count:
-    #     if request.method == "POST":
-    #         appt_count = AppointmentModel.objects.filter(schedule=request.POST['schedule']).count()
+    def ViewAppointments(request):
+        if request.method == "GET":
+            user = User.objects.filter(username=request.user.username, patient=True).first()
+            patient = PatientModel.objects.filter(my_account=user).first()
 
+            print("appt_patient")
+            print(patient)
+            # it is a valid search string
+            appointments = AppointmentModel.objects.filter(patient=patient.id)
+            print(appointments)
+            if len(appointments) == 0:
+                return render(request, "hospital_hub/Patient/view_appointments.html", {
+                    "message": "No results found"
+                })
+
+            return render(request, "hospital_hub/Patient/view_appointments.html", {
+                "appointments": appointments
+            })
+        
+    def ViewAppointmentDocs(request, appt_id):
+        if request.method == "GET":
+            user = User.objects.filter(username=request.user.username, patient=True).first()
+            patient = PatientModel.objects.filter(my_account=user).first()
+
+            appointmentDocs = AppointmentDocsModel.objects.filter(appointment=appt_id)
+            print("appt_docs")
+            print(appointmentDocs)
+            if len(appointmentDocs) == 0:
+                return render(request, "hospital_hub/Patient/view_appointments_docs.html", {
+                    "message": "No results found"
+                })
+
+            return render(request, "hospital_hub/Patient/view_appointments_docs.html", {
+                "appointmentDocs": appointmentDocs
+            })

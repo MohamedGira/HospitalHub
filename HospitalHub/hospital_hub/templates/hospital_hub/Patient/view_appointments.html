@@ -4,33 +4,6 @@
 
 <header>
 
-    <!--the home/doctors/admins/logout header-->
-    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
-        <div class="container">
-            <img src="{%static 'hospital_hub/assets/img/logo2.png'%}" alt="" style="width:20px;">
-            <a style="color:#81C2D6" class="navbar-brand" href="#"><span class="text-primary2">Hospital</span>Hub </a>
-
-
-
-            <div class="collapse navbar-collapse" id="navbarSupport">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item ">
-                        <a class="nav-link" href="{%url 'patient_home'%}">Home</a>
-                    </li>
-                        <li class="nav-item active">
-                            <a class="nav-link " href="{%url 'view_specialities'%}">Specialities</a>
-                        </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{%url 'patient_view_doctors'%}">Doctors</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{%url 'patient_logout'%}">Logout</a>
-                    </li>
-                </ul>
-            </div> <!-- .navbar-collapse -->
-        </div> <!-- .container -->
-    </nav>
 </header>
 
 <div class="page-banner overlay-dark bg-image"
@@ -42,11 +15,11 @@
                 <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
                     <li class="breadcrumb-item"><a href="{%url 'patient_home'%}">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        Specialties
+                        Appointments
                     </li>
                 </ol>
             </nav>
-            <h1 class="font-weight-normal">Your Specialties</h1>
+            <h1 class="font-weight-normal">Your Appointments</h1>
         </div>
         <!-- .container -->
     </div>
@@ -61,32 +34,29 @@
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="row">
-                    {%if message %}
-                    <h3 class="text-primary2">{{message}}</h3>
-                    {%endif%}
-                    {%if specialities%}
-                        {%for speciality , doctors in specialities%}
+                    {%if appointments%}
+                        {%for appointment in appointments%}
 
                         <div class="col-md-6 col-lg-3 py-3 wow zoomIn">
                             <div class="card-doctor">
 
                                 <div class="header">
-                                    <img src="{{speciality.image.url}}" alt=""
+                                    <img src="" alt=""
                                             height="260" style="object-fit: cover;">
                                     <div class="meta" style="text-align: center">
 
-                                        <a href="{%url 'view_speciality' speciality=speciality.name %}">
+                                        <a href="">
                                             <span class="mai-people"></span>
                                         </a>
                                         <a data-toggle="modal"
-                                                data-target="#remove_{{speciality.id}}">
+                                                data-target="#remove_{{appointment.id}}">
                                         <span class="mai-close"></span>
                                         </a>
                                     </div>
                                 </div>
                                 <div class="body">
                                     <p class="text-x2 mb-0" style="text-align: center">
-                                        {{speciality.name}}
+                                        {{appointment.doctor.name}}
                                     </p>
                                 </div>
                             </div>
@@ -122,7 +92,6 @@
                                     </ul>
                                 <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal" >Cancel</button>
-                                <a class="btn btn-primary" href="{% url 'remove_speciality' speciality_id=speciality.id %}"  value="Save" style="background: rgba(207, 72, 76, 0.8)  ;">Delete</a>
                                 
 
                                 </div>
@@ -149,7 +118,7 @@
                         {%endfor%}
 
                     {%else%}
-                    <h1 style="color:grey;">Your hospital has no specialites added yet.</h1>
+                    <h1 style="color:grey;">No Appointments Available</h1>
                     {%endif%}
 
                 </div>
