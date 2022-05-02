@@ -47,11 +47,18 @@
 <!-- partial:index.partial.html -->
 <div class="login-wrap">
 	<div class="login-html">
-		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">User</label>
+    {%if radio == "doctor" %}
+		<input id="tab-1" type="radio" name="tab" class="sign-in"><label for="tab-1" class="tab">User</label>
+		<input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Doctor</label>
+		{%else%}
+    <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">User</label>
 		<input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Doctor</label>
-		<div class="login-form">
+    {%endif%}
+    <div class="login-form">
 			<div class="sign-in-htm">
-        <form>
+        <form method = "POST">
+          {% csrf_token %} 
+          <div>{%if message %} {{message}} {%endif%}</div>
   				<div class="group">
   					<label for="user" class="label">Username</label>
   					<input id="user" type="text" class="input">
@@ -98,10 +105,12 @@
   			</form>
     </div>
 			<div class="sign-up-htm">
-        <form>
+        <form method="POST">
+          {% csrf_token %} 
+          <div>{%if message %} {{message}} {%endif%}</div>
         <div class="group">
 					<label for="user" class="label">Username</label>
-					<input id="user2" type="text" class="input" name ="doctor_usernames">
+					<input id="user2" type="text" class="input" name ="doctor_username">
 				</div>
 				<div class="group">
 					<label for="pass" class="label">Password</label>
@@ -139,7 +148,7 @@
 				<div class="foot-lnk">
 					<h style="color: #fff; margin-top:340px;">Create New Doctor Account</h>
           <div class="group">
-  					<a href="doctor_register.html" class="button" style="margin-top:10px; margin-left:100px; width:50%; background-color:#81C2D6"> Register </a>
+  					<a href="register" class="button" style="margin-top:10px; margin-left:100px; width:50%; background-color:#81C2D6"> Register </a>
   				</div>
 				</div>
 			</div>
