@@ -68,12 +68,19 @@ urlpatterns = [
     #########################
     # paths for patient
 
-    path('patient/login', views.Patient.PatientLogin, name='patient_login'),
-    path('patient/register', views.Patient.PatientRegister, name='patient_register'),
-    path('patient/home', views.Patient.PatientHome, name='patient_home'),
+     path('patient/login', views.Patient.PatientLogin, name='patient_login'),
+     path('patient/register', views.Patient.PatientRegister, name='patient_register'),
+     path('patient/home', views.Patient.PatientHome, name='patient_home'),
+     path ('patient/logout',views.Patient.patientlogout , name='patient_logout'),
 
-    path('patient/searchbyspeciality',
+     path('patient/searchbyspeciality',
          views.Patient.searchbyspeciality, name='specialities_search'),
-    path('patient/find_hospitals_by_speciality',
+     path('patient/find_hospitals_by_speciality',
          views.Patient.find_hospitals_by_speciality, name='find_hospitals_by_speciality'),
+     path('patient/book_appointment/<str:doctor_name>',
+         views.Patient.ViewDoctorProfile, name='book_appointment'),
+    path('patient/view_doctors',views.Patient.ViewDoctors, name='patient_view_doctors'),
+    path('patient/view_specialities',views.Patient.ViewSpecialities, name='patient_view_specialities'),
+
+    
 ]

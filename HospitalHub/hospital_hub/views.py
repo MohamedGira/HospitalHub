@@ -13,6 +13,8 @@ from .models import Owner as OwnerModel
 from .models import Speciality as SpecialityModel
 from .models import Hospital as HospitalModel
 from .models import City as CityModel
+from .models import Schedule as ScheduleModel
+from .models import Appointment as AppointmentModel
 from .utils import *
 
 import re
@@ -1093,3 +1095,106 @@ class Patient:
                 })
 
         return render(request, "hospital_hub/Patient/hospitals_by_speciality.html")
+
+    def ViewDoctorProfile(request, doctor_name):
+        doc_account = User.objects.filter(username=doctor_name, doctor=True)
+        doctor = doc_account.first().my_doctor.first()
+        hospital = doctor.hospital
+        patient = User.objects.filter(username=request.user.username, patient=True).first()
+        appt_date = request.POST['date']
+        selected_schedule = ScheduleModel.objects.filter(id=request.POST['schedule']).first()
+        appt_count = AppointmentModel.objects.filter(appt_date=appt_date).count()
+
+        if request.method == "POST":
+            if request.POST.get("command", False):
+                if request.POST['command'] == "confirm":
+
+                    if appt_count < selected_schedule.max_patient_count:
+                        patient_no = appt_count+1
+
+                        appointment = AppointmentModel()
+                        appointment.doctor = doctor
+                        appointment.patient = patient
+                        appointment.schedule = selected_schedule
+                        appointment.patient_no = patient_no
+                        appointment.date = appt_date
+                        appointment.save()
+                        return HttpResponseRedirect(reverse('patient_view_doctors', args=[doctor_name]))
+                    else:
+                        return render(request, "hospital_hub/Patient/book_appointment.html", {
+                        "message": "No available appointments on this day.",
+            })
+                    
+        if doc_account.count() == 1:
+            doc = doc_account.first().my_doctor.first()
+            account = doc_account.first()
+            reviews = doc.my_reviews.all()
+            schedules = doc.dailyschedule.all()
+            schedule_abbreviation = []
+
+            for schedule in schedules:
+                schedule_abbreviation.append([schedule, schedule.day[0:3]])
+            empty_days = []
+            for day in days:
+                dne = True
+                for schedule in schedules:
+                    if schedule.day == day:
+                        dne = False
+                        break
+                if dne == True:
+                    empty_days.append(day)
+
+            return render(request, "hospital_hub/Patient/book_appointment.html", {
+                "doctor": doc,
+                "account": account,
+                "hospital": hospital,
+                "schedules": schedule_abbreviation,
+                "reviews": reviews,
+                "empty_days": empty_days,
+
+            })
+        else:
+            specialities = hospital.specialities.all()
+            return render(request, "hospital_hub/Patient/view_specialities.html", {
+                "message": "No doctor by this name exitsts in your hospital.",
+                "specialities": specialities,
+            })
+    def ViewDoctors(request):
+        doctors = DoctorModel.objects.all()
+        doctors_with_dependent_appointmens = []
+        for doctor in doctors:
+            doctors_with_dependent_appointmens.append(
+                [doctor, doctor.appointments.all()])
+
+        return render(request, "hospital_hub/Patient/view_doctors.html", {
+            "doctors": doctors_with_dependent_appointmens
+        })
+    def ViewSpecialities(request):
+        # Redirect users to login page if they are not signed in as admins
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('patient_login'))
+        elif not request.user.is_admin:
+            # may add later "you have no access to this page :( "
+            return HttpResponseRedirect(reverse('home'))
+
+        specialities = SpecialityModel.objects.all()
+
+        specialities_with_doctors_dependet = []
+        for speciality in specialities:
+            doctors = DoctorModel.objects.filter(
+                hospital=hospital, speciality=speciality)
+            specialities_with_doctors_dependet.append([speciality, doctors])
+
+        if specialities.count() == 0:
+            return render(request, "hospital_hub/Patient/view_specialities.html", {
+                "specialities": None,
+            })
+        else:
+            return render(request, "hospital_hub/Patient/view_specialities.html", {
+                "specialities": specialities_with_doctors_dependet,
+            })
+
+    # def appointment_count:
+    #     if request.method == "POST":
+    #         appt_count = AppointmentModel.objects.filter(schedule=request.POST['schedule']).count()
+

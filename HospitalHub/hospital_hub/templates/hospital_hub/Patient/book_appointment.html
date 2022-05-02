@@ -1,0 +1,480 @@
+﻿{%extends 'hospital_hub/Patient/patient_layout.html'%}
+{%load static%}
+{%block body%}
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" href="{%static 'hospital_hub/assets/css/doctor_profile.css'%}"/>
+
+  <div class="page-banner overlay-dark bg-image" style="background-image: url(../../../static/hospital_hub/assets/img/bg_image_1.jpg);">4
+    <div class="banner-section">
+      <div class="container text-center wow fadeInUp">
+        <h1 class="font-weight-normal">🏥{{hospital.name}}🏥</h1>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
+            <li class="breadcrumb-item">
+<a href="{%url 'patient_home'%}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page"> 
+<a href="{%url 'patient_view_doctors'%}"> Doctors </a></li>
+            <li class="breadcrumb-item active" aria-current="page"> {{account.full_name}} </li>
+          </ol>
+        </nav>
+        <h1 class="font-weight-normal">Dr. {{account.full_name}} </h1>
+      </div> <!-- .container -->
+    </div> <!-- .banner-section -->
+  </div> <!-- .page-banner -->
+
+  <div class="page-section bg-light">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+
+          <div class="row">
+
+            <div class="row gutters-sm">
+              <div class="col-md-4 mb-3">
+                <div class="card ">
+                  <div class="card-body">
+                    <div class="d-flex flex-column align-items-center text-center">
+                      <img src="{{account.image.url}}" alt="Profile Picture" class="rounded-circle" width="150"height="150">
+                      <div class="mt-3">
+                        <h4 style="font-size:auto;">Dr. {{account.full_name}}</h4>
+                        <p class="text-secondary mb-1">{{doctor.speciality}}</p>
+                        <p class="text-muted font-size-sm">{{hospital}}</p>
+                        <br>
+                        <button class="btn btn-outline-primary" style="padding:8px 20px;">Message</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  <!---->
+                <div class="card mt-3">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                      <h6 class="mb-0">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>Website</h6>
+                      <a class="text-secondary" href="https://hospitalhub/doctors/username">../doctors/helmy16</a>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                      <h6 class="mb-0">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter mr-2 icon-inline text-info"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>Twitter</h6>
+                      <a class="text-secondary" href="https://twitter.com/hforhelmy">@hforhelmy</a>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                      <h6 class="mb-0">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" 
+                                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram mr-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>Instagram</h6>
+                      <a class="text-secondary" href="https://www.instagram.com/hforhelmy">@hforhelmy</a>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                      <h6 class="mb-0">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook mr-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>Facebook</h6>
+                      <a class="text-secondary" href="https://www.facebook.com/HForHelmy/">@HForHelmy</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-8 ">
+                <div class="card mb-3">
+                  <div class="card2-body test">
+                    
+  <!--                    <section>
+                      <div class ="container">
+                        <div class="row">
+                          <div class="col-sm-3">
+                            <h6 calss ="mb-0">Address</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                            Qalubia
+                          </div>
+                        </div>
+
+                        <hr>
+                        
+                        <div class="row">
+                          <div class="col-sm-3">
+                            <h6 calss ="mb-0">Address</h6>
+                          </div>
+                          <div class="col-sm-9 text-secondary">
+                            Qalubia
+                          </div>
+                        </div>
+                      </div>
+                    </section>-->
+                      
+                    <section id="working-time" class="working-time">
+                            <div>
+                                <p class="text-primary">Weekly Schedule</p>
+                            </div>
+                        {%if request.GET.message%}
+                      <p class="text-secondary">{{request.GET.message}}</p>
+                      {%endif%}
+                            <div class="container">
+                                <!-- .row end -->
+                                <div class="row">
+
+
+         
+                                    <!-- Service #1 -->
+                                    <!-- .col-md-2 end -->
+
+                                    <!-- 
+                                    <div class="col-3 col-sm-3 col-md-3 col-lg-3 mb-2">
+                                        <div class="time-panel">
+                                            <h3>sat</h3>
+                                            <ul class="list-unstyled mb-0">
+                                                <li style="color:#CF484C;" >9:00 AM</li>
+                                                <li style="color:#81C2D6;">to</li>
+                                                <li style="color:#CF484C;">4:30 PM</li>
+                                            </ul>
+                                        </div>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width:50%; font-size:12px; padding:0px 0px;">Reserve </button>
+                                    
+                                    </div>
+                                    -->
+                                    
+                                    {%for schedule,abbreviation in schedules %}
+
+                                       <div class="col-3 col-sm-3 col-md-3 col-lg-3 mb-2">
+                                        <div class="time-panel">
+                                            <h3>{{abbreviation}}</h3>
+                                            <ul class="list-unstyled mb-0">
+                                                <li style="color:#CF484C;" >{{schedule.start_time|time:"h:i A"}}</li>
+                                                <li style="color:#81C2D6;">to</li>
+                                                <li style="color:#CF484C;">{{schedule.end_time|time:"h:i A"}}</li>
+                                            </ul>
+                                        </div>
+                                        <button type="button" class="btn btn-primary"  data-toggle="modal"
+                                                data-target="#edit_{{schedule.day}}" style="width:50%;
+                                        font-size:12px; padding:0px 0px;">Book</button>
+                                    
+    
+                                    </div>
+                                                                        <!-- .time-panel end -->
+
+
+                                    <div class="modal fade" id="edit_{{schedule.day}}" tabindex="-1" 
+                                       role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog" role="document" >
+                                        <div class="modal-content" style="width:120%;">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit Schedule</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#CF484C;">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            Confirm Appointment on {{schedule.day}} ?
+                                          </div>
+
+                                            <form method="post">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="command" value="confirm"/>
+                                                
+                                                 <div>
+
+                                                 </div>
+                                                <div class="group" style="color: rgba(255,255,255,.5);">
+                                                Day
+                                                <input class="input" type="date" value="{{schedule.day}}"  name="appt_schedule" disabled
+                                                    style="width:40%;">
+                                                Date
+                                                <input class="input" type="date" value=""  name="appt_date" disabled
+                                                    style="width:40%;" />
+                                                Your turn will be: 
+                                                <input class="input" type="date" value=""  name="appt_count" disabled
+                                                    style="width:40%;" />
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal" style="background: rgba(207, 72, 76, 0.8)  ;">Cancel</button>
+                                                <input type="submit" class="btn btn-primary" value="Confirm">
+                                                {%if message %}
+                                                  <h6 style="color: darkred; text-align: left">{{message}}</h6>
+                                                {%endif%}
+                                                </div>
+                                            </form>
+
+                                          
+                                        </div>
+                                      </div>
+                                    </div>
+                                    {% empty %}
+                                    <div>
+
+                                       <div class="col-sm-12" style="text-align:center;">
+                                        No schedule set.
+                                            </div>
+                                    </div>
+
+                                    {%endfor%}
+
+
+
+
+
+
+                                </div>
+                                <!-- .row end -->
+                            </div>
+                            <!-- .container end -->
+
+                            
+                        </section>
+
+
+                    <!-- ده اللي هتشال علشان تشيل زرار الايديت-->
+                    <hr>
+            
+                   <!--  ده اللي هتشال علشان تشيل زرار الايديت-->
+
+
+
+
+
+
+                      <!--add / remove shedule-->
+                                     <div class="modal fade" id="edit" tabindex="-1" 
+                                       role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                                      <div class="modal-dialog" role="document"  >
+                                        <div  class="modal-content" style="width:120% ;padding:5%">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit Schedule</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#CF484C;">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            Schedules for Dr. {{doctor.my_account.full_name}}
+                                          </div>
+                                            
+                                             <ul class="list-unstyled mb-0">
+                                                {%for schedule , abbreviation in schedules %}
+
+                                                <li>
+                                                    <section>
+                                                <div class ="container">
+                                                <div class="row">
+                                                       <div class="col-sm-9">
+                                                        <h6 calss ="mb-0">{{schedule.day}}</h6>
+                                                      </div>
+                                                    <form method="post">
+
+                                                     {% csrf_token %}
+                                                     <input type="hidden" name="command" value="remove_{{schedule.day}}"/>
+                                                      <div class="col-sm-9 text-secondary">
+                                                        <input type="submit" class="btn-primary"  style="background: rgba(207, 72, 76, 0.8)  "value="Remove"/>
+                                                      </div>
+                                                     </form>
+                                                    </div>
+                                                    </div>
+
+                                                </section>
+                                                
+                        
+                        
+                                                    <hr />
+                                                 </li>
+                                                 {%endfor%}
+
+                                                 
+
+                                            </ul>
+                                            
+                                                 <hr>
+
+                                                <div class="row">
+                                                  <div class="col-sm-12" style="text-align:center;">
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                                            data-target="#add" >Confirm Appointment</button>
+                                                  </div>
+                                                </div>
+                         
+
+                                        </div>
+                                      </div>
+                                    </div>
+
+
+                                    
+
+                                    <div class="modal fade" id="add" tabindex="-2" 
+                                       role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog" role="document" >
+                                        <div class="modal-content" style="width:120%;padding:5%;">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit Schedule</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#CF484C;">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            Schedules for Dr. {{doctor.my_account.full_name}}
+                                          </div>
+                                            
+                                         
+                                                    <form style="margin:5%" method="post">
+                                                        {% csrf_token %}
+                                                     <input type="hidden" name ="command" value="add_day"/>
+
+                                                        <div>
+                                                        <label for="select_day" class="label"  style="text-align:center;">Choose day</label>
+                                                        <select name="to_add" id="select_day" class="input">
+                                                           {%for day in empty_days%}
+                                                            <option>{{day}}</option>
+                                                           {%endfor%}
+                                                        </select>
+                                                        </div>
+                                                        
+                                                        <hr />
+                                                        
+                                                        <label for="start_time" class="label"  style="text-align:center;">From</label>
+                                                        <input class="input" type="time" id="start_time" name="start_time" min="00:00" max="23:59"  required
+                                                            style="width:40%;">
+                                                        
+                                                        <label for="end_time" class="label"  style="text-align:center;">To</label>
+                                                        <input class="input" type="time" id="end_time" name="end_time" min="00:00" max="23:59"  required
+                                                            style="width:40%;" />
+                                                        <hr />
+                                                        <div class="group">
+                                                        <label for="price"  class="label">Price</label>
+                                                        <input type="number" id="price" name="price" min="0" max="1000" step="5" class="input" />
+                                                        </div>
+                                                        <hr />
+                                                        <label for="count"  class="label">Max number of patients per day</label>
+                                                        <input type="number" id="count" name="max_patient_count" min="0" max="25" step="5" class="input" />
+                                                        <hr />
+
+                                                      <div class="col-sm-9 text-secondary"  style="margin-top:5%">
+                                                        <input type="submit" class="btn btn-primary" value="Add"/>
+                                                      </div>
+
+                                                     </form>
+
+                                        </div>
+                                      </div>
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  </div>
+                </div>
+                  <!--Comments section-->
+                <div class="row gutters-sm">
+                  <div class="col-sm-6 mb-3">
+                    <div class="card h-100">
+                      <div class="card-body" style="text-align: center;">
+                        <h6 style="text-align:center;">Overall Review</h6>
+                        <div>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                        </div>
+                        <div class="hr"></div>
+
+                      <small> Knowledge </small>
+                        <div>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                        </div>
+
+                      <small> Helpfulness </small>
+                        <div>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                        </div>
+
+                      <small> Punctuality </small>
+                        <div>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                        </div>
+
+                      <small> Staff </small>
+                        <div>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star checked"></span>
+                          <span class="fa fa-star"></span>
+                          <span class="fa fa-star"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  
+                  <div class="col-sm-6 mb-3">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h6 style="text-align:center;">Last 5 Reviews</h6>
+                        
+                        {%for review in reviews%}
+                          <!-- comment template-->
+                            <div class="row align-items-center" style="margin:1%">
+                              <img src="{{review.patient.my_account.image.url}}" alt="Admin" class="rounded-circle" width="40">
+                              <div class="col" style="padding-left:10px">
+                                
+                                  
+                                {% for i in '01234'|make_list %}
+                                  {%if forloop.counter <= review.rating %}
+                                  <span class="fa fa-star checked"></span>
+                                  {%else%}
+                                  <span class="fa fa-star "></span>
+                                  {%endif%}
+                                {% endfor %}  
+           
+                                <div class="col" style="padding-left:0px">
+                                  <span style="font-size:12px; text-align:left;"> {{review.comment}} </span>
+                                </div>
+                              </div>
+                            </div>
+                          {%endfor%}
+
+                     
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+              </div>
+            </div>
+
+
+
+          </div>
+
+        </div>
+      </div>
+    </div> <!-- .container -->
+  </div> <!-- .page-section -->
+
+  <style type="text/css">
+  
+  </style>
+{%endblock%}
