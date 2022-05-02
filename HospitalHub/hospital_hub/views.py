@@ -394,7 +394,7 @@ class Admin:
 
             image = request.FILES.get('image', None)
             print(image)
-
+             
             # Attempt to create new user
             try:
                 cit = City.objects.get(id=city)
