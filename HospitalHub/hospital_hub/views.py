@@ -429,18 +429,18 @@ class Admin:
                 #   "hospital_name":hospital.name,
             })
 
+    def ViewSpeciality(request, speciality):
+        hospital = request.user.my_admin.first().hospital
+        spec = Speciality.objects.filter(name=speciality)
+        if spec.count() == 1:
+            doctors = DoctorModel.objects.filter(
+                speciality=spec.first(), hospital=hospital)
 
-    def ViewSpeciality(request,speciality):
-        hospital=request.user.my_admin.first().hospital
-        spec=Speciality.objects.filter(name=speciality)
-        if spec.count()==1:
-            doctors=DoctorModel.objects.filter(speciality=spec.first(),hospital=hospital)
-      
-            return render(request,"hospital_hub/admin/view_speciality.html",{
-                "doctors":doctors,
-               "hospital_name":request.user.my_admin.first().hospital.name,   
-                "speciality":spec.first().name
-                })
+            return render(request, "hospital_hub/admin/view_speciality.html", {
+                "doctors": doctors,
+                "hospital_name": request.user.my_admin.first().hospital.name,
+                "speciality": spec.first().name
+            })
         else:
             specialities = hospital.specialities.all()
             return render(request, "hospital_hub/admin/view_specialities.html", {
@@ -451,38 +451,37 @@ class Admin:
             })
 
     def ViewDoctorProfile(request, doctor_name):
-        days=['Sunday','Saturday','Monday','Teusday','Wednesday','Thursday','Friday']
-        hospital=request.user.my_admin.first().hospital
-        doc_account=User.objects.filter(username=doctor_name, doctor=True)
-        doctor =doc_account.first().my_doctor.first()
-        if request.method=="POST":
-            if request.POST.get("command",False):
-                
+        days = ['Sunday', 'Saturday', 'Monday',
+                'Teusday', 'Wednesday', 'Thursday', 'Friday']
+        hospital = request.user.my_admin.first().hospital
+        doc_account = User.objects.filter(username=doctor_name, doctor=True)
+        doctor = doc_account.first().my_doctor.first()
+        if request.method == "POST":
+            if request.POST.get("command", False):
+
                 for day in days:
-                    if request.POST['command']== "edit_"+day:
-                        schedule_day=Schedule.objects.filter(doctor=doctor, day=day).first()
-                        schedule_day.start_time=request.POST['new_start']
-                        schedule_day.end_time=request.POST['new_end']
+                    if request.POST['command'] == "edit_"+day:
+                        schedule_day = Schedule.objects.filter(
+                            doctor=doctor, day=day).first()
+                        schedule_day.start_time = request.POST['new_start']
+                        schedule_day.end_time = request.POST['new_end']
                         schedule_day.save()
                         return HttpResponseRedirect(reverse('admin_view_doctor', args=[doctor_name]))
-                    
-                
+
                 for day in days:
-                    if request.POST['command']== "remove_"+day:
-                        schedule_day=Schedule.objects.filter(doctor=doctor, day=day).first()
-                        if schedule_day.appointments.all().count()==0:
+                    if request.POST['command'] == "remove_"+day:
+                        schedule_day = Schedule.objects.filter(
+                            doctor=doctor, day=day).first()
+                        if schedule_day.appointments.all().count() == 0:
                             schedule_day.delete()
                             return HttpResponseRedirect(reverse('admin_view_doctor', args=[doctor]))
                         else:
-                            return HttpResponseRedirect(reverse('admin_view_doctor', args=[doctor])+
-                                                       '?message=+'+day+' is busy, couldn\'t remove')
+                            return HttpResponseRedirect(reverse('admin_view_doctor', args=[doctor]) +
+                                                        '?message=+'+day+' is busy, couldn\'t remove')
 
-                            
-                        
-
-                if request.POST['command']== "add_day":
-                    if Schedule.objects.filter(doctor=doctor,day=request.POST['to_add']).count()==0:
-                        schedule=Schedule(doctor=doctor,day=request.POST['to_add'],
+                if request.POST['command'] == "add_day":
+                    if Schedule.objects.filter(doctor=doctor, day=request.POST['to_add']).count() == 0:
+                        schedule = Schedule(doctor=doctor, day=request.POST['to_add'],
                                             start_time=request.POST['start_time'],
                                             end_time=request.POST['end_time'],
                                             price=request.POST['price'],
@@ -490,37 +489,34 @@ class Admin:
                         schedule.save()
                         return HttpResponseRedirect(reverse('admin_view_doctor', args=[doctor]))
 
-                    return HttpResponseRedirect(reverse('admin_view_doctor', args=[doctor])+
-                                                    '?message=A Schedule exists on day already, you can Edit it below')
+                    return HttpResponseRedirect(reverse('admin_view_doctor', args=[doctor]) +
+                                                '?message=A Schedule exists on day already, you can Edit it below')
 
- 
-        
-        if doc_account.count()==1:
-            doc= doc_account.first().my_doctor.first()
-            account=doc_account.first()
-            reviews=doc.my_reviews.all()
-            schedules=doc.dailyschedule.all()
+        if doc_account.count() == 1:
+            doc = doc_account.first().my_doctor.first()
+            account = doc_account.first()
+            reviews = doc.my_reviews.all()
+            schedules = doc.dailyschedule.all()
 
-            empty_days=[]
-            
+            empty_days = []
+
             for day in days:
-                dne=True
+                dne = True
                 for schedule in schedules:
-                    if schedule.day==day:
-                        dne=False
+                    if schedule.day == day:
+                        dne = False
                         break
-                if dne==True:
+                if dne == True:
                     empty_days.append(day)
 
-
-            return render(request,"hospital_hub/admin/admin_view_doctor_profile.html",{
-                    "doctor":doc,
-                    "account":account,
-                    "hospital":hospital,
-                    "schedules":schedules,
-                    "reviews":reviews,
-                    "empty_days":empty_days,
-                    })
+            return render(request, "hospital_hub/admin/admin_view_doctor_profile.html", {
+                "doctor": doc,
+                "account": account,
+                "hospital": hospital,
+                "schedules": schedules,
+                "reviews": reviews,
+                "empty_days": empty_days,
+            })
         else:
             specialities = hospital.specialities.all()
             return render(request, "hospital_hub/admin/view_specialities.html", {
@@ -529,14 +525,13 @@ class Admin:
             })
 
     def ViewDoctors(request):
-        hospital=request.user.my_admin.first().hospital
-        doctors=DoctorModel.objects.filter(hospital=hospital)
-        
-        
-        return render(request,"hospital_hub/admin/view_doctors.html",{
-        "doctors":doctors,
-        "hospital_name":request.user.my_admin.first().hospital.name,
-        "flag":"all"
+        hospital = request.user.my_admin.first().hospital
+        doctors = DoctorModel.objects.filter(hospital=hospital)
+
+        return render(request, "hospital_hub/admin/view_doctors.html", {
+            "doctors": doctors,
+            "hospital_name": request.user.my_admin.first().hospital.name,
+            "flag": "all"
         })
 
     def AddDoctor(request):
@@ -740,34 +735,56 @@ class Admin:
 
 class Doctor:
     def DoctorRegister(request):
+        cities = CityModel.objects.all()
+        specialities = SpecialityModel.objects.all()
+
         if request.method == "POST":
             username = request.POST["username"]
             full_name = request.POST["full_name"]
             email = request.POST["email"]
-            password = request.POST["password"]
-            confirm_password = request.POST["confirm_password"]
             city = request.POST["city"]
             phone_number = request.POST["phone_number"]
+            speciality = request.POST["speciality"]
+            password = request.POST["password"]
+            confirm_password = request.POST["confirm_password"]
             if password != confirm_password:
-                return render(request, "doctor_register", {
-                    "message": "Passwords must match."
+                return render(request, "hospital_hub/Doctor/doctor_register.html", {
+                    "message": "Passwords must match.",
+                    "cities": cities,
+                    "specialities": specialities,
                 })
+            image = request.FILES.get('image', None)
+            print(image)
             # Atempt to create new user
             try:
-                user = User.objects.create_user(username, email, full_name, password,
-                                                is_doctor=True, city=city, phone_number=phone_number)
+                selectedCity = CityModel.objects.filter(id=city).first()
+                selectedSpeciality = SpecialityModel.objects.filter(
+                    id=speciality).first()
+
+                if image is not None:
+                    user = User.objects.create_user(username=username, email=email, full_name=full_name,
+                                                    password=password, is_doctor=True, city=selectedCity, phone_number=phone_number, image=image)
+                else:
+                    user = User.objects.create_user(username=username, email=email, full_name=full_name,
+                                                    password=password, is_doctor=True, city=selectedCity, phone_number=phone_number)
+                doctor = DoctorModel(my_account=user,
+                                     speciality=selectedSpeciality)
                 user.save()
-                doctor = Doctor(my_account=user)
                 doctor.save()
-            except:
-                return render(request, "doctor_register", {
-                    "message": "Doctor already exist."
+            except IntegrityError:
+                return render(request, "hospital_hub/Doctor/doctor_register.html", {
+                    "message": "Doctor already exist.",
+                    "cities": cities,
+                    "specialities": specialities,
                 })
             login(request, user)
             # why not doctor home
             return HttpResponseRedirect(reverse("doctor_home"))
         else:
-            return render(request, "hospital_hub/Doctor/doctor_register.html")
+            return render(request, "hospital_hub/Doctor/doctor_register.html", {
+                "cities": cities,
+                "specialities": specialities,
+            })
 
     def DoctorLogin(request):
         # redirect users to home page if they are already signed in as patients
@@ -868,7 +885,6 @@ class Patient:
                           })
 
     def PatientHome(request):
-
         # Redirect PATIENTS to login page if they are not signed in as admins
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('patient_login'))
