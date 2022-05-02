@@ -281,7 +281,10 @@ class Appointment(models.Model):
     schedule=models.ForeignKey(Schedule,on_delete= models.CASCADE,related_name="appointments")
     status=models.ForeignKey(AppointmentStatus, on_delete=models.CASCADE)
     patient_no=models.IntegerField()
-    appt_date=models.DateTimeField()
+    appt_date=models.DateField()
+
+    def __str__(self):
+        return ("Appointment with "+str(self.patient.my_account.username) +" on "+self.schedule.day+" "+str( self.appt_date))
 
 class AppointmentDocument(models.Model):
     appointment= models.ForeignKey(Appointment,on_delete= models.CASCADE,related_name="document")

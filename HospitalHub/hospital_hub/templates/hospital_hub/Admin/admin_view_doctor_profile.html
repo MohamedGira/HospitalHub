@@ -186,11 +186,11 @@
                                     </div>
                                     -->
                                     
-                                    {%for schedule in schedules %}
+                                    {%for schedule,abbreviation in schedules %}
 
                                        <div class="col-3 col-sm-3 col-md-3 col-lg-3 mb-2">
                                         <div class="time-panel">
-                                            <h3>{{schedule.day}}</h3>
+                                            <h3>{{abbreviation}}</h3>
                                             <ul class="list-unstyled mb-0">
                                                 <li style="color:#CF484C;" >{{schedule.start_time|time:"h:i A"}}</li>
                                                 <li style="color:#81C2D6;">to</li>
@@ -302,13 +302,13 @@
                                           </div>
                                             
                                              <ul class="list-unstyled mb-0">
-                                                {%for schedule in schedules %}
+                                                {%for schedule , abbreviation in schedules %}
 
                                                 <li>
                                                     <section>
                                                 <div class ="container">
                                                 <div class="row">
-                                                       <div class="col-sm-3">
+                                                       <div class="col-sm-9">
                                                         <h6 calss ="mb-0">{{schedule.day}}</h6>
                                                       </div>
                                                     <form method="post">
