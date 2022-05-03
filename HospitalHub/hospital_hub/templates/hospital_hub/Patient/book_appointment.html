@@ -112,7 +112,9 @@
                       <p class="text-secondary">{{request.GET.message}}</p>
                       {%endif%}
                             <div class="container">
-                                <!-- .row end -->
+                                <!-- .row end -->     {%if message %}
+                                                  <h6 style="color: darkred; text-align: left">{{message}}</h6>
+                                                {%endif%}
                                 <div class="row">
 
 
@@ -135,19 +137,19 @@
                                     </div>
                                     -->
                                     
-                                    {%for schedule,abbreviation in schedules %}
+                                    {%for schedule_and_abbreviation, dates_and_corres_turn in schedules %} <!--schedule,abbreviation, nextdays-->
 
                                        <div class="col-3 col-sm-3 col-md-3 col-lg-3 mb-2">
                                         <div class="time-panel">
-                                            <h3>{{abbreviation}}</h3>
+                                            <h3>{{schedule_and_abbreviation.1}}</h3>
                                             <ul class="list-unstyled mb-0">
-                                                <li style="color:#CF484C;" >{{schedule.start_time|time:"h:i A"}}</li>
+                                                <li style="color:#CF484C;" >{{schedule_and_abbreviation.0.start_time|time:"h:i A"}}</li>
                                                 <li style="color:#81C2D6;">to</li>
-                                                <li style="color:#CF484C;">{{schedule.end_time|time:"h:i A"}}</li>
+                                                <li style="color:#CF484C;">{{schedule_and_abbreviation.0.end_time|time:"h:i A"}}</li>
                                             </ul>
                                         </div>
                                         <button type="button" class="btn btn-primary"  data-toggle="modal"
-                                                data-target="#edit_{{schedule.day}}" style="width:50%;
+                                                data-target="#edit_{{schedule_and_abbreviation.0.day}}" style="width:50%;
                                         font-size:12px; padding:0px 0px;">Book</button>
                                     
     
@@ -155,45 +157,47 @@
                                                                         <!-- .time-panel end -->
 
 
-                                    <div class="modal fade" id="edit_{{schedule.day}}" tabindex="-1" 
+                                    <div class="modal fade" id="edit_{{schedule_and_abbreviation.0.day}}" tabindex="-1" 
                                        role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                       <div class="modal-dialog" role="document" >
                                         <div class="modal-content" style="width:120%;">
                                           <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Edit Schedule</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">Pick a date</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#CF484C;">
                                               <span aria-hidden="true">&times;</span>
                                             </button>
                                           </div>
                                           <div class="modal-body">
-                                            Confirm Appointment on {{schedule.day}} ?
+                                            Confirm Appointment on {{schedule_and_abbreviation.0.day}} ?
                                           </div>
 
                                             <form method="post">
                                                 {% csrf_token %}
+
                                                 <input type="hidden" name="command" value="confirm"/>
+                                                <input type="hidden" name="schedule" value="{{schedule_and_abbreviation.0.id}}"/>
                                                 
                                                  <div>
-
+                                                     <p class="text-primary">Choose a date</p>
+                                                     <select name="appt_date">
+                                                         {%for date , corresponding_turn in dates_and_corres_turn %}
+                                                         {%if corresponding_turn >= schedule_and_abbreviation.0.patient_count%}
+                                                         <option value="{{date.date|date:"Y-m-d"}}" disabled>{{date.date}} patients ahead ({{corresponding_turn}}) </option>
+                                                         {%else%}
+                                                         <option value="{{date.date|date:"Y-m-d"}}">{{date.date }} patients ahead ({{corresponding_turn}}) </option>
+                                                         {%endif%}
+                                                         {%endfor%}
+                                                     </select>
                                                  </div>
+
                                                 <div class="group" style="color: rgba(255,255,255,.5);">
-                                                Day
-                                                <input class="input" type="date" value="{{schedule.day}}"  name="appt_schedule" disabled
-                                                    style="width:40%;">
-                                                Date
-                                                <input class="input" type="date" value=""  name="appt_date" disabled
-                                                    style="width:40%;" />
-                                                Your turn will be: 
-                                                <input class="input" type="date" value=""  name="appt_count" disabled
-                                                    style="width:40%;" />
+                                                alo
                                                 </div>
 
                                                 <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal" style="background: rgba(207, 72, 76, 0.8)  ;">Cancel</button>
                                                 <input type="submit" class="btn btn-primary" value="Confirm">
-                                                {%if message %}
-                                                  <h6 style="color: darkred; text-align: left">{{message}}</h6>
-                                                {%endif%}
+                                           
                                                 </div>
                                             </form>
 

@@ -19,7 +19,7 @@ from .models import AppointmentDocument as AppointmentDocsModel
 from .utils import *
 
 import re
-
+import datetime
 ##
 from django.contrib import messages
 ##
@@ -103,6 +103,14 @@ def Login(request):
 
 ############################################################################
 # Owner app
+
+
+def next_weekday(d, weekday):
+    days_ahead = weekday - d.weekday()
+    if days_ahead <= 0: # Target day already happened this week
+        days_ahead += 7
+    return d + datetime.timedelta(days_ahead)
+
 
 class Owner:
 
@@ -968,13 +976,16 @@ class Patient:
                           })
 
     def PatientHome(request):
-        # Redirect PATIENTS to login page if they are not signed in as admins
-        if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('login'))
-        elif not request.user.is_patient:
-            # may add later "you have no access to this page :( "
-            logout(request)
-            return HttpResponseRedirect(reverse('patient_home'))
+        #####consider making patient and anonymous user have the same functionalitis(except in booking and commenting)######
+        
+       #Redirect PATIENTS to login page if they are not signed in as patient
+
+        #if not request.user.is_authenticated:
+        #    return HttpResponseRedirect(reverse('login'))
+        #if not request.user.is_patient:
+        #    # may add later "you have no access to this page :( "
+        #    logout(request)
+        #    return HttpResponseRedirect(reverse('patient_home'))
 
         allspecialities = SpecialityModel.objects.all()
         allhospitals = HospitalModel.objects.all()
@@ -1098,68 +1109,104 @@ class Patient:
         return render(request, "hospital_hub/Patient/hospitals_by_speciality.html")
 
     def ViewDoctorProfile(request, doctor_name):
-        doc_account = User.objects.filter(username=doctor_name, doctor=True)
-        doctor = doc_account.first().my_doctor.first()
-        hospital = doctor.hospital
-        patient = User.objects.filter(username=request.user.username, patient=True).first()
-        appt_date = request.POST['date']
-        selected_schedule = ScheduleModel.objects.filter(id=request.POST['schedule']).first()
-        appt_count = AppointmentModel.objects.filter(appt_date=appt_date).count()
-
-        if request.method == "POST":
-            if request.POST.get("command", False):
-                if request.POST['command'] == "confirm":
-
-                    if appt_count < selected_schedule.max_patient_count:
-                        patient_no = appt_count+1
-
-                        appointment = AppointmentModel()
-                        appointment.doctor = doctor
-                        appointment.patient = patient
-                        appointment.schedule = selected_schedule
-                        appointment.patient_no = patient_no
-                        appointment.date = appt_date
-                        appointment.save()
-                        return HttpResponseRedirect(reverse('patient_view_doctors', args=[doctor_name]))
-                    else:
-                        return render(request, "hospital_hub/Patient/book_appointment.html", {
-                        "message": "No available appointments on this day.",
-            })
-                    
+        
+        
+        doc_account =User.objects.filter(username=doctor_name, doctor=True)
         if doc_account.count() == 1:
-            doc = doc_account.first().my_doctor.first()
-            account = doc_account.first()
-            reviews = doc.my_reviews.all()
-            schedules = doc.dailyschedule.all()
-            schedule_abbreviation = []
+            doctor = doc_account.first().my_doctor.first()
+            hospital = doctor.hospital
+            reviews = doctor .my_reviews.all()
+            schedules = doctor .dailyschedule.all()
+            schedule_abbreviation_days = []
+            patient_account = User.objects.filter(username=request.user.username, patient=True).first()
+
+            
+            days=['Monday','Tuesday','Wednesday','Thursday','Friday','Sunday','Saturday']
 
             for schedule in schedules:
-                schedule_abbreviation.append([schedule, schedule.day[0:3]])
-            empty_days = []
-            for day in days:
-                dne = True
-                for schedule in schedules:
-                    if schedule.day == day:
-                        dne = False
-                        break
-                if dne == True:
-                    empty_days.append(day)
+                nextday=next_weekday(datetime.datetime.today(),days.index(schedule.day))
+                next_month_dates_waiting=[]
+                patients_ahead=AppointmentModel.objects.filter(doctor=doctor,appt_date=nextday.date()).count()
+                next_month_dates_waiting.append([nextday,patients_ahead])
+                for j in range(3):
+                    nextday=nextday+ datetime.timedelta(7)
+                    patients_ahead=AppointmentModel.objects.filter(doctor=doctor,appt_date=nextday.date()).count()
+                    next_month_dates_waiting.append([nextday,patients_ahead])
+                    
+                schedule_abbreviation_days.append([[schedule, schedule.day[0:3]],next_month_dates_waiting])
+        
+
+            if request.method == "POST":    
+                if request.POST['command'] == "confirm":
+                    if patient_account is  None:
+                        return render(request, "hospital_hub/Patient/book_appointment.html", {
+                        "message": "You have to sign in to book",
+                        "doctor": doctor,
+                        "account": doc_account.first(),
+                        "hospital": hospital,
+                        "schedules": schedule_abbreviation_days,
+                        "reviews": reviews,
+                            })
+                    else:
+                        appt_date = request.POST['appt_date']
+                        selected_schedule = ScheduleModel.objects.filter(id=request.POST['schedule']).first()
+                        appt_count = AppointmentModel.objects.filter(doctor=doctor,appt_date=appt_date).count()
+
+                        if appt_count < selected_schedule.patient_count:
+                            exsiting_appointments=AppointmentModel.objects.filter(doctor=doctor,
+                                                               patient=patient_account.my_patient.first(),
+                                                               appt_date=appt_date)
+                            if exsiting_appointments.count()==0:
+
+                                patient_no = appt_count+1
+                                appointment = AppointmentModel()
+                                appointment.doctor = doctor
+                                appointment.patient = patient_account.my_patient.first()
+                                appointment.schedule = selected_schedule
+                                appointment.patient_no = patient_no
+                                appointment.appt_date= appt_date
+                                #appointment.status=AppointmentStatus.objects.filter("Booked").first()
+                                appointment.save()
+                                return HttpResponseRedirect(reverse('book_appointment', args=[doctor_name]))
+                            else:
+                                return render(request, "hospital_hub/Patient/book_appointment.html", {
+                                "message": "you already have an appointment on this day, your turn is ("
+                                +str(exsiting_appointments.first().patient_no)+").",
+                                "doctor": doctor,
+                                "account": doc_account.first(),
+                                "hospital": hospital,
+                                "schedules": schedule_abbreviation_days,
+                                "reviews": reviews,
+                            })
+
+                        else:
+                            return render(request, "hospital_hub/Patient/book_appointment.html", {
+                            "message": "No available appointments on this day.",
+                            "doctor": doctor,
+                            "account": doc_account.first(),
+                            "hospital": hospital,
+                            "schedules": schedule_abbreviation_days,
+                            "reviews": reviews,
+                            })
+                else:
+                    return HttpResponseRedirect(reverse('book_appointment', args=[doctor_name]))
 
             return render(request, "hospital_hub/Patient/book_appointment.html", {
-                "doctor": doc,
-                "account": account,
-                "hospital": hospital,
-                "schedules": schedule_abbreviation,
-                "reviews": reviews,
-                "empty_days": empty_days,
-
-            })
+                            "doctor": doctor,
+                            "account": doc_account.first(),
+                            "hospital": hospital,
+                            "schedules": schedule_abbreviation_days,
+                            "reviews": reviews,
+                            })     
+               
         else:
-            specialities = hospital.specialities.all()
+            specialities = Speciality.objects.all()
             return render(request, "hospital_hub/Patient/view_specialities.html", {
                 "message": "No doctor by this name exitsts in your hospital.",
                 "specialities": specialities,
             })
+
+        
     def ViewDoctors(request):
         doctors = DoctorModel.objects.all()
         doctors_with_dependent_appointmens = []
@@ -1170,6 +1217,7 @@ class Patient:
         return render(request, "hospital_hub/Patient/view_doctors.html", {
             "doctors": doctors_with_dependent_appointmens
         })
+
     def ViewSpecialities(request):
         # Redirect users to login page if they are not signed in as admins
         if not request.user.is_authenticated:

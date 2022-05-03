@@ -49,10 +49,9 @@
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
         <div class="container">
         <img src="../assets/img/logo2.png" alt="" style="width:20px;">
-        <a style="color:#81C2D6" class="navbar-brand" href="#"><span class="text-primary2">Hospital</span>Hub </a>
+        <a style="color:#81C2D6" class="navbar-brand" href="{%url 'home'%}"><span class="text-primary2">Hospital</span>Hub </a>
 
-        <form method="post">
-
+        <form method="post" action="{%url 'patient_home'%}">
             {% csrf_token %}
             <div class="input-group input-navbar">
             <div class="input-group-prepend">
@@ -86,9 +85,15 @@
 
         <div class="collapse navbar-collapse" id="navbarSupport">
             <ul class="navbar-nav ml-auto">
+                  {%if user.is_authenticated%}
             <li class="nav-item active">
                 <a class="nav-link" href="{%url 'patient_home'%}">Home</a>
             </li>
+            {%else%}
+                <li class="nav-item active">
+                <a class="nav-link" href="{%url 'home'%}">Home</a>
+            </li>
+            {%endif%}
             <li class="nav-item">
                 <a class="nav-link" href="#">About Us</a>
             </li>

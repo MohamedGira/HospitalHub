@@ -298,7 +298,7 @@ class Appointment(models.Model):
         Patient, on_delete=models.CASCADE, related_name="appointments")
     schedule = models.ForeignKey(
         Schedule, on_delete=models.CASCADE, related_name="appointments")
-    status = models.ForeignKey(AppointmentStatus, on_delete=models.CASCADE)
+    status = models.ForeignKey(AppointmentStatus, on_delete=models.SET_NULL,null=True)
     patient_no = models.IntegerField()
     appt_date = models.DateField()
 
