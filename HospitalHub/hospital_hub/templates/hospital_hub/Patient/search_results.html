@@ -24,6 +24,7 @@
 <!-- .page-banner -->
 
 
+                 {%if specialities%}
 
 <div class="page-section bg-light">
     <div class="container">
@@ -77,6 +78,10 @@
         </div>
     </div>
 </div>
+                {%endif%}
+
+{%if doctors%}
+
  <div class="page-section bg-light">
     <div class="container">
         <div class="row justify-content-center">
@@ -84,6 +89,7 @@
                 {%if doctors%}
                          <h1 class="font-weight-normal">Doctors</h1>
                 {%endif%}
+
                 <div class="row">
                     
                     {%if doctors%}
@@ -127,6 +133,9 @@
         </div>
     </div>
 </div>
+{%endif%}
+
+{%if hospitals%}
  <div class="page-section bg-light">
     <div class="container">
         <div class="row justify-content-center">
@@ -174,6 +183,7 @@
         </div>
     </div>
 </div>
+{%endif%}
 
 <div class="page-section banner-home bg-image" style="background-image: url(../assets/img/banner-pattern.svg)">
     <div class="container py-5 py-lg-0">
