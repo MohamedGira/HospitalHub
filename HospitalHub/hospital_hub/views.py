@@ -1,7 +1,8 @@
+from datetime import datetime
 import site
 from django.shortcuts import render
 from django.urls import reverse
-from django.http import HttpResponseRedirect, HttpResponse  
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.contrib.auth import get_user_model
@@ -51,54 +52,53 @@ def Logout(request):
 
 
 def Login(request):
-        # redirect users to home page if they are already signed in as patients
-        if request.user.is_authenticated:  # if already signed in
-            if request.user.is_doctor:
-                return HttpResponseRedirect(reverse('doctor_home'))
-            if request.user.is_patient:
-                return HttpResponseRedirect(reverse('patient_home'))
-            logout(request)
-            return HttpResponseRedirect(reverse('login'))
-            
+    # redirect users to home page if they are already signed in as patients
+    if request.user.is_authenticated:  # if already signed in
+        if request.user.is_doctor:
+            return HttpResponseRedirect(reverse('doctor_home'))
+        if request.user.is_patient:
+            return HttpResponseRedirect(reverse('patient_home'))
+        logout(request)
+        return HttpResponseRedirect(reverse('login'))
 
-        if request.method == 'POST':
-            username = request.POST.get("username", None)
-            password = request.POST.get("password", None)
-            user = authenticate(request, username=username, password=password)
+    if request.method == 'POST':
+        username = request.POST.get("username", None)
+        password = request.POST.get("password", None)
+        user = authenticate(request, username=username, password=password)
 
-            if user is not None:
-                if request.POST['user_type']=="doctor":
-                    if user.is_doctor:
-                        login(request, user) 
-                        return HttpResponseRedirect(reverse("doctor_home"))
-                    else:
-                        return render(request, "hospital_hub\login-general.html", {
-                            "message": "Invalid username or password",
-                            "radio": "doctor"
-                        })
-                elif request.POST['user_type']=="patient":
-                    if user.is_patient:
-                        login(request, user) 
-                        return HttpResponseRedirect(reverse("patient_home"))
-                    else:
-                        return render(request, "hospital_hub\login-general.html", {
-                            "message": "Invalid username or password",
-                            "radio": "patient"
-                        })
+        if user is not None:
+            if request.POST['user_type'] == "doctor":
+                if user.is_doctor:
+                    login(request, user)
+                    return HttpResponseRedirect(reverse("doctor_home"))
                 else:
                     return render(request, "hospital_hub\login-general.html", {
-                            "message": "Something went wrong, try again",
-                            "radio": "patient"
-                        })
+                        "message": "Invalid username or password",
+                        "radio": "doctor"
+                    })
+            elif request.POST['user_type'] == "patient":
+                if user.is_patient:
+                    login(request, user)
+                    return HttpResponseRedirect(reverse("patient_home"))
+                else:
+                    return render(request, "hospital_hub\login-general.html", {
+                        "message": "Invalid username or password",
+                        "radio": "patient"
+                    })
             else:
                 return render(request, "hospital_hub\login-general.html", {
-                    "message": "Invalid username or password",
+                    "message": "Something went wrong, try again",
                     "radio": "patient"
                 })
         else:
             return render(request, "hospital_hub\login-general.html", {
+                "message": "Invalid username or password",
                 "radio": "patient"
             })
+    else:
+        return render(request, "hospital_hub\login-general.html", {
+            "radio": "patient"
+        })
 
 
 ############################################################################
@@ -884,6 +884,7 @@ class Doctor:
 
             if user is not None:
                 if user.is_doctor:
+                    login(request, user)
                     return HttpResponseRedirect(reverse("doctor_home"))
                 else:
                     return render(request, "hospital_hub\login.html", {
@@ -906,7 +907,74 @@ class Doctor:
         elif not request.user.is_doctor:
             logout(request)
             return HttpResponseRedirect(reverse('doctor_login'))
-        return HttpResponse("Hello, world!")
+
+        doctor = DoctorModel.objects.filter(my_account=request.user).first()
+        schedule = Schedule.objects.filter(doctor=doctor).first()
+        appointment = Appointment.objects.filter(
+            schedule=schedule, appt_date=datetime.today()).all()
+        status = Appointment.objects.filter(status=pending).first()
+        # give all pending any day for the doctor
+        pending = Appointment.objects.filter(
+            schedule=schedule, status=status).all()
+
+        return render(request, "hospital_hub/Doctor/doctor_homepage.html", {
+            "doctor": doctor,
+            "apointments": appointment,
+            "pending": pending,
+        })
+
+    def DoctorSchedule(request):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('doctor_login'))
+        elif not request.user.is_doctor:
+            logout(request)
+            return HttpResponseRedirect(reverse('doctor_login'))
+
+        doctor = DoctorModel.objects.filter(my_account=request.user).first()
+        schedule = Schedule.objects.filter(doctor=doctor).first()
+        next_month_schedule = []
+        day = datetime.today()
+
+        for i in range(7):
+            day = day + datetime.timedelta(1)
+            appointments = Appointment.objects.filter(
+                schedule=schedule, appt_date=day.date()).all()
+            next_month_schedule.append(appointments)
+
+        return render(request, "hospital_hub/Doctor/doctor_homepage.html", {
+            "doctor": doctor,
+            "next_month_schedule": next_month_schedule,
+        })
+
+    def DoctorViewRecord(request, appointment):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('doctor_login'))
+        elif not request.user.is_doctor:
+            logout(request)
+            return HttpResponseRedirect(reverse('doctor_login'))
+
+        patient = appointment.patient
+        doctor = DoctorModel.objects.filter(my_account=request.user).first()
+        appointments = Appointment.objects.filter(patient=patient).all()
+        docs = []
+        tests = []
+        if request == "POST":
+            title = request.POST["title"]
+            attachment = request.POST["attachment"]
+            diagnosis = request.POST["diagnosis"]
+            disease = request.POST["disease"]
+
+        for apt in appointments:
+            doc = AppointmentDocument.objects.filter(Appointment=apt)
+            docs.append(doc)
+            tests.append(MedicalTest.objects.filter(doc))
+
+        return render(request, "hospital_hub/Doctor/doctor_homepage.html", {
+            "patient": patient,
+            "doctor": doctor,
+            "documents": docs,  # array
+            "tests": tests,  # array
+        })
 
     def DoctorLogout(request):
         logout(request)
