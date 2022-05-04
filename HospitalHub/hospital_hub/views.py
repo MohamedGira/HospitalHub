@@ -380,7 +380,7 @@ class Owner:
                 
                 return render(request,"hospital_hub/owner/owner_view_speciality.html",{
                     "doctors":doctors,
-                    "hospital_name":request.user.my_admin.first().hospital.name,   
+                    "hospital_name":hospital.name,   
                     "speciality":spec.first().name
                     })
             else:
@@ -396,10 +396,9 @@ class Owner:
 
     def OwnerViewDoctorProfile(request, doctor_name):
         
-            hospital = request.user.my_admin.first().hospital
             doc_account = User.objects.filter(username=doctor_name, doctor=True)
-            doctor = doc_account.first().my_doctor.first()
-        
+            doctor = doc_account.first().my_doctor.first()        
+            hospital = doctor.hospital
 
             if doc_account.count() == 1:
                 doc = doc_account.first().my_doctor.first()
@@ -426,7 +425,6 @@ class Owner:
                     "message": "No doctor by this name exitsts in your hospital.",
                     "specialities": specialities,
                 })
-
 
     def RemoveHospital(request,hospital_id):
         hospitalset=HospitalModel.objects.filter(id=hospital_id)
