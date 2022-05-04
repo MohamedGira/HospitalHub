@@ -12,17 +12,18 @@ urlpatterns = [
     path('logout', views.Logout, name='user_logout'),
 
 
-
+    
     #########################
     # paths for owner
 
     path('owner/register', views.Owner.OwnerRegister, name='owner_register'),
     path('owner/login', views.Owner.OwnerLogin, name='owner_login'),
+    path('owner/logout', views.Owner.OwnerLogout, name='owner_logout'),
     path('owner/home', views.Owner.OwnerHome, name='owner_home'),
-    path('owner/add_admin', views.Owner.OwnerAddAdmin, name='owner_add_admin'),
-    path('owner/add_hospital', views.Owner.OwnerAddHospital,
-         name='owner_add_hospital'),
-
+    path('owner/add_admin', views.Owner.OwnerAddAdmin,name='owner_add_admin'),
+    path('owner/add_hospitals', views.Owner.OwnerAddHospitals,name='owner_add_hospitals'),
+    path('owner/view_hospitals', views.Owner.OwnerViewHospitals,name='owner_view_hospitals'),
+    path('owner/specialities/<int:hosp_id>', views.Owner.OwnerViewSpecialities,name='owner_view_specialities'),
 
 
 
@@ -47,7 +48,7 @@ urlpatterns = [
     path('admin/admins/remove/<int:removed_admin_id>',views.Admin.RemoveAdmin,name='remove_admin'),
     path('admin/doctors',views.Admin.ViewDoctors,name='admin_view_doctors'),
     path('admin/doctors/remove/<int:doctor_id>',views.Admin.RemoveDoctorFromDoctors ,name='remove_doctor_from_doctors'),
-    path('admin/doctors/<str:doctor_name>',views.Admin.ViewDoctorProfile,name='admin_view_doctor'),
+    path('admin/doctors/<str:doctor>',views.Admin.ViewDoctorProfile,name='admin_view_doctor'),
     path('admin/specialities',views.Admin.ViewSpecialities,name='view_specialities'),
     path('admin/specialities/remove/<int:speciality_id>',views.Admin.RemoveSpeciality,name='remove_speciality'),
     path('admin/specialities/<str:speciality>',views.Admin.ViewSpeciality,name='view_speciality'),
@@ -56,10 +57,10 @@ urlpatterns = [
     
     #########################
     # paths for doctor
-    path('Doctor/register', views.Doctor.DoctorRegister, name='doctor_register'),
-    path('Doctor/login', views.Doctor.DoctorLogin, name='doctor_login'),
+    path('doctor/register', views.Doctor.DoctorRegister, name='doctor_register'),
+    path('doctor/login', views.Doctor.DoctorLogin, name='doctor_login'),
     # displaying schedual and some other data
-    path('Doctor/home', views.Doctor.DoctorHome, name='doctor_home'),
+    path('doctor/home', views.Doctor.DoctorHome, name='doctor_home'),
 
 
 
@@ -70,9 +71,7 @@ urlpatterns = [
     path('patient/login', views.Patient.PatientLogin, name='patient_login'),
     path('patient/register', views.Patient.PatientRegister, name='patient_register'),
     path('patient/home', views.Patient.PatientHome, name='patient_home'),
-
-    path('patient/searchbyspeciality',
-         views.Patient.searchbyspeciality, name='specialities_search'),
-    path('patient/find_hospitals_by_speciality',
-         views.Patient.find_hospitals_by_speciality, name='find_hospitals_by_speciality'),
+    
+    path('patient/searchbyspeciality', views.Patient.searchbyspeciality, name='specialities_search'),
+    path('patient/find_hospitals_by_speciality', views.Patient.find_hospitals_by_speciality, name='find_hospitals_by_speciality'),
 ]

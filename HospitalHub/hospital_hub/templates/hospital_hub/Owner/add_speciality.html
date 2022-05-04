@@ -1,0 +1,99 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en" >
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Baloo+Paaji" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap" rel="stylesheet">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:600'>
+
+<link rel="stylesheet" href="{% static 'hospital_hub/assets/css/bootstrap.css' %}">
+<link rel="stylesheet" href="{% static 'hospital_hub/assets/css/maicons.css'%} ">
+<link rel="stylesheet" href="{% static 'hospital_hub/assets/css/add_specialty.css'%}">
+
+
+<head>
+  <meta charset="UTF-8">
+  <title>Add Speciality</title>
+</head>
+<body>
+  <div class="back-to-top"></div>
+  <header>
+    <div class="topbar">
+        <div class="row">
+          <div class="col-sm-6 text-sm">
+            <div class="site-info">
+              <a href="#"><span class="mai-call text-primary"></span> +20 1013421486</a>
+              <span class="divider">|</span>
+              <a href="#"><span class="mai-mail text-primary"></span> HospitalHub@gmail.com</a>
+            </div>
+          </div>
+          <div class="col-sm-3   text-right text-sm">
+            <div class="social-mini-button">
+              <a href="#"><span class="mai-logo-facebook-f"></span></a>
+              <a href="#"><span class="mai-logo-twitter"></span></a>
+              <a href="#"><span class="mai-logo-dribbble"></span></a>
+              <a href="#"><span class="mai-logo-instagram"></span></a>
+            </div>
+          </div>
+        </div> <!-- .row -->
+      </div> <!-- .container -->
+    </header> <!-- .topbar -->
+<!-- partial:index.partial.html -->
+<div class="login-wrap">
+	<div class="login-html">
+		<input id="tab-2" type="radio" name="tab" class="sign-up" checked><label for="tab-2" class="tab">Add Specialty</label>
+		<div class="login-form">
+        <div class="sign-up-htm">
+        <div class="group">
+
+            <form method="post">
+                <!--Specialities list-->
+                {%csrf_token%}
+                <div class="group">
+                <label for="user" class="label">Doctor's Specialty</label>
+                <select  id="speciality" class="input" style=" color: white;" name="speciality">
+                    <option value="" disabled selected style="background: transparent; color: black;">
+                    Choose Specialty</option>
+                    {%for speciality in specialities%}
+
+                    {%if submitted_speciality_name == speciality.name %}
+                    <option value="{{speciality.name}}" style="background: transparent; color: black;" selected>
+                    {{speciality}}</option>
+                    {%else%}
+                    <option value="{{speciality.name}}" style="background: transparent; color: black;">{{speciality}}
+                    </option>
+                    {%endif%}
+
+                    {%empty%}
+                    <option>
+                    No Specialities Available at the moment.
+                    </option>
+                    {%endfor%}
+                </select>
+                </div>
+                {%if message %}
+                <h6 style="color:#CF484C;margin-bottom:-6.8%;margin-top:-2%">{{message}}</h6>
+               {%endif%}
+                <div class="hr"></div>
+                <div class="group">
+                <input type="submit" class="button" value="Add Specialty">
+
+                </div>
+
+            </form>
+        <div class="hr"></div>
+          
+        </div>
+            
+      </div>
+            
+		</div>
+        
+	</div>
+    
+</div>
+    
+<!-- partial -->
+
+</body>
+</html>

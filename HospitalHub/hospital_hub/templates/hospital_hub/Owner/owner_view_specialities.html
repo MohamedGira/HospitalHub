@@ -1,0 +1,229 @@
+{%extends 'hospital_hub/Admin/admin_layout.html'%}
+{%load static%}
+{%block body%}
+
+<header>
+
+    <!--the home/doctors/admins/logout header-->
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+        <div class="container">
+            <img src="{%static 'hospital_hub/assets/img/logo2.png'%}" alt="" style="width:20px;">
+            <a style="color:#81C2D6" class="navbar-brand" href="#"><span class="text-primary2">Hospital</span>Hub </a>
+
+
+
+            <div class="collapse navbar-collapse" id="navbarSupport">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{%url 'admin_home'%}">Home</a>
+                    </li>
+                        <li class="nav-item active">
+                            <a class="nav-link " href="{%url 'view_specialities'%}">Specialities</a>
+                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%url 'admin_view_doctors'%}">Doctors</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%url 'admin_view_admins'%}">Admins</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%url 'admin_logout'%}">Logout</a>
+                    </li>
+                </ul>
+            </div> <!-- .navbar-collapse -->
+        </div> <!-- .container -->
+    </nav>
+</header>
+
+<div class="page-banner overlay-dark bg-image"
+        style="background-image: url(../../../static/hospital_hub/assets/img/bg_image_1.jpg)">
+    <div class="banner-section">
+        <div class="container text-center wow fadeInUp">
+            <span class="subhead">🏥{{hospital_name}}🏥 </span>
+            <nav aria-label="Breadcrumb">
+                <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
+                    <li class="breadcrumb-item"><a href="{%url 'admin_home'%}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Specialties
+                    </li>
+                </ol>
+            </nav>
+            <h1 class="font-weight-normal">Your Specialties</h1>
+        </div>
+        <!-- .container -->
+    </div>
+    <!-- .banner-section -->
+</div>
+<!-- .page-banner -->
+
+
+
+<div class="page-section bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="row">
+                <!--
+                    {%if message %}
+                    <h3 class="text-primary2">{{message}}</h3>
+                -->
+                    {%endif%}
+                    {%if specialities%}
+                        {%for speciality , doctors in specialities%}
+
+                        <div class="col-md-6 col-lg-3 py-3 wow zoomIn">
+                            <div class="card-doctor">
+
+                                <div class="header">
+                                    <img src="{{speciality.image.url}}" alt=""
+                                            height="260" style="object-fit: cover;">
+                                    <div class="meta" style="text-align: center">
+
+                                        <a href="{%url 'view_speciality' speciality=speciality.name %}">
+                                            <span class="mai-people"></span>
+                                        </a>
+                                        <a data-toggle="modal"
+                                                data-target="#remove_{{speciality.id}}">
+                                        <span class="mai-close"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="body">
+                                    <p class="text-x2 mb-0" style="text-align: center">
+                                        {{speciality.name}}
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--
+
+                        <div class="modal fade" id="remove_{{speciality.id}}" tabindex="-1" 
+                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document" >
+                            
+                                <div class="modal-content" style="width:120%;">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Remove Speciality</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:#CF484C;">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Are you sure you want to delete {{speciality}}?
+                                    {%if doctors%}
+                                        <br /><br />The following doctors (with all thier appointments and schedules)will be removed from your hospital
+                                    {%endif%}
+                                    </div>
+                                        <ul >           
+                                        {%for doctor in doctors %}
+                                            <li>
+                                                <div class="col-sm-9">
+                                                <h6 calss ="mb-0">Dr. {{doctor.my_account.full_name}}</h6>
+                                                </div>
+                                                <hr />
+                                            </li>
+                                        {%endfor%}            
+                                        </ul>
+                                    <div class="modal-footer">
+                                    
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal" >Cancel</button>
+                                        <a class="btn btn-primary" href="{% url 'remove_speciality' speciality_id=speciality.id %}"  value="Save" style="background: rgba(207, 72, 76, 0.8)  ;">Delete</a>                            
+                                    </div>                                                                                
+                                </div>                            
+                            </div>
+                        </div>
+                    -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        {%endfor%}
+
+                    {%else%}
+                    <h1 style="color:grey;">Your hospital has no specialites added yet.</h1>
+                    {%endif%}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- .container -->
+</div>
+<!-- .page-section -->
+
+<div class="page-section banner-home bg-image" style="background-image: url(../assets/img/banner-pattern.svg)">
+    <div class="container py-5 py-lg-0">
+        <div class="row align-items-center">
+            <div class="col-lg-12 wow zoomIn">
+                <div class="img-banner d-none d-lg-block">
+                    <p><img src="../assets/img/logo3.png" alt="Logo" /></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- .banner-home -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{%endblock%}
+
+
+
+
+<!--
+    card item
+
+            <div class="col">
+                <div class="card h-100">
+                    <img src="src" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h3 class="Cardiology">Cardiology</h3>
+                        <p class="card-text">
+                            <header>
+                                <h4>
+                                    Doctors
+                                </h4>
+                            </header>
+                        <p class="card-text">Dr. Komsry</p>
+                        <h4>
+                            Clinical time
+                        </h4>
+                        <p class="card-text">2:00 PM / 4:00 PM</p>
+                        </p>
+                    </div>
+                </div>
+            </div>-->
