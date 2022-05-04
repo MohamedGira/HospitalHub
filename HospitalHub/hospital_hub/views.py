@@ -405,8 +405,26 @@ class Owner:
                 doc = doc_account.first().my_doctor.first()
                 account = doc_account.first()
                 reviews = doc.my_reviews.all()
+                reviews_left=[]
+                reviews_right=[]
+                
                 schedules = doc.dailyschedule.all()
                 schedule_abbreviation = []
+
+
+                
+                total_reviews=0
+                for i in range(reviews.count()):
+                    total_reviews+=reviews[i].rating
+                    if i<=reviews.count()/2:
+                        reviews_left.append(reviews[i])
+                    else:
+                        reviews_right.append(reviews[i])
+                if reviews.count():
+                    total_reviews=int(total_reviews/reviews.count())
+
+
+
 
                 for schedule in schedules:
                     schedule_abbreviation.append([schedule, schedule.day[0:3]])
@@ -418,6 +436,10 @@ class Owner:
                     "hospital": hospital,
                     "schedules": schedule_abbreviation,
                     "reviews": reviews,
+                    
+                    "reviews_left": reviews_left,
+                    "reviews_right": reviews_right,
+                    "total_reviews": total_reviews,
 
                 })
             else:
@@ -1484,31 +1506,18 @@ class Patient:
 
         
     def ViewDoctors(request):
-        doctors = DoctorModel.objects.all()
-        doctors_with_dependent_appointmens = []
-        for doctor in doctors:
-            doctors_with_dependent_appointmens.append(
-                [doctor, doctor.appointments.all()])
+        doctors = DoctorModel.objects.filter(is_employed=True)
+      
 
         return render(request, "hospital_hub/Patient/view_doctors.html", {
-            "doctors": doctors_with_dependent_appointmens
+            "doctors": doctors
         })
 
     def ViewSpecialities(request):
         # Redirect users to login page if they are not signed in as admins
-        if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('patient_login'))
-        elif not request.user.is_admin:
-            # may add later "you have no access to this page :( "
-            return HttpResponseRedirect(reverse('home'))
-
+        
         specialities = SpecialityModel.objects.all()
 
-        specialities_with_doctors_dependet = []
-        for speciality in specialities:
-            doctors = DoctorModel.objects.filter(
-                hospital=hospital, speciality=speciality)
-            specialities_with_doctors_dependet.append([speciality, doctors])
 
         if specialities.count() == 0:
             return render(request, "hospital_hub/Patient/view_specialities.html", {
@@ -1516,7 +1525,7 @@ class Patient:
             })
         else:
             return render(request, "hospital_hub/Patient/view_specialities.html", {
-                "specialities": specialities_with_doctors_dependet,
+                "specialities": specialities,
             })
 
     def ViewAppointments(request):
@@ -1554,3 +1563,82 @@ class Patient:
             return render(request, "hospital_hub/Patient/view_appointments_docs.html", {
                 "appointmentDocs": appointmentDocs
             })
+
+    def PatientViewHospital(request,hospital_id):
+        
+        hospitalset = Hospital.objects.filter(id=hospital_id)
+        if hospitalset.count()==1:
+            hospital=hospitalset.first()
+            specialities=hospital.specialities.all()
+            if specialities.count()==0:
+                return render(request, "hospital_hub/Patient/view_hospital.html",{
+                       "specialities":None,
+                       "hospital": hospital,
+                    #   "hospital_name":hospital.name,
+                })
+            else:
+                return render(request, "hospital_hub/Patient/view_hospital.html",{
+                   "specialities":specialities,
+                   "hospital":  hospital,# message: message,
+
+                #   "hospital_name":hospital.name,
+                })
+        else:
+            return render(request, "hospital_hub/Patient/patient_home.html",{
+                   "message":"Invalid id",
+                   
+
+                
+                })
+
+    def PatientViewHospitalSpeciality(request,hospital_id,speciality_name):
+        hospitalset=HospitalModel.objects.filter(id=hospital_id)
+        if hospitalset.count()==1:
+            spec=Speciality.objects.filter(name=speciality_name)
+            hospital=hospitalset.first()
+            if spec.count()==1:
+                doctors=DoctorModel.objects.filter(speciality=spec.first(),hospital=hospital)
+                
+                
+                return render(request,"hospital_hub/patient/patient_view_speciality.html",{
+                    "doctors":doctors,
+                    "hospital_name":hospital.name,   
+                    "speciality":spec.first().name
+                    })
+            else:
+                specialities=hospital.specialities.all()
+                return render(request,"hospital_hub/patient/patient_view_speciality.html",{
+                    "message":"Requested specialitiy doesn't exist",
+                    "specialities":hospital.specialities.all(),
+                    "hospital":  hospital
+
+                    })
+        else:
+            return HttpResponseRedirect('patient_home')
+
+    def PatientViewSpeciality(request,speciality_name):
+        spec=Speciality.objects.filter(name=speciality_name)
+        if spec.count()==1:
+            doctors=DoctorModel.objects.filter(speciality=spec.first(),is_employed=True)
+                
+                
+            return render(request,"hospital_hub/patient/patient_view_speciality.html",{
+            "doctors":doctors,
+            
+            "speciality":spec.first().name
+            })
+        else:
+            specialities=hospital.specialities.all()
+            return render(request,"hospital_hub/patient/patient_view_specialities.html",{
+            "message":"Requested specialitiy doesn't exist",
+            "specialities":hospital.specialities.all(),
+            
+
+            })
+    
+    def ViewHospitals(request):
+        hospitals=HospitalModel.objects.all()
+
+        return render(request, "hospital_hub/Patient/view_hospitals.html", {
+            "hospitals": hospitals
+        })

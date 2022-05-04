@@ -1,19 +1,21 @@
-{%extends 'hospital_hub/Patient/patient_layout.html'%}
+{%extends 'hospital_hub/patient/patient_layout.html'%}
 {%load static%}
 {%block body%}
 
 
+
 <div class="page-banner overlay-dark bg-image"
-     style="background-image: url(../../../static/hospital_hub/assets/img/bg_image_1.jpg)">
+        style="background-image: url(../../../../static/hospital_hub/assets/img/bg_image_1.jpg)">
     <div class="banner-section">
         <div class="container text-center wow fadeInUp">
-        
+            <span class="subhead">🏥{{hospital_name}}🏥</span>
+
             <nav aria-label="Breadcrumb">
                 <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
                     <li class="breadcrumb-item"><a href="{%url 'patient_home'%}">Home</a></li>
-                    {%if speciality%}
-                    <li class="breadcrumb-item"><a href="{%url 'patient_view_specialities'%}">Specialties</a></li>
-                    {%endif%}
+                    
+                    <li class="breadcrumb-item"><a href="{%url 'patient_view_hospitals'%}">Hospitals</a></li>
+                    
                     <li class="breadcrumb-item active" aria-current="page">
                         Doctors
                     </li>
@@ -44,38 +46,38 @@
 
                     {%if doctors%}
 
-                        {% for doctor  in doctors %}
+                        {% for doctor in doctors %}
 
                         <div class="col-md-6 col-lg-3 py-3 wow zoomIn">
                             <div class="card-doctor">
                                 <div class="header">
                                     <img src="{{doctor.my_account.image.url}}" alt="" height="260" style="object-fit: cover;">
                                     <div class="meta" style="text-align:center;">
-                                        <a href="{%url 'book_appointment' doctor_name=doctor.my_account.username %}">
+                                        <a href="{%url 'book_appointment' doctor_name=doctor.my_account.username%}">
                                         <span class="mai-person"></span></a>
+                                      
+                                        
                                     </div>
                                 </div>
                                 <div class="body">
-                                    <p class="text-x2 mb-0" style="text-align:left;">
+                                    <p class="text-x2 mb-0" style="text-align:center;">
                                         {{doctor.my_account.username}}
                                     </p>
-                                    <p  style="text-align:left; color:darkgray; font-size:small">
-                                        {{doctor.speciality}}
-                                    </p>
-
+                                
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
-
                         {%endfor%}
 
                     {%else%}
-                    <h1 style="color:grey;">Your hospital has no specialites added yet.</h1>
+                    
+                    <nav aria-label="Breadcrumb">
+
+                    <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
+                    <li class="breadcrumb-item"><p>No doctors are added yet</p></li>
+                    </ol>
+                    </nav>
+
                     {%endif%}
 
                 </div>
@@ -83,10 +85,6 @@
         </div>
     </div>
     <!-- .container -->
-
-
-
-
 </div>
 <!-- .page-section -->
 

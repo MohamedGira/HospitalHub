@@ -93,15 +93,22 @@
   <ItemGroup>
     <Content Include="hospital_hub\static\hospital_hub\assets\css\add admin.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\add_admin_to_hospital.css" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\css\add_admin_to_hospital_owner.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\add_doctor.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\add_doctor2.css" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\css\add_doctor_to_hospital.css" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\css\add_specialty.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\bootstrap.css" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\css\doctor-register.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\doctor_profile.css">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="hospital_hub\static\hospital_hub\assets\css\login-old.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\login.css" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\css\login2-old.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\login2.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\login_admin.css" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\css\login_general.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\maicons.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\specializations groups.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\specializations preview-1.css" />
@@ -191,13 +198,14 @@
     <Content Include="hospital_hub\templates\hospital_hub\Owner\owner_register.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Owner\owner_view_specialities.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Owner\owner_view_speciality.html" />
-    <Content Include="hospital_hub\templates\hospital_hub\Patient\hospitals_by_speciality.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Patient\view_hospitals.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_view_speciality.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Patient\view_hospital.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_home.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_layout.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_login.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_register.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_register_old.html" />
-    <Content Include="hospital_hub\templates\hospital_hub\Patient\preview_specializations.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\searchbyspeciality.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\search_results.html" />
     <Content Include="requirements.txt" />
