@@ -697,7 +697,7 @@ class Admin:
             })
 
     def ViewDoctorProfile(request, doctor_name):
-        days = ['Sunday', 'Saturday', 'Monday',
+        days = ['Saturday','Sunday', 'Monday',
                 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
         hospital = request.user.my_admin.first().hospital
         doc_account = User.objects.filter(username=doctor_name, doctor=True)
@@ -805,7 +805,7 @@ class Admin:
         })
 
     def AddDoctor(request):
-        days = ['Sunday', 'Saturday', 'Monday',
+        days = ['Saturday', 'Sunday', 'Monday',
                 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
         gdoctors = DoctorModel.objects.filter(is_employed=False)
         specialities = request.user.my_admin.first().hospital.specialities.all()
@@ -1384,7 +1384,7 @@ class Patient:
             if reviews.count():
                 total_reviews=int(total_reviews/reviews.count())
 
-            days=['Monday','Tuesday','Wednesday','Thursday','Friday','Sunday','Saturday']
+            days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 
             for schedule in schedules:
                 nextday=next_weekday(datetime.datetime.today(),days.index(schedule.day))

@@ -13,23 +13,23 @@ a{color:inherit;text-decoration:none}
 .text-primary{
 	color: #81C2D6 !important;
 }
-.login-wrap{
-	border-radius:50px;
-	width:100%;
-	height:970px;
-	margin-top:20px;
-	margin-left:800px;
-	max-width:525px;
-	min-height:670px;
-	position:relative;
-	background:url(https://i.ibb.co/pzck32t/medical-stethoscope-white-surface.jpg) no-repeat;
-	background-size:     cover;
-	box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+.login-wrap {
+	border-radius: 50px;
+	width: 100%;
+	height: 1150px;
+	margin-top: 20px;
+	margin-left: 800px;
+	max-width: 525px;
+	min-height: 670px;
+	position: relative;
+	background: url(https://i.ibb.co/pzck32t/medical-stethoscope-white-surface.jpg) no-repeat;
+	background-size: cover;
+	box-shadow: 0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
 }
 .login-html {
 	border-radius: 50px;
 	width: 100%;
-	height: 970px;
+	height: 1150px;
 	position: absolute;
 	padding: 50px 70px 50px 70px;
 	background: rgba(40,57,101,.5);
