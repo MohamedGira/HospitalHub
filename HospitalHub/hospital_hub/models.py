@@ -4,7 +4,7 @@ from django.conf import settings
 from PIL import Image, ImageOps
 from io import BytesIO
 from django.core.files import File
-
+import datetime
 from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager
 )
@@ -235,6 +235,7 @@ class User(AbstractBaseUser):
                 self.image = new_image
         except:
             pass
+        created_at=datetime.datetime.now()
         super().save(*args, **kwargs)
 
 
@@ -249,7 +250,7 @@ class Admin(models.Model):
     my_account = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="my_admin")
     hospital = models.ForeignKey(
-        Hospital, on_delete=models.CASCADE, related_name="my_admins", blank=True, null=True)
+        Hospital, on_delete=models.SET_NULL, related_name="my_admins", blank=True, null=True)
 
     def __str__(self):
         return "Hospital of "+str(self.hospital)+" - Admin "+str(self.id)+" : " + self.my_account.username
