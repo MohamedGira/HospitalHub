@@ -380,7 +380,7 @@ class Owner:
                 
                 return render(request,"hospital_hub/owner/owner_view_speciality.html",{
                     "doctors":doctors,
-                    "hospital_name":request.user.my_admin.first().hospital.name,   
+                    "hospital_name":hospital.name,   
                     "speciality":spec.first().name
                     })
             else:
@@ -717,11 +717,25 @@ class Admin:
                                                 '?message=A Schedule exists on day already, you can Edit it below')
 
         if doc_account.count() == 1:
+            
             doc = doc_account.first().my_doctor.first()
             account = doc_account.first()
             reviews = doc.my_reviews.all()
             schedules = doc.dailyschedule.all()
             schedule_abbreviation = []
+            reviews_left=[]
+            reviews_right=[]
+
+            total_reviews=0
+            for i in range(reviews.count()):
+                total_reviews+=reviews[i].rating
+                if i<=reviews.count()/2:
+                    reviews_left.append(reviews[i])
+                else:
+                    reviews_right.append(reviews[i])
+            if reviews.count():
+                total_reviews=int(total_reviews/reviews.count())
+            
 
             for schedule in schedules:
                 schedule_abbreviation.append([schedule, schedule.day[0:3]])
@@ -741,6 +755,9 @@ class Admin:
                 "hospital": hospital,
                 "schedules": schedule_abbreviation,
                 "reviews": reviews,
+                "reviews_left": reviews_left,
+                "reviews_right": reviews_right,
+                "total_reviews": total_reviews,
                 "empty_days": empty_days,
 
             })
@@ -1332,7 +1349,19 @@ class Patient:
             schedule_abbreviation_days = []
             patient_account = User.objects.filter(username=request.user.username, patient=True).first()
 
-            
+            total_reviews=0
+            reviews_left=[]
+            reviews_right=[]
+            for i in range(reviews.count()):
+                print(reviews.count())
+                total_reviews+=reviews[i].rating
+                if i<=reviews.count()/2:
+                    reviews_left.append(reviews[i])
+                else:
+                    reviews_right.append(reviews[i])
+            if reviews.count():
+                total_reviews=int(total_reviews/reviews.count())
+
             days=['Monday','Tuesday','Wednesday','Thursday','Friday','Sunday','Saturday']
 
             for schedule in schedules:
@@ -1347,6 +1376,7 @@ class Patient:
                     
                 schedule_abbreviation_days.append([[schedule, schedule.day[0:3]],next_month_dates_waiting])
         
+            
 
             if request.method == "POST":    
                 if request.POST['command'] == "confirm":
@@ -1358,6 +1388,10 @@ class Patient:
                         "hospital": hospital,
                         "schedules": schedule_abbreviation_days,
                         "reviews": reviews,
+                        "reviews_left": reviews_left,
+                        "reviews_right": reviews_right,
+                        "total_reviews":total_reviews,
+                        
                             })
                     else:
                         appt_date = request.POST['appt_date']
@@ -1389,6 +1423,9 @@ class Patient:
                                 "hospital": hospital,
                                 "schedules": schedule_abbreviation_days,
                                 "reviews": reviews,
+                                 "reviews_left": reviews_left,
+                        "reviews_right": reviews_right,
+                        "total_reviews":total_reviews,
                             })
 
                         else:
@@ -1399,7 +1436,31 @@ class Patient:
                             "hospital": hospital,
                             "schedules": schedule_abbreviation_days,
                             "reviews": reviews,
+                             "reviews_left": reviews_left,
+                        "reviews_right": reviews_right,
+                        "total_reviews":total_reviews,
                             })
+                elif request.POST['command']=="add_rating":
+                    rating=3
+                    if request.POST.get('rating',False):
+                        rating=request.POST['rating']
+                        comment=request.POST['comment']
+                        if AppointmentModel.objects.filter(doctor=doctor,patient=patient_account.my_patient.first()).count()>0:
+                            review=Review(doctor=doctor,patient=patient_account.my_patient.first(),rating=rating,comment=comment)
+                            review.save()
+                        else:
+                             return render(request, "hospital_hub/Patient/book_appointment.html", {
+                            "message": "You had no appointments with this doctor, you can't add rating.",
+                            "doctor": doctor,
+                            "account": doc_account.first(),
+                            "hospital": hospital,
+                            "schedules": schedule_abbreviation_days,
+                            "reviews": reviews,
+                            "reviews_left": reviews_left,
+                            "reviews_right": reviews_right,
+                            "total_reviews":total_reviews,})
+
+                    return HttpResponseRedirect(reverse('book_appointment', args=[doctor_name]))
                 else:
                     return HttpResponseRedirect(reverse('book_appointment', args=[doctor_name]))
 
@@ -1409,6 +1470,9 @@ class Patient:
                             "hospital": hospital,
                             "schedules": schedule_abbreviation_days,
                             "reviews": reviews,
+                             "reviews_left": reviews_left,
+                            "reviews_right": reviews_right,
+                            "total_reviews":total_reviews,
                             })     
                
         else:

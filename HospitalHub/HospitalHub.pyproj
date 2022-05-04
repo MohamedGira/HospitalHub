@@ -168,6 +168,7 @@
     <Content Include="hospital_hub\templates\hospital_hub\Admin\admin_home.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\admin_login.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\admin_view_doctor_profile.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Admin\admin_view_doctor_profile_bug.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\view_admins.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\view_doctors_old.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\view_doctors.html" />

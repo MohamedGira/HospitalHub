@@ -163,7 +163,7 @@ class User(AbstractBaseUser):
     doctor = models.BooleanField(default=False)  # superuser
     patient = models.BooleanField(default=False)  # superuser
     staff = models.BooleanField(default=False)  # necessary
-    created_at = models.DateTimeField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     image = models.ImageField(
         default="media/no_profile_img.png", upload_to="media/")
 
@@ -235,7 +235,7 @@ class User(AbstractBaseUser):
                 self.image = new_image
         except:
             pass
-        created_at=datetime.datetime.now()
+        
         super().save(*args, **kwargs)
 
 
@@ -340,3 +340,5 @@ class Review(models.Model):
     comment = models.TextField()
     rating = models.IntegerField(
         default=Rating.EXCELLENT, choices=Rating.choices)
+    created_at = models.DateTimeField(auto_now_add=True)
+
