@@ -1,13 +1,44 @@
-<!DOCTYPE html>
-<html lang="en" >
+{%extends 'hospital_hub/Admin/admin_layout.html'%}
+{%load static%}
+{%block body%}
+ <header><!--the home/doctors/admins/logout header-->
+        <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+            <div class="container">
+            
+            
+                <img src="{%static 'hospital_hub/assets/img/logo2.png'%}" alt="t" style="width:20px;">
+                <a style="color:#81C2D6" class="navbar-brand" href="#"><span class="text-primary2">Hospital</span>Hub </a>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Login</title>
 
-</head>
-<body>
-	<h1>THIS IS THE OWNER's HOME PAGE</h1>
-</body>
-</html>
 
+                <div class="collapse navbar-collapse" id="navbarSupport">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item ">
+                            <a class="nav-link active" href="{%url 'owner_home'%}">Home</a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link" href="{%url 'owner_view_hospitals'%}">Hospitals</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{%url 'owner_logout'%}">Logout</a>
+                        </li>
+                    </ul>
+                </div> <!-- .navbar-collapse -->
+            </div> <!-- .container -->
+        </nav>
+    </header>
+<div class="page-hero bg-image overlay-dark" style="background-image: url(../../../static/hospital_hub/assets/img/bg_image_1.jpg);">
+        <div class="hero-section">
+            <div class="container text-center wow zoomIn">
+                <span class="subhead">🏥-Welcome to your dashboard-🏥</span>
+                <br>
+                <h style="color:white; font-size:60px;" class="navbar-brand"><span class="text-primary">Hospital</span>Hub </h>
+                <br>
+                <a href="{% url 'owner_add_hospitals' %}" class="btn btn-primary">Add Hospitals</a>
+                <a href="{% url 'owner_add_admin'%}" class="btn btn-primary">Add admin</a>
+                <a href="{% url 'owner_view_hospitals'%}" class="btn btn-primary">Preview Hospitals</a>
+            </div>
+        </div>
+    </div>
+{%endblock%}
