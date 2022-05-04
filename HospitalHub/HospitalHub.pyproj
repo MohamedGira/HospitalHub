@@ -181,9 +181,12 @@
     <Content Include="hospital_hub\templates\hospital_hub\Owner\add admin.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Owner\add_hospital.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Owner\add_owner.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Owner\owner_view_doctor_profile.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Owner\owner_home.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Owner\owner_login.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Owner\owner_register.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Owner\owner_view_specialities.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Owner\owner_view_speciality.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\hospitals_by_speciality.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_home.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Patient\patient_layout.html" />

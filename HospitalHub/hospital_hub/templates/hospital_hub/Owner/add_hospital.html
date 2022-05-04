@@ -42,11 +42,11 @@
         <!-- partial:index.partial.html -->
 
 
-        <div class="login-wrap">
-            <div class="login-html">
+        <div class="login-wrap" style="height:600px">
+            <div class="login-html" style="height:600px" >
                 <form method="post" enctype="multipart/form-data">
 
-                        {% csrf_token %}
+                {% csrf_token %}
                     <input id="tab-2" type="radio" name="tab" class="sign-up" checked>
                     <label for="tab-2" class="tab">Add Hospital</label>
                     <div class="login-form">

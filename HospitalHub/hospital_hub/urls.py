@@ -20,13 +20,14 @@ urlpatterns = [
     path('owner/login', views.Owner.OwnerLogin, name='owner_login'),
     path('owner/logout', views.Owner.OwnerLogout, name='owner_logout'),
     path('owner/home', views.Owner.OwnerHome, name='owner_home'),
+    path('o', views.Owner.OwnerHome, name='owner_home'),
     path('owner/add_admin', views.Owner.OwnerAddAdmin,name='owner_add_admin'),
     path('owner/add_hospitals', views.Owner.OwnerAddHospitals,name='owner_add_hospitals'),
     path('owner/view_hospitals', views.Owner.OwnerViewHospitals,name='owner_view_hospitals'),
-    path('owner/specialities/<int:hosp_id>', views.Owner.OwnerViewSpecialities,name='owner_view_specialities'),
-
-
-
+    path('owner/specialities/<int:hospital_id>', views.Owner.OwnerViewSpecialities,name='owner_view_specialities'),
+    path('owner/specialities/<int:hospital_id>/<str:speciality_name>', views.Owner.OwnerViewSpeciality,name='owner_view_speciality'),
+    path('owner/doctors/<str:doctor_name>', views.Owner.OwnerViewDoctorProfile ,name='owner_view_doctor'),
+    path('owner/Hospitals/remove/<int:hospital_id>', views.Owner.RemoveHospital ,name='remove_hospital'),
 
 
 

@@ -272,36 +272,115 @@ class Owner:
 
 
         
-    def OwnerViewSpecialities(request,hosp_id):
+    def OwnerViewSpecialities(request,hospital_id):
         # Redirect users to login page if they are not signed in as owners
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('owner_login'))
         elif not request.user.is_owner:
             return HttpResponseRedirect(reverse('home'))
 
-        hospital = Hospital.objects.filter(id=hosp_id)
-        specialities=hospital.specialities.all()
-        if specialities.count()==0:
-            return render(request, "hospital_hub/Owner/Owner_view_specialities.html",{
-                   "specialities":None,
-                   "hospital_name": hospital.name,
+        hospitalset = Hospital.objects.filter(id=hospital_id)
+        if hospitalset.count()==1:
+            hospital=hospitalset.first()
+            specialities=hospital.specialities.all()
+            if specialities.count()==0:
+                return render(request, "hospital_hub/Owner/owner_view_specialities.html",{
+                       "specialities":None,
+                       "hospital": hospital,
+                    #   "hospital_name":hospital.name,
+                })
+            else:
+                return render(request, "hospital_hub/Owner/owner_view_specialities.html",{
+                   "specialities":specialities,
+                   "hospital":  hospital,# message: message,
+
                 #   "hospital_name":hospital.name,
-            })
+                })
         else:
-            return render(request, "hospital_hub/Owner/Owner_view_specialities.html",{
-               "specialities":specialities,
-               "hospital_name":  hospital.name,# message: message,
+            return render(request, "hospital_hub/Owner/owner_view_hospitals.html",{
+                    "message":"Invalid id",
+                   "hospitals":  HospitalModel.objects.all(),# message: message,
 
-            #   "hospital_name":hospital.name,
-            })
+                #   "hospital_name":hospital.name,
+                })
+
+    def OwnerViewSpeciality(request,hospital_id,speciality_name):
+        hospitalset=HospitalModel.objects.filter(id=hospital_id)
+        if hospitalset.count()==1:
+            spec=Speciality.objects.filter(name=speciality_name)
+            hospital=hospitalset.first()
+            if spec.count()==1:
+                doctors=DoctorModel.objects.filter(speciality=spec.first(),hospital=hospital)
+                
+                
+                return render(request,"hospital_hub/owner/owner_view_speciality.html",{
+                    "doctors":doctors,
+                    "hospital_name":request.user.my_admin.first().hospital.name,   
+                    "speciality":spec.first().name
+                    })
+            else:
+                specialities=hospital.specialities.all()
+                return render(request,"hospital_hub/owner/owner_view_specialities.html",{
+                    "message":"Requested specialitiy doesn't exist",
+                    "specialities":hospital.specialities.all(),
+                    "hospital":  hospital
+
+                    })
+        else:
+            return HttpResponseRedirect('owner_view_specialities')
+
+    def OwnerViewDoctorProfile(request, doctor_name):
+        
+            hospital = request.user.my_admin.first().hospital
+            doc_account = User.objects.filter(username=doctor_name, doctor=True)
+            doctor = doc_account.first().my_doctor.first()
+        
+
+            if doc_account.count() == 1:
+                doc = doc_account.first().my_doctor.first()
+                account = doc_account.first()
+                reviews = doc.my_reviews.all()
+                schedules = doc.dailyschedule.all()
+                schedule_abbreviation = []
+
+                for schedule in schedules:
+                    schedule_abbreviation.append([schedule, schedule.day[0:3]])
+            
+
+                return render(request, "hospital_hub/owner/owner_view_doctor_profile.html", {
+                    "doctor": doc,
+                    "account": account,
+                    "hospital": hospital,
+                    "schedules": schedule_abbreviation,
+                    "reviews": reviews,
+
+                })
+            else:
+                specialities = hospital.specialities.all()
+                return render(request, "hospital_hub/owner/owner_view_specialities.html", {
+                    "message": "No doctor by this name exitsts in your hospital.",
+                    "specialities": specialities,
+                })
 
 
-
-
-
-
-
-
+    def RemoveHospital(request,hospital_id):
+        hospitalset=HospitalModel.objects.filter(id=hospital_id)
+        if hospitalset.count()==1:
+            hospital=hospitalset.first()
+            specialities=hospital.specialities.all()
+            for speciality in specialities:
+                hospital.specialities.remove(speciality)
+                doctors=DoctorModel.objects.filter(hospital=hospital,speciality=speciality)
+                for doctor in doctors:
+                    doctor.is_employed=False
+                    doctor.hospital=None
+                    for schedule in doctor.dailyschedule.all():
+                        schedule.delete()
+                    doctor.save()
+            hospital.delete()
+            return HttpResponseRedirect(reverse('owner_view_hospitals'))
+        else :
+            return HttpResponseRedirect(reverse('owner_view_hospitals')+'?message=Could\'t remove hospital with such id.')
 
 
 
