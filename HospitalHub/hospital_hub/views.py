@@ -56,7 +56,7 @@ def Login(request):
     # redirect users to home page if they are already signed in as patients
     if request.user.is_authenticated:  # if already signed in
         if request.user.is_doctor:
-            return HttpResponseRedirect(reverse('doctor_home'))
+            return HttpResponseRedirect(reverse('doctor_dashboard'))
         if request.user.is_patient:
             return HttpResponseRedirect(reverse('patient_home'))
         logout(request)
@@ -71,7 +71,7 @@ def Login(request):
             if request.POST['user_type'] == "doctor":
                 if user.is_doctor:
                     login(request, user)
-                    return HttpResponseRedirect(reverse("doctor_home"))
+                    return HttpResponseRedirect(reverse("doctor_dashboard"))
                 else:
                     return render(request, "hospital_hub\login-general.html", {
                         "message": "Invalid username or password",
