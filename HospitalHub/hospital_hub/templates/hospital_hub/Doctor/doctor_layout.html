@@ -5,21 +5,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <title>HospitalHub</title>
-    <!--Import Google Icon Font-->
-
-    <link rel="stylesheet" href={%static 'hospital_hub/assets/css/maicons.css' %}>
-
-    <link rel="stylesheet" href={%static 'hospital_hub/assets/css/bootstrap.css' %}>
-
-    <link rel="stylesheet" href={%static 'hospital_hub/assets/vendor/owl-carousel/css/owl.carousel.css' %}>
-
-    <link rel="stylesheet" href={%static 'hospital_hub/assets/vendor/animate/animate.css' %}>
-
-    <link rel="stylesheet" href={%static 'hospital_hub/assets/css/theme.css' %}>
+  
+    <title>Doctor Dashboard</title>
+  
+    <link rel="stylesheet" href={%static "hospital_hub/assets/css/maicons.css"%}>
+  
+    <link rel="stylesheet" href={%static "hospital_hub/assets/css/bootstrap.css"%}>
+  
+    <link rel="stylesheet" href={%static "hospital_hub/assets/vendor/owl-carousel/css/owl.carousel.css"%}>
+  
+    <link rel="stylesheet" href={%static "hospital_hub/assets/vendor/animate/animate.css"%}>
+  
+    <link rel="stylesheet" href={%static "hospital_hub/assets/css/theme.css"%}>
+  
+    <link rel="stylesheet" href={%static "hospital_hub/assets/css/doctor_home.css"%}>
 </head>
 <body>
 
@@ -46,7 +49,34 @@
                     </div>
                 </div> <!-- .row -->
             </div> <!-- .container -->
-        </div> <!-- .topbar -->
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+            <div class="container">
+              <img src="../assets/img/logo2.png" alt="" style="width:20px;">
+              <a style="color:#81C2D6" class="navbar-brand" href="#"><span class="text-primary2">Hospital</span>Hub </a>
+              <h5 class="font-weight-normal" style=" margin:0px; margin-left:250px;">{{request.user.email}}</h5>
+      
+      
+      
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupport" aria-controls="navbarSupport" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+      
+              <div class="collapse navbar-collapse" id="navbarSupport">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="{%url 'doctor_dashboard'%}">Dashboard</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{%url 'doctor_profile'%}"> Profile </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{%url 'doctor_logout'%}">Logout</a>
+                  </li>
+                </ul>
+              </div> <!-- .navbar-collapse -->
+            </div> <!-- .container -->
+          </nav> <!-- .topbar -->
 </header>
    
 

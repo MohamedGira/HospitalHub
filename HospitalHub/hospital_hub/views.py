@@ -32,6 +32,7 @@ logging.basicConfig(level=logging.DEBUG)
 User = get_user_model()
 # Create your views here.
 
+
 def Logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('home'))
@@ -46,10 +47,9 @@ def index(request):
         elif request.user.is_patient:
             return HttpResponseRedirect(reverse('patient_home'))
         elif request.user.is_doctor:
-             Logout(request)
+            Logout(request)
 
     return render(request, "hospital_hub/index.html")
-
 
 
 def Login(request):
@@ -108,13 +108,12 @@ def Login(request):
 
 def next_weekday(d, weekday):
     days_ahead = weekday - d.weekday()
-    if days_ahead <= 0: # Target day already happened this week
+    if days_ahead <= 0:  # Target day already happened this week
         days_ahead += 7
     return d + datetime.timedelta(days_ahead)
 
 
 class Owner:
-
 
     def OwnerRegister(request):
         if request.method == "POST":
@@ -146,10 +145,10 @@ class Owner:
             return HttpResponseRedirect(reverse("owner_home"))
         else:
             cities = CityModel.objects.all()
-            return render(request, 
-            "hospital_hub/Owner/owner_register.html", {
-                "cities": cities
-            })
+            return render(request,
+                          "hospital_hub/Owner/owner_register.html", {
+                              "cities": cities
+                          })
 
     # Owner Owner signin/signout methods__________________________________________________________________________________
 
@@ -164,11 +163,11 @@ class Owner:
             username = request.POST["username"]
             password = request.POST["password"]
             user = authenticate(request, username=username, password=password)
-            if user is not None:                
+            if user is not None:
                 # Check if owner is user
                 if user.is_owner:
                     login(request, user)
-                    return HttpResponseRedirect(reverse("owner_home"))                                        
+                    return HttpResponseRedirect(reverse("owner_home"))
                 else:
                     return render(request, "hospital_hub/owner/owner_login.html", {
                         "message": "Invalid username or password",
@@ -181,8 +180,6 @@ class Owner:
                 })
         else:
             return render(request, "hospital_hub/Owner/owner_login.html")
-
-
 
     def OwnerLogout(request):
         logout(request)
@@ -198,7 +195,6 @@ class Owner:
             logout(request)
             return HttpResponseRedirect(reverse('owner_login'))
         return render(request, "hospital_hub/Owner/owner_home.html")
-
 
     def OwnerAddAdmin(request):  # register new admin to my hospital
         # Redirect users to login page if they are not signed in as owner
@@ -219,44 +215,42 @@ class Owner:
             city = request.POST["city"]
             phone_number = request.POST["phone_number"]
 
-
             if password != confirm_password:
                 return render(request, "hospital_hub/admin/add_admin.html", {
-                "mustmatch": "Passwords must match.",
-                "username":username,
-                "email":email,
-                "full_name":full_name,
-                "password":password,
-                "cities":cities,
-                "provided_city":city,
-                "phone":phone_number,
+                    "mustmatch": "Passwords must match.",
+                    "username": username,
+                    "email": email,
+                    "full_name": full_name,
+                    "password": password,
+                    "cities": cities,
+                    "provided_city": city,
+                    "phone": phone_number,
                 })
-                
-                
-            image=request.FILES.get('image',None)
+
+            image = request.FILES.get('image', None)
             print(image)
-      
+
             # Attempt to create new user
             try:
-                cit=City.objects.get(id=city)
+                cit = City.objects.get(id=city)
                 if image is not None:
-                    user = User.objects.create_user(username, email,full_name,
-                    password,is_admin=True,city=cit,phone_number=phone_number,image=image)
+                    user = User.objects.create_user(username, email, full_name,
+                                                    password, is_admin=True, city=cit, phone_number=phone_number, image=image)
                 else:
-                    user = User.objects.create_user(username, email,full_name,
-                     password,is_admin=True,city=cit,phone_number=phone_number)
-                admin = AdminModel(my_account=user)                
+                    user = User.objects.create_user(username, email, full_name,
+                                                    password, is_admin=True, city=cit, phone_number=phone_number)
+                admin = AdminModel(my_account=user)
                 user.save()
                 # links admin toadmin object
                 admin.save()
             except IntegrityError:
                 return render(request,  "hospital_hub/admin/add_admin.html", {
                     "mustmatch": "Username or email are already taken.",
-                    "full_name":full_name,
-                    "cities":cities,
-                    "city":city,
-                    "phone_number":phone_number,
-                    "email":email,
+                    "full_name": full_name,
+                    "cities": cities,
+                    "city": city,
+                    "phone_number": phone_number,
+                    "email": email,
                 })
             return HttpResponseRedirect(reverse("owner_home"))
         else:
@@ -264,8 +258,6 @@ class Owner:
             return render(request, "hospital_hub/admin/add_admin.html", {
                 "cities": cities,
             })
-
-
 
     def OwnerAddHospitals(request):  # register new  hospital
         # Redirect users to login page if they are not signed in as admins
@@ -276,32 +268,33 @@ class Owner:
             return HttpResponseRedirect(reverse('home'))
 
         cities = City.objects.all()
-        admins=AdminModel.objects.filter(hospital=None)
+        admins = AdminModel.objects.filter(hospital=None)
         adminaccounts = []
         for admin in admins:
-           adminaccounts.append(admin.my_account)
-    
+            adminaccounts.append(admin.my_account)
+
         if(request.method == "POST"):
             hospital_name = request.POST["hospital_name"]
             city = request.POST["city"]
             admin_account_id = request.POST["admin_account_id"]
 
-                
-            image=request.FILES.get('image',None)
-      
+            image = request.FILES.get('image', None)
+
             # Attempt to create new hospital
-        
-            cit=City.objects.get(id=city)
+
+            cit = City.objects.get(id=city)
             if image is not None:
-                hospital=HospitalModel(name=hospital_name,city=cit,image=image)
+                hospital = HospitalModel(
+                    name=hospital_name, city=cit, image=image)
             else:
-                hospital=HospitalModel(name=hospital_name,city=cit)
-                
+                hospital = HospitalModel(name=hospital_name, city=cit)
+
             hospital.save()
-            admin_set=User.objects.filter(id=int(admin_account_id),admin=True)
-            if  admin_set.count()==1:
-                admin=admin_set.first().my_admin.first()
-                admin.hospital=hospital
+            admin_set = User.objects.filter(
+                id=int(admin_account_id), admin=True)
+            if admin_set.count() == 1:
+                admin = admin_set.first().my_admin.first()
+                admin.hospital = hospital
                 admin.save()
                 return HttpResponseRedirect(reverse("owner_home"))
             else:
@@ -309,17 +302,17 @@ class Owner:
                     "admins": adminaccounts,
                     "message": "Admin Doesn't exist",
                     "cities": cities,
-                    "provided_name":hospital_name,
-                    "provided_city":cit,
-                    #"provided_admin": 
-                })                
+                    "provided_name": hospital_name,
+                    "provided_city": cit,
+                    # "provided_admin":
+                })
         else:
-            
+
             return render(request, "hospital_hub/owner/add_hospital.html", {
                 "admins": adminaccounts,
                 "cities": cities,
             })
-        
+
     def OwnerViewHospitals(request):
         # Redirect users to login page if they are not signed in as owners
         if not request.user.is_authenticated:
@@ -329,15 +322,12 @@ class Owner:
 
         hospitals = HospitalModel.objects.all()
 
-        if hospitals.count()==0:
-            return render(request, "hospital_hub/Owner/owner_view_hospitals.html",{"hospitals":None})
+        if hospitals.count() == 0:
+            return render(request, "hospital_hub/Owner/owner_view_hospitals.html", {"hospitals": None})
         else:
-            return render(request, "hospital_hub/Owner/owner_view_hospitals.html",{"hospitals": hospitals})
+            return render(request, "hospital_hub/Owner/owner_view_hospitals.html", {"hospitals": hospitals})
 
-
-
-        
-    def OwnerViewSpecialities(request,hospital_id):
+    def OwnerViewSpecialities(request, hospital_id):
         # Redirect users to login page if they are not signed in as owners
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('owner_login'))
@@ -345,117 +335,112 @@ class Owner:
             return HttpResponseRedirect(reverse('home'))
 
         hospitalset = Hospital.objects.filter(id=hospital_id)
-        if hospitalset.count()==1:
-            hospital=hospitalset.first()
-            specialities=hospital.specialities.all()
-            if specialities.count()==0:
-                return render(request, "hospital_hub/Owner/owner_view_specialities.html",{
-                       "specialities":None,
-                       "hospital": hospital,
+        if hospitalset.count() == 1:
+            hospital = hospitalset.first()
+            specialities = hospital.specialities.all()
+            if specialities.count() == 0:
+                return render(request, "hospital_hub/Owner/owner_view_specialities.html", {
+                    "specialities": None,
+                    "hospital": hospital,
                     #   "hospital_name":hospital.name,
                 })
             else:
-                return render(request, "hospital_hub/Owner/owner_view_specialities.html",{
-                   "specialities":specialities,
-                   "hospital":  hospital,# message: message,
+                return render(request, "hospital_hub/Owner/owner_view_specialities.html", {
+                    "specialities": specialities,
+                    "hospital":  hospital,  # message: message,
 
-                #   "hospital_name":hospital.name,
+                    #   "hospital_name":hospital.name,
                 })
         else:
-            return render(request, "hospital_hub/Owner/owner_view_hospitals.html",{
-                    "message":"Invalid id",
-                   "hospitals":  HospitalModel.objects.all(),# message: message,
+            return render(request, "hospital_hub/Owner/owner_view_hospitals.html", {
+                "message": "Invalid id",
+                "hospitals":  HospitalModel.objects.all(),  # message: message,
 
                 #   "hospital_name":hospital.name,
-                })
+            })
 
-    def OwnerViewSpeciality(request,hospital_id,speciality_name):
-        hospitalset=HospitalModel.objects.filter(id=hospital_id)
-        if hospitalset.count()==1:
-            spec=Speciality.objects.filter(name=speciality_name)
-            hospital=hospitalset.first()
-            if spec.count()==1:
-                doctors=DoctorModel.objects.filter(speciality=spec.first(),hospital=hospital)
-                
-                
-                return render(request,"hospital_hub/owner/owner_view_speciality.html",{
-                    "doctors":doctors,
-                    "hospital_name":request.user.my_admin.first().hospital.name,   
-                    "speciality":spec.first().name
-                    })
-            else:
-                specialities=hospital.specialities.all()
-                return render(request,"hospital_hub/owner/owner_view_specialities.html",{
-                    "message":"Requested specialitiy doesn't exist",
-                    "specialities":hospital.specialities.all(),
-                    "hospital":  hospital
+    def OwnerViewSpeciality(request, hospital_id, speciality_name):
+        hospitalset = HospitalModel.objects.filter(id=hospital_id)
+        if hospitalset.count() == 1:
+            spec = Speciality.objects.filter(name=speciality_name)
+            hospital = hospitalset.first()
+            if spec.count() == 1:
+                doctors = DoctorModel.objects.filter(
+                    speciality=spec.first(), hospital=hospital)
 
-                    })
-        else:
-            return HttpResponseRedirect('owner_view_specialities')
-
-    def OwnerViewDoctorProfile(request, doctor_name):
-        
-            hospital = request.user.my_admin.first().hospital
-            doc_account = User.objects.filter(username=doctor_name, doctor=True)
-            doctor = doc_account.first().my_doctor.first()
-        
-
-            if doc_account.count() == 1:
-                doc = doc_account.first().my_doctor.first()
-                account = doc_account.first()
-                reviews = doc.my_reviews.all()
-                schedules = doc.dailyschedule.all()
-                schedule_abbreviation = []
-
-                for schedule in schedules:
-                    schedule_abbreviation.append([schedule, schedule.day[0:3]])
-            
-
-                return render(request, "hospital_hub/owner/owner_view_doctor_profile.html", {
-                    "doctor": doc,
-                    "account": account,
-                    "hospital": hospital,
-                    "schedules": schedule_abbreviation,
-                    "reviews": reviews,
-
+                return render(request, "hospital_hub/owner/owner_view_speciality.html", {
+                    "doctors": doctors,
+                    "hospital_name": request.user.my_admin.first().hospital.name,
+                    "speciality": spec.first().name
                 })
             else:
                 specialities = hospital.specialities.all()
                 return render(request, "hospital_hub/owner/owner_view_specialities.html", {
-                    "message": "No doctor by this name exitsts in your hospital.",
-                    "specialities": specialities,
+                    "message": "Requested specialitiy doesn't exist",
+                    "specialities": hospital.specialities.all(),
+                    "hospital":  hospital
+
                 })
+        else:
+            return HttpResponseRedirect('owner_view_specialities')
 
+    def OwnerViewDoctorProfile(request, doctor_name):
 
-    def RemoveHospital(request,hospital_id):
-        hospitalset=HospitalModel.objects.filter(id=hospital_id)
-        if hospitalset.count()==1:
-            hospital=hospitalset.first()
-            specialities=hospital.specialities.all()
+        hospital = request.user.my_admin.first().hospital
+        doc_account = User.objects.filter(username=doctor_name, doctor=True)
+        doctor = doc_account.first().my_doctor.first()
+
+        if doc_account.count() == 1:
+            doc = doc_account.first().my_doctor.first()
+            account = doc_account.first()
+            reviews = doc.my_reviews.all()
+            schedules = doc.dailyschedule.all()
+            schedule_abbreviation = []
+
+            for schedule in schedules:
+                schedule_abbreviation.append([schedule, schedule.day[0:3]])
+
+            return render(request, "hospital_hub/owner/owner_view_doctor_profile.html", {
+                "doctor": doc,
+                "account": account,
+                "hospital": hospital,
+                "schedules": schedule_abbreviation,
+                "reviews": reviews,
+
+            })
+        else:
+            specialities = hospital.specialities.all()
+            return render(request, "hospital_hub/owner/owner_view_specialities.html", {
+                "message": "No doctor by this name exitsts in your hospital.",
+                "specialities": specialities,
+            })
+
+    def RemoveHospital(request, hospital_id):
+        hospitalset = HospitalModel.objects.filter(id=hospital_id)
+        if hospitalset.count() == 1:
+            hospital = hospitalset.first()
+            specialities = hospital.specialities.all()
             for speciality in specialities:
                 hospital.specialities.remove(speciality)
-                doctors=DoctorModel.objects.filter(hospital=hospital,speciality=speciality)
+                doctors = DoctorModel.objects.filter(
+                    hospital=hospital, speciality=speciality)
                 for doctor in doctors:
-                    doctor.is_employed=False
-                    doctor.hospital=None
+                    doctor.is_employed = False
+                    doctor.hospital = None
                     for schedule in doctor.dailyschedule.all():
                         schedule.delete()
                     doctor.save()
-            admins=AdminModel.objects.filter(hospital=hospital)
+            admins = AdminModel.objects.filter(hospital=hospital)
             for admin in admins:
                 if not admin.my_account.is_staff:
                     admin.my_account.delete()
                 else:
-                    admin.hospital=None
-            
+                    admin.hospital = None
+
             hospital.delete()
             return HttpResponseRedirect(reverse('owner_view_hospitals'))
-        else :
+        else:
             return HttpResponseRedirect(reverse('owner_view_hospitals')+'?message=Could\'t remove hospital with such id.')
-
-
-
 
 
 ############################################################################
@@ -546,7 +531,7 @@ class Admin:
 
             image = request.FILES.get('image', None)
             print(image)
-             
+
             # Attempt to create new user
             try:
                 cit = City.objects.get(id=city)
@@ -1019,7 +1004,7 @@ class Doctor:
         # redirect users to home page if they are already signed in as patients
         if request.user.is_authenticated:  # if already signed in
             if request.user.is_doctor:
-                return HttpResponseRedirect(reverse('doctor_home'))
+                return HttpResponseRedirect(reverse('doctor_dashboard'))
 
         if request.method == 'POST':
             username = request.POST.get("doctor_username", None)
@@ -1029,7 +1014,7 @@ class Doctor:
             if user is not None:
                 if user.is_doctor:
                     login(request, user)
-                    return HttpResponseRedirect(reverse("doctor_home"))
+                    return HttpResponseRedirect(reverse("doctor_dashboard"))
                 else:
                     return render(request, "hospital_hub\login.html", {
                         "message": "Invalid username or password",
@@ -1045,76 +1030,194 @@ class Doctor:
                 "radio": "doctor"
             })
 
-    def DoctorHome(request):
+    def DoctorDashboard(request):
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('doctor_login'))
         elif not request.user.is_doctor:
             logout(request)
             return HttpResponseRedirect(reverse('doctor_login'))
-
+        status_booked = AppointmentStatus.objects.get(status="booked")
+        status_pending = AppointmentStatus.objects.get(status="pending")
+        print(status_booked)
+        print(status_pending)
         doctor = DoctorModel.objects.filter(my_account=request.user).first()
-        schedule = Schedule.objects.filter(doctor=doctor).first()
+        #schedule = Schedule.objects.filter(doctor=doctor).first()
         appointment = Appointment.objects.filter(
-        schedule=schedule, appt_date=datetime.datetime.today()).all()
-        status = Appointment.objects.get(status=AppointmentStatus.objects).first()
+            doctor=doctor, appt_date=datetime.datetime.today(), status=status_booked).all()
         # give all pending any day for the doctor
         pending = Appointment.objects.filter(
-            schedule=schedule, status=status).all()
-
-        return render(request, "hospital_hub/Doctor/doctor_homepage.html", {
+            doctor=doctor, status=status_pending).all()
+        # status=status
+        return render(request, "hospital_hub/Doctor/doctor_dashboard.html", {
             "doctor": doctor,
-            "apointments": appointment,
+            "appointments": appointment,
             "pending": pending,
         })
 
-    def DoctorSchedule(request):
+    def DoctorProfile(request):
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('doctor_login'))
         elif not request.user.is_doctor:
             logout(request)
             return HttpResponseRedirect(reverse('doctor_login'))
 
+        doc_account = request.user
         doctor = DoctorModel.objects.filter(my_account=request.user).first()
-        schedule = Schedule.objects.filter(doctor=doctor).first()
-        next_month_schedule = []
-        day = datetime.today()
+        days = ['Saturday', 'Sunday', 'Monday',
+                'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+        hospital = doctor.hospital
+        reviews = doctor.my_reviews.all()
+        schedules = doctor.dailyschedule.all()
+        schedule_abbreviation = []
+        for schedule in schedules:
+            schedule_abbreviation.append([schedule, schedule.day[0:3]])
+        empty_days = []
+        for day in days:
+            dne = True
+            for schedule in schedules:
+                if schedule.day == day:
+                    dne = False
+                    break
+            if dne == True:
+                empty_days.append(day)
 
-        for i in range(7):
-            day = day + datetime.timedelta(1)
-            appointments = Appointment.objects.filter(
-                schedule=schedule, appt_date=day.date()).all()
-            next_month_schedule.append(appointments)
+        if request.method == "POST":
+            if request.POST.get("command", False):
 
-        return render(request, "hospital_hub/Doctor/doctor_homepage.html", {
-            "doctor": doctor,
-            "next_month_schedule": next_month_schedule,
-        })
+                for day in days:
+                    if request.POST['command'] == "edit_"+day:
+                        schedule_day = Schedule.objects.filter(
+                            doctor=doctor, day=day).first()
+                        schedule_day.start_time = request.POST['new_start']
+                        schedule_day.end_time = request.POST['new_end']
+                        schedule_day.save()
+                        return HttpResponseRedirect(reverse('doctor_profile'))
 
-    def DoctorViewRecord(request, appointment):
+                for day in days:
+                    if request.POST['command'] == "remove_"+day:
+                        schedule_day = Schedule.objects.filter(
+                            doctor=doctor, day=day).first()
+                        if schedule_day.appointments.all().count() == 0:
+                            schedule_day.delete()
+                            return HttpResponseRedirect(reverse('doctor_profile'))
+                        else:
+                            return HttpResponseRedirect(reverse('doctor_profile') +
+                                                        '?message=+'+day+' is busy, couldn\'t remove')
+
+                if request.POST['command'] == "add_day":
+                    if Schedule.objects.filter(doctor=doctor, day=request.POST['to_add']).count() == 0:
+                        schedule = Schedule(doctor=doctor, day=request.POST['to_add'],
+                                            start_time=request.POST['start_time'],
+                                            end_time=request.POST['end_time'],
+                                            price=request.POST['price'],
+                                            patient_count=request.POST['max_patient_count'])
+                        schedule.save()
+                        return HttpResponseRedirect(reverse('doctor_profile'))
+
+                    return HttpResponseRedirect(reverse('doctor_profile') +
+                                                '?message=A Schedule exists on day already, you can Edit it below')
+
+            return render(request, "hospital_hub/Doctor/doctor_profile.html", {
+                "doctor": doctor,
+                "hospital": hospital,
+                "schedules": schedule_abbreviation,
+                "reviews": reviews,
+                "empty_days": empty_days,
+
+            })
+        else:
+            specialities = hospital.specialities.all()
+            return render(request, "hospital_hub/Doctor/doctor_profile.html", {
+                "doctor": doctor,
+                "hospital": hospital,
+                "schedules": schedule_abbreviation,
+                "reviews": reviews,
+                "empty_days": empty_days,
+            })
+
+    # def DoctorSchedule(request):
+    #    if not request.user.is_authenticated:
+    #        return HttpResponseRedirect(reverse('doctor_login'))
+    #    elif not request.user.is_doctor:
+    #        logout(request)
+    #        return HttpResponseRedirect(reverse('doctor_login'))
+
+    #    doctor = DoctorModel.objects.filter(my_account=request.user).first()
+    #    schedule = Schedule.objects.filter(doctor=doctor).first()
+    #    next_month_schedule = []
+    #    day = datetime.today()
+
+    #    for i in range(7):
+    #        day = day + datetime.timedelta(1)
+    #        appointments = Appointment.objects.filter(
+    #            schedule=schedule, appt_date=day.date()).all()
+    #        next_month_schedule.append(appointments)
+
+    #    return render(request, "hospital_hub/Doctor/doctor_home.html", {
+    #        "doctor": doctor,
+    #        "next_month_schedule": next_month_schedule,
+    #    })
+
+    def DoctorViewRecord(request, patient_name):
+        print("view")
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('doctor_login'))
         elif not request.user.is_doctor:
             logout(request)
             return HttpResponseRedirect(reverse('doctor_login'))
 
-        patient = appointment.patient
+        status_done = AppointmentStatus.objects.get(status="done")
+        status_pending = AppointmentStatus.objects.get(status="pending")
+
+        patient_user = User.objects.filter(username=patient_name).first()
+        patient = PatientModel.objects.filter(my_account=patient_user).first()
+
         doctor = DoctorModel.objects.filter(my_account=request.user).first()
-        appointments = Appointment.objects.filter(patient=patient).all()
+
+        this_appointment = Appointment.objects.filter(
+            doctor=doctor, patient=patient, appt_date=datetime.datetime.today()).first()
+
+        appointments = Appointment.objects.filter(patient=patient)
         docs = []
         tests = []
-        if request == "POST":
-            title = request.POST["title"]
-            attachment = request.POST["attachment"]
-            diagnosis = request.POST["diagnosis"]
-            disease = request.POST["disease"]
-
         for apt in appointments:
-            doc = AppointmentDocument.objects.filter(Appointment=apt)
-            docs.append(doc)
-            tests.append(MedicalTest.objects.filter(doc))
+            documents = AppointmentDocument.objects.filter(
+                appointment=apt).first()
+            if documents != None:
+                docs.append(documents)
+                test = MedicalTest.objects.filter(
+                    appointment_document=documents)
+                if test != None:
+                    tests.append(test)
+                else:
+                    tests.append("pending")
 
-        return render(request, "hospital_hub/Doctor/doctor_homepage.html", {
-            "patient": patient,
+        if request.method == "POST":
+            title = request.POST["diagnosis"]
+            attachment = request.POST["prescription"]
+            diagnosis = request.POST["tests"]
+            disease = request.POST["diagnosis"]
+            try:
+                doc = AppointmentDocsModel(appointment=this_appointment, title=title,
+                                           attachment=attachment, diagnosis=diagnosis, disease=disease)
+                if diagnosis == "None":
+                    print("done")
+                    this_appointment.status = status_done
+                else:
+                    this_appointment.status = status_pending
+                this_appointment.save()
+                print("saved")
+                doc.save()
+            except IntegrityError:
+                return render(request, "hospital_hub/Doctor/doctor_viewRecord.html", {
+                    "patient": patient_user,
+                    "doctor": doctor,
+                    "documents": docs,  # array
+                    "tests": tests,  # array
+                })
+
+        return render(request, "hospital_hub/Doctor/doctor_viewRecord.html", {
+            "patient": patient_user,
             "doctor": doctor,
             "documents": docs,  # array
             "tests": tests,  # array
@@ -1189,12 +1292,12 @@ class Patient:
 
     def PatientHome(request):
         #####consider making patient and anonymous user have the same functionalitis(except in booking and commenting)######
-        
-       #Redirect PATIENTS to login page if they are not signed in as patient
 
-        #if not request.user.is_authenticated:
+       # Redirect PATIENTS to login page if they are not signed in as patient
+
+        # if not request.user.is_authenticated:
         #    return HttpResponseRedirect(reverse('login'))
-        #if not request.user.is_patient:
+        # if not request.user.is_patient:
         #    # may add later "you have no access to this page :( "
         #    logout(request)
         #    return HttpResponseRedirect(reverse('patient_home'))
@@ -1321,54 +1424,59 @@ class Patient:
         return render(request, "hospital_hub/Patient/hospitals_by_speciality.html")
 
     def ViewDoctorProfile(request, doctor_name):
-        
-        
-        doc_account =User.objects.filter(username=doctor_name, doctor=True)
+
+        doc_account = User.objects.filter(username=doctor_name, doctor=True)
         if doc_account.count() == 1:
             doctor = doc_account.first().my_doctor.first()
             hospital = doctor.hospital
             reviews = doctor .my_reviews.all()
             schedules = doctor .dailyschedule.all()
             schedule_abbreviation_days = []
-            patient_account = User.objects.filter(username=request.user.username, patient=True).first()
+            patient_account = User.objects.filter(
+                username=request.user.username, patient=True).first()
 
-            
-            days=['Monday','Tuesday','Wednesday','Thursday','Friday','Sunday','Saturday']
+            days = ['Monday', 'Tuesday', 'Wednesday',
+                    'Thursday', 'Friday', 'Sunday', 'Saturday']
 
             for schedule in schedules:
-                nextday=next_weekday(datetime.datetime.today(),days.index(schedule.day))
-                next_month_dates_waiting=[]
-                patients_ahead=AppointmentModel.objects.filter(doctor=doctor,appt_date=nextday.date()).count()
-                next_month_dates_waiting.append([nextday,patients_ahead])
+                nextday = next_weekday(
+                    datetime.datetime.today(), days.index(schedule.day))
+                next_month_dates_waiting = []
+                patients_ahead = AppointmentModel.objects.filter(
+                    doctor=doctor, appt_date=nextday.date()).count()
+                next_month_dates_waiting.append([nextday, patients_ahead])
                 for j in range(3):
-                    nextday=nextday+ datetime.timedelta(7)
-                    patients_ahead=AppointmentModel.objects.filter(doctor=doctor,appt_date=nextday.date()).count()
-                    next_month_dates_waiting.append([nextday,patients_ahead])
-                    
-                schedule_abbreviation_days.append([[schedule, schedule.day[0:3]],next_month_dates_waiting])
-        
+                    nextday = nextday + datetime.timedelta(7)
+                    patients_ahead = AppointmentModel.objects.filter(
+                        doctor=doctor, appt_date=nextday.date()).count()
+                    next_month_dates_waiting.append([nextday, patients_ahead])
 
-            if request.method == "POST":    
+                schedule_abbreviation_days.append(
+                    [[schedule, schedule.day[0:3]], next_month_dates_waiting])
+
+            if request.method == "POST":
                 if request.POST['command'] == "confirm":
-                    if patient_account is  None:
+                    if patient_account is None:
                         return render(request, "hospital_hub/Patient/book_appointment.html", {
-                        "message": "You have to sign in to book",
-                        "doctor": doctor,
-                        "account": doc_account.first(),
-                        "hospital": hospital,
-                        "schedules": schedule_abbreviation_days,
-                        "reviews": reviews,
-                            })
+                            "message": "You have to sign in to book",
+                            "doctor": doctor,
+                            "account": doc_account.first(),
+                            "hospital": hospital,
+                            "schedules": schedule_abbreviation_days,
+                            "reviews": reviews,
+                        })
                     else:
                         appt_date = request.POST['appt_date']
-                        selected_schedule = ScheduleModel.objects.filter(id=request.POST['schedule']).first()
-                        appt_count = AppointmentModel.objects.filter(doctor=doctor,appt_date=appt_date).count()
+                        selected_schedule = ScheduleModel.objects.filter(
+                            id=request.POST['schedule']).first()
+                        appt_count = AppointmentModel.objects.filter(
+                            doctor=doctor, appt_date=appt_date).count()
 
                         if appt_count < selected_schedule.patient_count:
-                            exsiting_appointments=AppointmentModel.objects.filter(doctor=doctor,
-                                                               patient=patient_account.my_patient.first(),
-                                                               appt_date=appt_date)
-                            if exsiting_appointments.count()==0:
+                            exsiting_appointments = AppointmentModel.objects.filter(doctor=doctor,
+                                                                                    patient=patient_account.my_patient.first(),
+                                                                                    appt_date=appt_date)
+                            if exsiting_appointments.count() == 0:
 
                                 patient_no = appt_count+1
                                 appointment = AppointmentModel()
@@ -1376,41 +1484,41 @@ class Patient:
                                 appointment.patient = patient_account.my_patient.first()
                                 appointment.schedule = selected_schedule
                                 appointment.patient_no = patient_no
-                                appointment.appt_date= appt_date
-                                #appointment.status=AppointmentStatus.objects.filter("Booked").first()
+                                appointment.appt_date = appt_date
+                                # appointment.status=AppointmentStatus.objects.filter("Booked").first()
                                 appointment.save()
                                 return HttpResponseRedirect(reverse('book_appointment', args=[doctor_name]))
                             else:
                                 return render(request, "hospital_hub/Patient/book_appointment.html", {
-                                "message": "you already have an appointment on this day, your turn is ("
-                                +str(exsiting_appointments.first().patient_no)+").",
+                                    "message": "you already have an appointment on this day, your turn is ("
+                                    + str(exsiting_appointments.first().patient_no)+").",
+                                    "doctor": doctor,
+                                    "account": doc_account.first(),
+                                    "hospital": hospital,
+                                    "schedules": schedule_abbreviation_days,
+                                    "reviews": reviews,
+                                })
+
+                        else:
+                            return render(request, "hospital_hub/Patient/book_appointment.html", {
+                                "message": "No available appointments on this day.",
                                 "doctor": doctor,
                                 "account": doc_account.first(),
                                 "hospital": hospital,
                                 "schedules": schedule_abbreviation_days,
                                 "reviews": reviews,
                             })
-
-                        else:
-                            return render(request, "hospital_hub/Patient/book_appointment.html", {
-                            "message": "No available appointments on this day.",
-                            "doctor": doctor,
-                            "account": doc_account.first(),
-                            "hospital": hospital,
-                            "schedules": schedule_abbreviation_days,
-                            "reviews": reviews,
-                            })
                 else:
                     return HttpResponseRedirect(reverse('book_appointment', args=[doctor_name]))
 
             return render(request, "hospital_hub/Patient/book_appointment.html", {
-                            "doctor": doctor,
-                            "account": doc_account.first(),
-                            "hospital": hospital,
-                            "schedules": schedule_abbreviation_days,
-                            "reviews": reviews,
-                            })     
-               
+                "doctor": doctor,
+                "account": doc_account.first(),
+                "hospital": hospital,
+                "schedules": schedule_abbreviation_days,
+                "reviews": reviews,
+            })
+
         else:
             specialities = Speciality.objects.all()
             return render(request, "hospital_hub/Patient/view_specialities.html", {
@@ -1418,7 +1526,6 @@ class Patient:
                 "specialities": specialities,
             })
 
-        
     def ViewDoctors(request):
         doctors = DoctorModel.objects.all()
         doctors_with_dependent_appointmens = []
@@ -1443,7 +1550,7 @@ class Patient:
         specialities_with_doctors_dependet = []
         for speciality in specialities:
             doctors = DoctorModel.objects.filter(
-                hospital=hospital, speciality=speciality)
+                hospital=Hospital, speciality=speciality)
             specialities_with_doctors_dependet.append([speciality, doctors])
 
         if specialities.count() == 0:
@@ -1457,7 +1564,8 @@ class Patient:
 
     def ViewAppointments(request):
         if request.method == "GET":
-            user = User.objects.filter(username=request.user.username, patient=True).first()
+            user = User.objects.filter(
+                username=request.user.username, patient=True).first()
             patient = PatientModel.objects.filter(my_account=user).first()
 
             print("appt_patient")
@@ -1473,13 +1581,15 @@ class Patient:
             return render(request, "hospital_hub/Patient/view_appointments.html", {
                 "appointments": appointments
             })
-        
+
     def ViewAppointmentDocs(request, appt_id):
         if request.method == "GET":
-            user = User.objects.filter(username=request.user.username, patient=True).first()
+            user = User.objects.filter(
+                username=request.user.username, patient=True).first()
             patient = PatientModel.objects.filter(my_account=user).first()
 
-            appointmentDocs = AppointmentDocsModel.objects.filter(appointment=appt_id)
+            appointmentDocs = AppointmentDocsModel.objects.filter(
+                appointment=appt_id)
             print("appt_docs")
             print(appointmentDocs)
             if len(appointmentDocs) == 0:
