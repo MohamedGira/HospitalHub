@@ -1,0 +1,527 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Patient Profile</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700&subset=latin-ext">
+  
+  <link rel="stylesheet" href={%static "hospital_hub/assets/css/maicons.css"%}>
+  
+  <link rel="stylesheet" href={%static "hospital_hub/assets/css/bootstrap.css"%}>
+
+  <link rel="stylesheet" href={%static "hospital_hub/assets/vendor/owl-carousel/css/owl.carousel.css"%}>
+
+  <link rel="stylesheet" href={%static "hospital_hub/assets/vendor/animate/animate.css"%}>
+
+  <link rel="stylesheet" href={%static "hospital_hub/assets/css/theme.css"%}>
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css'>
+
+  <link rel="stylesheet" href={%static "hospital_hub/assets/css/doctor_viewRecord.css"%}>
+
+
+</head>
+<body>
+
+  <!-- Back to top button -->
+  <div class="back-to-top"></div>
+  <header>
+    <div class="topbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-8 text-sm">
+            <div class="site-info">
+              <a href="#"><span class="mai-call text-primary"></span> +20 1013421486</a>
+              <span class="divider">|</span>
+              <a href="#"><span class="mai-mail text-primary"></span> HospitalHub@gmail.com</a>
+            </div>
+          </div>
+          <div class="col-sm-4 text-right text-sm">
+            <div class="social-mini-button">
+              <a href="#"><span class="mai-logo-facebook-f"></span></a>
+              <a href="#"><span class="mai-logo-twitter"></span></a>
+              <a href="#"><span class="mai-logo-dribbble"></span></a>
+              <a href="#"><span class="mai-logo-instagram"></span></a>
+            </div>
+          </div>
+        </div> <!-- .row -->
+      </div> <!-- .container -->
+    </div> <!-- .topbar -->
+
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+      <div class="container">
+        <img src="../assets/img/logo2.png" alt="" style="width:20px;">
+        <a style="color:#81C2D6" class="navbar-brand" href="#"><span class="text-primary2">Hospital</span>Hub </a>
+
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupport" aria-controls="navbarSupport" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupport">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href={%url 'doctor_dashboard'%}>Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'doctor_profile'%}"> Profile </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'doctor_logout'%}">Logout</a>
+            </li>
+          </ul>
+        </div> <!-- .navbar-collapse -->
+      </div> <!-- .container -->
+    </nav>
+  </header>
+
+  <div class="page-banner overlay-dark bg-image" style="background-image: url(../../../static/hospital_hub/assets/img/bg_image_1.jpg);">
+    <div class="banner-section">
+      <div class="container text-center wow fadeInUp">
+        <h1 class="font-weight-normal" style="margin-bottom:0px;">👨‍⚕️-DR.{{request.user.full_name}}-👨‍⚕️</h1>
+        <h5 class="font-weight-normal">{{doctor.speciality}}</h5>
+        <nav aria-label="Breadcrumb">
+          <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
+            <li class="breadcrumb-item" aria-current="page"> <a href="doctor_dashboard.html"> Dashboard </a> </li>
+            <li class="breadcrumb-item active" aria-current="page">&lt {{patient_username}} &gt</li>
+          </ol>
+        </nav>
+        <h1 class="font-weight-normal">{{patient.full_name}}</h1>
+      </div> <!-- .container -->
+    </div> <!-- .banner-section -->
+  </div> <!-- .page-banner -->
+
+  <div class="page-section bg-light">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+
+          <div class="row">
+
+            <div class="row gutters-sm">
+              <div class="col-md-4 mb-3">
+                <div class="card ">
+                  <div class="card-body">
+                    <div class="d-flex flex-column align-items-center text-center">
+                      <img src={{patient.image.url}} alt="Admin" class="rounded-circle" width="150" height="150">
+                      <div class="mt-3">
+                        <h4 style="font-size:auto;">{{patient.full_name}}</h4>
+                        
+                        <p class="text-muted font-size-sm">{{patient.email}}</p>
+
+                        <!-- Change "Pending Appointments" to "Make Appointment"-->
+
+
+                        <!-- Change "Pending Appointments" to "Make Appointment"-->
+
+                        <br>
+
+
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" style="padding:8px 20px; border-radius:10px;">Message</button>
+                        <div id="myModal" class="modal fade" role="dialog">
+                          <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title" style="text-align:center">Send Message</h4>
+                                <button type="button" class="close" data-dismiss="modal" style="text-align:center">&times;</button>
+
+                              </div>
+                              <div class="modal-body" style="text-align:right;">
+                                <textarea rows = "5" cols = "50" name = "message" style="margin:20px" placeholder="Enter your message.."></textarea>
+                              </div>
+                              <div class="modal-footer">
+
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" style="background:rgba(207, 72, 76, 0.8)">Close</button>
+                                <input  type="submit" class="btn btn-primary" value="Submit" />
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-md-8 ">
+                <div class="card mb-3">
+                  <div class="card2-body ">
+                    <section id="working-time" class="">
+                            <div class="container">
+                                <!-- .row end -->
+                                <div class="row">
+                                  <div class="flex-container" id="books-table">
+
+                                     <h2 style="text-align: center; margin-bottom:50px;">Medical Record</h2>
+                                     <table class="table table-bordered table-striped table-responsive-stack"  id="books" style="text-align:center;">
+
+
+                                        <thead class="thead-dark">
+                                           <tr>
+                                             <th>Date</th>
+                                             <th>Diagnosis</th>
+                                             <th>Prescription</th>
+                                             <th>Requested Tests</th>
+                                             <th>Tests Results</th>
+                                           </tr>
+                                        </thead>
+
+                                        <tbody>
+                                          {%for doc in documents%}
+                                          <tr>
+                                            <td>{{doc.appointment.appt_date}}</td>
+                                            <td>{{doc.title}}</td>
+                                            <td>{{doc.attachment}}</td>
+                                            <td>{{doc.diagnosis}}</td>
+                                            {%if doc.diagnosis == "None"%}
+                                            <td>None</td>
+                                            {%else%}
+                                            <td> <a href="facebook.com">Tests Results</a> </td>
+                                            {%endif%}
+                                          </tr>
+                                          {%endfor%}
+                                        </tbody>
+                                      </table>
+
+                                    </div>
+                                  <!-- /.container -->
+                                <!-- .row end -->
+                            </div>
+                            <!-- .container end -->
+                            <div id="book-modal" title="Add new record" style="">
+
+                              <form method = "POST" id="myForm" >
+                                {%csrf_token%}
+                                <!-- addes fields together -->
+                                <fieldset>
+                                  <!-- semantically adding a title -->
+
+                                  <p>
+                                    <label for="title">Date</label>
+                                    <input type="datetime-local" name="date" id="date"  class="text ui-widget ui-corner-all" />
+                                  </p>
+                                  <p>
+                                    <label for="diagnosis">Diagnosis</label>
+                                    <input type="text" name="diagnosis" id="diagnosis" class="text ui-widget ui-corner-all" />
+                                  </p>
+                                  <p>
+                                    <label for="author">Prescription</label>
+                                    <input type="text" name="prescription" id="prescription" class="text ui-widget ui-corner-all" />
+                                  </p>
+                                  <p>
+                                    <label for="author">Requested Tests</label>
+                                    <input list="alltests" name="tests" id="tests" class="text ui-widget ui-corner-all" />
+                                      <datalist id="alltests">
+                                          <option value="Aldolase Test">Aldolase Test	</option>
+                                          <option value="Allergy Test">Allergy Test</option>
+                                          <option value="Calcium Test">Calcium Test</option>
+                                          <option value="Chlamydia Test">Chlamydia Test</option>
+                                          <option value="Factor V Leiden Test">Factor V Leiden Test</option>
+                                          <option value="Helicobacter Pylori Test">Helicobacter Pylori Test	</option>
+                                          <option value="Hepatitis E Test">Hepatitis E Test</option>
+                                          <option value="None">None</option>
+                                      </datalist>
+                                  </p>
+                                  <!-- We have to include this input, but also we don't want 2 inputs, while we have one in our jquery modal, so hide this -->
+
+                                  <input onclick="form.submit()" type="submit" tabindex="-1" value="Add Record" style="background:#81C2D6; color:white; border-radius:10px; padding:8px 20px; margin:auto; display:block;">
+                                </fieldset>
+                              </form>
+                            </div>
+
+                        </section>
+
+
+                    <!-- ده اللي هتشال علشان تشيل زرار الايديت-->
+                    <hr>
+                    <div class="row">
+                      <div class="col-sm-12" style="text-align:center;">
+
+                        <input id="add-book-modal" type="button" class="btn btn-primary " target="__blank" href="#" value="Add Record" style="background:#81C2D6; color:white; border-radius:10px; padding:8px 20px;">
+
+                      </div>
+                    </div>
+                    <!-- ده اللي هتشال علشان تشيل زرار الايديت-->
+
+                  </div>
+                </div>
+                <div class="row gutters-sm">
+                </div>
+
+
+
+              </div>
+            </div>
+
+
+
+          </div>
+
+        </div>
+      </div>
+    </div> <!-- .container -->
+  </div> <!-- .page-section -->
+
+  <div class="page-section banner-home bg-image" style="background-image: url(../assets/img/banner-pattern.svg);">
+    <div class="container py-5 py-lg-0">
+      <div class="row align-items-center">
+        <div class="col-lg-12 wow zoomIn">
+          <div class="img-banner d-none d-lg-block">
+            <p><img src="../assets/img/logo3.png" alt="Logo"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- .banner-home -->
+
+  <footer class="page-footer">
+    <div class="container">
+      <div class="row px-md-3">
+        <div class="col-sm-6 col-lg-4 py-3">
+          <h5>Company</h5>
+          <ul class="footer-menu">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Career</a></li>
+            <li><a href="#">Editorial Team</a></li>
+            <li><a href="#">Protection</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-6 col-lg-4 py-3">
+          <h5>More</h5>
+          <ul class="footer-menu">
+            <li><a href="#">Terms & Condition</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Advertise</a></li>
+            <li><a href="#">Join as Doctors</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-6 col-lg-4 py-3">
+          <h5>Contact</h5>
+          <p class="footer-link mt-2">Ain Shams University, Faculty of Engineering</p>
+          <a href="#" class="footer-link">HospitalHub@gmail.com</a>
+          <br>
+          <a href="#" class="footer-link">+20 1013421486</a>
+          <h5 class="mt-3">Social Media</h5>
+          <div class="footer-sosmed mt-3">
+            <a href="#" target="_blank"><span class="mai-logo-facebook-f"></span></a>
+            <a href="#" target="_blank"><span class="mai-logo-twitter"></span></a>
+            <a href="#" target="_blank"><span class="mai-logo-google-plus-g"></span></a>
+            <a href="#" target="_blank"><span class="mai-logo-instagram"></span></a>
+            <a href="#" target="_blank"><span class="mai-logo-linkedin"></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <style type="text/css">
+
+  .test{
+    position: relative;
+  }
+
+  .test::before {
+    border-radius:10px;
+    content: "";
+    background:url(https://img.freepik.com/free-vector/clean-medical-patterned-background-vector_53876-140867.jpg?t=st=1651095193~exp=1651095793~hmac=b3c93edbeb698542600111de138b25dae0abe0992bc019bc2024d669bcc0d684&w=1060) no-repeat;
+    background-size:     cover;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      left: 0px;
+      opacity: 0.1;
+  }
+
+  .time-panel {
+    -webkit-transition: all 0.35s;
+    -moz-transition: all 0.35s;
+    -ms-transition: all 0.35s;
+    -o-transition: all 0.35s;
+    transition: all 0.35s;
+    position: relative;
+    padding: 26px 0;
+    border: 1px solid rgba(207, 72, 76, 0.5) ;
+    border-radius:10px;
+  }
+  .time-panel::before {
+  	border-radius:10px;
+  	content: "";
+  	background: rgba(207, 72, 76, 0.15);
+  	background-size:     cover;
+  		position: absolute;
+  		top: 0px;
+  		right: 0px;
+  		bottom: 0px;
+  		left: 0px;
+  		opacity: 0.1;
+  	}
+  .time-panel:hover {
+    -webkit-transform: translateY(-4px);
+    -moz-transform: translateY(-4px);
+    -ms-transform: translateY(-4px);
+    -o-transform: translateY(-4px);
+    transform: translateY(-4px);
+  }
+  .time-panel h3 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 20px;
+    color: #81C2D6;
+    text-transform: capitalize;
+  }
+  .time-panel ul li {
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 400;
+    color: #fff;
+  }
+  /* Custom, iPhone Retina */
+
+
+  .heading h2 {
+      font-size: 28px;
+      position: relative;
+      color: #212121;
+      margin: 0px 0px 40px 0;
+  }
+  .heading h2:before {
+      bottom: 0;
+      height: 17px;
+      width: 117px;
+      background: url(https://i.ibb.co/LCh7Hwv/line.png);
+      content: "";
+      display: inline-block;
+      background-repeat: no-repeat;
+      content: '';
+      position: absolute;
+      left: 50%;
+      -webkit-backface-visibility: hidden;
+      -webkit-transform: translate(-50%) rotate(45deg);
+      transform: translate(-50%);
+      top: 140%;
+  }
+  .heading {
+      margin-bottom: 50px;
+  }
+  .working-time {
+    text-align: center;
+  }
+  .working-time::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+  }
+  .working-time h2, .working-time p{
+      color: #fff;
+  }
+
+
+  .text-secondary{
+    color:#CF484C !important;
+  }
+
+  .hr{
+  	height:2px;
+  	margin:10px 0 10px 0;
+  	background:rgba(0,0,0,.2);
+  }
+  .checked {
+  color: orange;
+}
+
+  .main-body {
+      padding: 15px;
+  }
+  .card {
+      box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+  }
+
+  .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      word-wrap: break-word;
+      background-color: rgba(255,255,255,1);
+      background-clip: border-box;
+      border: 0 solid rgba(0,0,0,.125);
+      border-radius: .25rem;
+  }
+
+  .card-body {
+      flex: 1 1 auto;
+      min-height: 1px;
+      padding: 1rem;
+      width: 300px;
+
+  }
+  .card2-body {
+      flex: 1 1 auto;
+      min-height: 1px;
+      padding: 1rem;
+  }
+
+  .gutters-sm {
+      margin-right: -8px;
+      margin-left: -8px;
+  }
+
+  .gutters-sm>.col, .gutters-sm>[class*=col-] {
+      padding-right: 8px;
+      padding-left: 8px;
+  }
+  .mb-3, .my-3 {
+      margin-bottom: 1rem!important;
+  }
+
+  .bg-gray-300 {
+      background-color: #e2e8f0;
+  }
+  .h-100 {
+      height: 100%!important;
+  }
+  .shadow-none {
+      box-shadow: none!important;
+  }
+
+  </style>
+
+<script src="../assets/js/jquery-3.5.1.min.js"></script>
+
+<script src="../assets/js/bootstrap.bundle.min.js"></script>
+
+<script src="../assets/vendor/owl-carousel/js/owl.carousel.min.js"></script>
+
+<script src="../assets/vendor/wow/wow.min.js"></script>
+
+<script src="../assets/js/theme.js"></script>
+
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
+<script src={%static "hospital_hub/assets/js/patient_profile.js"%}></script>
+
+</body>
+</html>
