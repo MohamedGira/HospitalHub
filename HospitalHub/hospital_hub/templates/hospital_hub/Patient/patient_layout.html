@@ -85,27 +85,29 @@
 
         <div class="collapse navbar-collapse" id="navbarSupport">
             <ul class="navbar-nav ml-auto">
-                  {%if user.is_authenticated%}
-            <li class="nav-item active">
+            {%if user.is_authenticated%}
+            <li class="nav-item ">
                 <a class="nav-link" href="{%url 'patient_home'%}">Home</a>
             </li>
             {%else%}
-                <li class="nav-item active">
+                <li class="nav-item ">
                 <a class="nav-link" href="{%url 'home'%}">Home</a>
             </li>
             {%endif%}
             <li class="nav-item">
-                <a class="nav-link" href="#">About Us</a>
+                <a class="nav-link" href="{%url 'patient_view_hospitals'%}">Hospitals</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%url 'patient_view_specialities'%}">Specialities</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{%url 'patient_view_doctors'%}">Doctors</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">News</a>
-            </li>
-            <li class="nav-item">
+            
+            
+            <!--<li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>
-            </li>
+            </li>-->
 
             {% if  user.is_authenticated and user.is_patient %}
                 
@@ -129,6 +131,7 @@
         </div> <!-- .navbar-collapse -->
         </div> <!-- .container -->
     </nav>
+
     </header>
 
 

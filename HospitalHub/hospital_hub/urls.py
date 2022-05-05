@@ -9,6 +9,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='home'),
+    path('', views.index, name='patient_home'),
     path('logout', views.Logout, name='user_logout'),
     path('login', views.Login, name='login'),
     path('l', views.Login, name='login'),
@@ -91,6 +92,11 @@ urlpatterns = [
          views.Patient.ViewDoctorProfile, name='book_appointment'),
     path('patient/view_doctors',views.Patient.ViewDoctors, name='patient_view_doctors'),
     path('patient/view_specialities',views.Patient.ViewSpecialities, name='patient_view_specialities'),
+    path('patient/view_specialities/<str:speciality_name>',views.Patient.PatientViewSpeciality, name='patient_view_speciality'),
+    path('patient/view_hospitals',views.Patient.ViewHospitals, name='patient_view_hospitals'),
+    path('patient/view_hospitals/<int:hospital_id>',views.Patient.PatientViewHospital, name='patient_view_hospital'),
+    path('patient/view_hospitals/<int:hospital_id>/<str:speciality_name>',views.Patient.PatientViewHospitalSpeciality, name='patient_view_hospital_speciality'),
+    
     path('patient/appointments',views.Patient.ViewAppointments, name='patient_view_appointments'),
     path('patient/appointments/<int:appt_id>',views.Patient.ViewAppointmentDocs, name='patient_view_appointments_docs'),
 

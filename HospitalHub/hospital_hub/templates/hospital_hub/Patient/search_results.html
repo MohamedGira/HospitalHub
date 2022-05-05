@@ -57,7 +57,7 @@
 
 
                                     <div class="meta" style="text-align:center;">
-                                        <a href="#">
+                                        <a href="{%url 'patient_view_speciality' speciality_name=speciality.name%}">
                                             <span class="mai-people"></span>
                                         </a>
                                      
@@ -108,7 +108,7 @@
                                     {% endif %}
 
                                     <div class="meta" style="text-align:center;">
-                                        <a href="#">
+                                        <a href="{%url 'book_appointment' doctor_name=account.username %}">
                                         <span class="mai-person"></span></a>
 
                                         
@@ -160,7 +160,7 @@
 
                                       <div class="meta" style="text-align:center;">
 
-                                        <a href="#">
+                                        <a href="{%url 'patient_view_hospital' hospital_id=hospital.id%}">
                                             <span class="mai-people"></span>
                                         </a>
                                         
