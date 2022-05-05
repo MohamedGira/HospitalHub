@@ -1764,10 +1764,10 @@ class Patient:
                 "speciality": spec.first().name
             })
         else:
-            specialities = hospital.specialities.all()
-            return render(request, "hospital_hub/patient/patient_view_specialities.html", {
+            specialities = SpecialityModel.objects.all()
+            return render(request, "hospital_hub/patient/view_specialities.html", {
                 "message": "Requested specialitiy doesn't exist",
-                "specialities": hospital.specialities.all(),
+                "specialities": specialities,
 
 
             })
