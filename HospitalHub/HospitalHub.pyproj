@@ -110,6 +110,7 @@
     <Content Include="hospital_hub\static\hospital_hub\assets\css\login_admin.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\login_general.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\maicons.css" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\css\patient_profile.html" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\specializations groups.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\specializations preview-1.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\specializations.css" />
@@ -183,6 +184,7 @@
     <Content Include="hospital_hub\templates\hospital_hub\Admin\view_specialities.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Admin\view_speciality.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Doctor\doctor_registration.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Doctor\doctor_ViewRecord.html" />
     <Content Include="hospital_hub\templates\hospital_hub\home_layout.html" />
     <Content Include="hospital_hub\templates\hospital_hub\index.html" />
     <Content Include="hospital_hub\templates\hospital_hub\login-general.html">

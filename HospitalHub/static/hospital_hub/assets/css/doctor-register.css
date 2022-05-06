@@ -21,7 +21,7 @@ a{color:inherit;text-decoration:none}
 .login-wrap {
 	border-radius: 50px;
 	width: 100%;
-	height: 1300px;
+	height: 1150px;
 	margin-top: 20px;
 	margin-left: 800px;
 	max-width: 525px;
@@ -44,7 +44,7 @@ a{color:inherit;text-decoration:none}
 .login-html {
 	border-radius: 50px;
 	width: 100%;
-	height: 1300px;
+	height: 1150px;
 	position: absolute;
 	padding: 50px 70px 50px 70px;
 	background: rgba(40,57,101,.7);

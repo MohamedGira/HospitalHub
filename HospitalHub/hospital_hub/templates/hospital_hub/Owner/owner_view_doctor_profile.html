@@ -69,6 +69,16 @@
                         <p class="text-secondary mb-1">{{doctor.speciality}}</p>
                         <p class="text-muted font-size-sm">{{hospital}}</p>
 
+                           <div class="row align-items-center" style="margin:auto; display:block;">
+                         {% for i in '01234'|make_list %}
+                                  {%if forloop.counter <= total_reviews%}
+                                  <span class="fa fa-star checked"></span>
+                                  {%else%}
+                                  <span class="fa fa-star "></span>
+                                  {%endif%}
+                            {% endfor %} 
+                        </div>
+
                         
                       </div>
                     </div>
@@ -155,7 +165,7 @@
                       <span style="font-size:10px; text-align:left; "> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt  </span>
                     </div>
 
-                        {%for review in reviews_left%}
+                        {%for review in reviews_left %}
                           <!-- comment template-->
 
                         <div class="row align-items-center" >
@@ -180,7 +190,7 @@
                             </div>
                           </div>
                           <div class="col-6" style="padding:0px">
-                            <span style="font-size:10px; text-align:left; ">
+                            <span style="font-size:13px; text-align:left; ">
                             {{review.comment}}  
                             </span>
                           </div>
@@ -232,7 +242,7 @@
                             </div>
                           </div>
                           <div class="col-6" style="padding:0px">
-                            <span style="font-size:10px; text-align:left; ">
+                            <span style="font-size:13px; text-align:left; ">
                             {{review.comment}}  
                             </span>
                           </div>
