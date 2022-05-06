@@ -1068,10 +1068,10 @@ class Doctor:
 
     def DoctorDashboard(request):
         if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('doctor_login'))
+            return HttpResponseRedirect(reverse('login'))
         elif not request.user.is_doctor:
             logout(request)
-            return HttpResponseRedirect(reverse('doctor_login'))
+            return HttpResponseRedirect(reverse('login'))
         status_booked = AppointmentStatus.objects.get(status="booked")
         status_pending = AppointmentStatus.objects.get(status="pending")
         status_done = AppointmentStatus.objects.get(status="done")
@@ -1100,10 +1100,10 @@ class Doctor:
 
     def DoctorProfile(request):
         if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('doctor_login'))
+            return HttpResponseRedirect(reverse('login'))
         elif not request.user.is_doctor:
             logout(request)
-            return HttpResponseRedirect(reverse('doctor_login'))
+            return HttpResponseRedirect(reverse('login'))
 
         doc_account = request.user
         doctor = DoctorModel.objects.filter(my_account=request.user).first()
@@ -1180,10 +1180,10 @@ class Doctor:
     def DoctorViewRecord(request, patient_name):
         print("view")
         if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse('doctor_login'))
+            return HttpResponseRedirect(reverse('login'))
         elif not request.user.is_doctor:
             logout(request)
-            return HttpResponseRedirect(reverse('doctor_login'))
+            return HttpResponseRedirect(reverse('login'))
 
         status_done    = AppointmentStatus.objects.get(status="done")
         status_pending = AppointmentStatus.objects.get(status="pending")
@@ -1279,6 +1279,7 @@ class Patient:
             confirm_password = request.POST["confirm_password"]
             city = request.POST["city"]
             phone_number = request.POST["phone_number"]
+            age= request.POST["age"]
             image = request.FILES.get('image', None)
 
             if password != confirm_password:
@@ -1290,7 +1291,9 @@ class Patient:
                     "city": city,
                     "username": username,
                     "email": email,
-                    "phone_number": phone_number})
+                    "phone_number": phone_number,
+                    "age":age
+                    })
 
         # Attempt to create new user
             try:
@@ -1298,10 +1301,10 @@ class Patient:
 
                 if image is not None:
                     user = User.objects.create_user(username, email, full_name,
-                                                    password, is_patient=True, city=selectedCity, phone_number=phone_number, image=image)
+                                                    password, is_patient=True, city=selectedCity, phone_number=phone_number, image=image,age=age)
                 else:
                     user = User.objects.create_user(username, email, full_name,
-                                                    password, is_patient=True, city=selectedCity, phone_number=phone_number)
+                                                    password, is_patient=True, city=selectedCity, phone_number=phone_number,age=age)
 
                 user.save()
                 patient = PatientModel(my_account=user)
@@ -1315,7 +1318,8 @@ class Patient:
                     "city": city,
                     "phone_number": phone_number,
                     "username": username,
-                    "email": email
+                    "email": email,
+                    "age":age
 
                 })
             login(request, user)  # Checks authentication

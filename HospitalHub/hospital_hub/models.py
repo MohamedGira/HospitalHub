@@ -101,7 +101,7 @@ class UserManager(BaseUserManager):
     def create_user(self, username, email, full_name=None,
                     password=None, is_owner=False,
                     is_admin=False, is_doctor=False, is_staff=False,
-                    is_patient=False, city=None, phone_number=None, image=None):
+                    is_patient=False, city=None, phone_number=None, image=None,age=None):
         # checks if all requirements are complete
         if not (username and password and full_name and email):
             raise ValueError("Users must have all required data")
@@ -119,6 +119,7 @@ class UserManager(BaseUserManager):
         user_obj.staff = is_staff
         user_obj.city = city
         user_obj.phone_number = phone_number
+        user_obj.age = age
         if image is not None:
             user_obj.image = image
 
@@ -135,7 +136,7 @@ class UserManager(BaseUserManager):
     #    )
     #    return user
 
-    def create_superuser(self, username, email, full_name=None, password=None, phone_number=None, image=None):
+    def create_superuser(self, username, email, full_name=None, password=None, phone_number=None, image=None,age=None):
         user = self.create_user(
             username,
             full_name=full_name,
@@ -143,6 +144,7 @@ class UserManager(BaseUserManager):
             email=email,
             phone_number=phone_number,
             image=image,
+            age=age,
             is_owner=True,
             is_staff=True,
             is_admin=False
@@ -163,7 +165,8 @@ class User(AbstractBaseUser):
     doctor = models.BooleanField(default=False)  # superuser
     patient = models.BooleanField(default=False)  # superuser
     staff = models.BooleanField(default=False)  # necessary
-    created_at = models.DateTimeField(auto_now_add=True)
+    age   =models.IntegerField(null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
     image = models.ImageField(
         default="media/no_profile_img.png", upload_to="media/")
 

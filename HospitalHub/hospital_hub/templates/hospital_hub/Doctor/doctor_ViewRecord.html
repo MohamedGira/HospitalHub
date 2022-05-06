@@ -93,7 +93,7 @@
          style="background-image: url(../../../static/hospital_hub/assets/img/bg_image_1.jpg);">
         <div class="banner-section">
             <div class="container text-center wow fadeInUp">
-                <h1 class="font-weight-normal" style="margin-bottom:0px;">Dr. {{request.user.full_name}} </h1>
+                <h1 class="font-weight-normal" style="margin-bottom:0px;"> Dr. {{request.user.full_name}} </h1>
                 <h5 class="font-weight-normal">{{doctor.speciality}}</h5>
                 <nav aria-label="Breadcrumb">
                     <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
@@ -109,20 +109,22 @@
     <div class="page-section bg-light">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-10">
+                <div class="col-lg-12">
 
                     <div class="row">
 
                         <div class="row gutters-sm">
                             <div class="col-md-4 mb-3">
                                 <div class="card ">
-                                    <div class="card-body">
+                                    <div class="card-body" style="display:block; margin:auto;">
                                         <div class="d-flex flex-column align-items-center text-center">
 
                                             <img src={{patient.image.url}} alt="Admin" class="rounded-circle" width="150" height="150">
                                             <div class="mt-3">
                                                 <h4 style="font-size:auto;">{{patient.full_name}}</h4>
-                                                <p class="text-muted font-size-sm" style="visibility:hidden">a</p>
+                                                {%if patient.age%}
+                                                <p class="text-secondary mb-1">{{patient.age}} Years</p>
+                                                {%endif%}
                                                 <p class="text-muted font-size-sm">{{patient.email}}</p>
 
                                                 <!-- Change "Pending Appointments" to "Make Appointment"-->
@@ -178,15 +180,16 @@
                                         <section id="working-time" class="">
                                             <div class="container">
                                                 <!-- .row end -->
-                                                <div class="row">
+                                                       <div class="row" style="display:block;">    
+
                                                     <div class="flex-container" id="books-table">
 
                                                         <h2 style="text-align: center; margin-bottom:50px;">Medical Record</h2>
                                                         <table class="table table-bordered table-striped table-responsive-stack" id="books"
-                                                               style="text-align:center;">
+                                                               style="text-align:center;table-layout:fixed">
 
 
-                                                            <thead class="thead-dark">
+                                                            <thead class="thead" style="background-color:#81C2D6; color:white;" >
                                                                 <tr>
                                                                     <th>Date</th>
                                                                     <th>Title</th>
@@ -198,7 +201,7 @@
 
                                                             <tbody>
                                                                 {%for doc, test in documents%}
-                                                                <tr>
+                                                                <tr >
                                                                     <td>{{doc.appointment.appt_date}}</td>
                                                                     <td>{{doc.title}}</td>
                                                                     <td>
@@ -241,10 +244,7 @@
 
                                                                             </div>
 
-                                                                            <div>
-                                                                                <p class="font-weight-normal">
-                                                                                </p>
-                                                                            </div>
+                                                                           
 
 
                                                                         </div>
@@ -257,8 +257,11 @@
 
 
 
-
-
+                                                                {%empty%}
+                                                                <tr>
+                                                                    <td colspan="5">No previous visits</td>
+                                                                    
+                                                                </tr>
 
                                                                 {%endfor%}
                                                             </tbody>
@@ -355,6 +358,7 @@
                                                 </div>
 
                                             </div>
+                                            </section>
                                 </div>
                                 <div class="row gutters-sm">
                                 </div>

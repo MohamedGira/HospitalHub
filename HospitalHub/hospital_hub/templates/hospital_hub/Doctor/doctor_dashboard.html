@@ -90,7 +90,7 @@
   style="background-image: url(../../../static/hospital_hub/assets/img/bg_image_1.jpg);">4
   <div class="banner-section">
     <div class="container text-center wow fadeInUp">
-      <h1 class="font-weight-normal" style="margin-bottom:0px;">👨‍⚕️-DR. {{request.user.full_name}}-👨‍⚕️</h1>
+      <h1 class="font-weight-normal" style="margin-bottom:0px;">Dr. {{request.user.full_name}}</h1>
       <h5 class="font-weight-normal">{{doctor.speciality}}</h5>
       <nav aria-label="Breadcrumb">
         <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
@@ -117,7 +117,7 @@
           <div class="col-md-4 col-lg-4 py-3 wow zoomIn">
             <div class="wrapper">
               <div class="profile-card js-profile-card">
-                <div class="profile-card__img">
+                <div class="profile-card__img" style="box-shadow: 0px 0px 0px 7px rgba(207, 72, 76, 0.9) ;">
                   <img src="{{appointment.patient.my_account.image.url}}" alt="profile card">
                 </div>
 
@@ -129,7 +129,7 @@
 
                   <div class="profile-card-inf" style="margin-top:5px">
                     <div class="profile-card-inf__item">
-                      <div class="profile-card-inf__txt"># in queue</div>
+                      <div class="profile-card-inf__txt"># appt. no</div>
                       <div class="profile-card-inf__title">{{appointment.patient_no}}</div>
                     </div>
 
@@ -191,7 +191,7 @@
       <div class="col-md-4 col-lg-4 py-3 wow zoomIn">
         <div class="wrapper">
           <div class="profile-card js-profile-card">
-            <div class="profile-card__img">
+            <div class="profile-card__img" style="box-shadow: 0px 0px 0px 7px rgba(255, 204, 0, 0.5) ;">
               <img src="{{pend.patient.my_account.image.url}}" alt="profile card">
             </div>
 
@@ -200,6 +200,17 @@
               <div class="profile-card__txt">{{pend.patient.my_account.email}}</div>
               <div class="profile-card-loc">
               </div>
+
+
+
+
+                <div class="profile-card-inf" style="visibility:hidden ;margin-top:5px">
+                    <div class="profile-card-inf__item">
+                      <div class="profile-card-inf__txt"># in queue</div>
+                      <div class="profile-card-inf__title">0</div>
+                    </div></div>
+
+
               <div class="profile-card-inf" style="margin-top:5px">
                 <div class="">
                   <button class="profile-card__button button--blue" style="margin: 0px 35px; padding:5px;">
@@ -252,7 +263,7 @@
       <div class="col-md-4 col-lg-4 py-3 wow zoomIn">
         <div class="wrapper">
           <div class="profile-card js-profile-card">
-            <div class="profile-card__img">
+            <div class="profile-card__img" style="box-shadow: 0px 0px 0px 7px rgba(57, 193, 108, 0.7) ;">
               <img src="{{appointment.patient.my_account.image.url}}" alt="profile card">
             </div>
 
@@ -261,6 +272,16 @@
               <div class="profile-card__txt">{{appointment.patient.my_account.email}}</div>
               <div class="profile-card-loc">
               </div>
+
+                
+                <div class="profile-card-inf" style="visibility:hidden ;margin-top:5px">
+                    <div class="profile-card-inf__item">
+                      <div class="profile-card-inf__txt"># in queue</div>
+                      <div class="profile-card-inf__title">0</div>
+                    </div></div>
+
+
+
               <div class="profile-card-inf" style="margin-top:5px">
                 <div class="">
                   <button class="profile-card__button button--blue" style="margin: 0px 35px; padding:5px;">

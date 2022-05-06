@@ -110,6 +110,7 @@
     <Content Include="hospital_hub\static\hospital_hub\assets\css\login_admin.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\login_general.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\maicons.css" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\css\patient_profile.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\patient_profile.html" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\specializations groups.css" />
     <Content Include="hospital_hub\static\hospital_hub\assets\css\specializations preview-1.css" />

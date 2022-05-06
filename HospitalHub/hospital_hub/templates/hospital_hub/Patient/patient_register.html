@@ -64,33 +64,36 @@
 
                             <div class="group">
                                 <label for="user" class="label">Username</label>
-                                <input id="user" value="{{username}}" type="text" name="username" class="input">
+                                <input id="user" value="{{username}}" type="text" name="username" class="input" required>
                             </div>
                             <div class="group">
                                 <label for="user" class="label">Full Name</label>
-                                <input id="user" value="{{full_name}}" type="text" name="full_name" class="input">
+                                <input id="user" value="{{full_name}}" type="text" name="full_name" class="input" required>
                             </div>
                             <div class="group">
                                 <label for="user" class="label">Email Address</label>
-                                <input id="user" value="{{email}}" type="email" name="email" class="input">
+                                <input id="user" value="{{email}}" type="email" name="email" class="input" required>
                             </div>
 
                             <div class="group">
                                 <label for="user" class="label">Phone Number</label>
-                                <input id="user" value="{{phone_number}}" type="number" name="phone_number" class="input">
+                                <input id="user" value="{{phone_number}}" type="number" name="phone_number" class="input" required>
                             </div>
 
 
                             <div class="group">
                                 <label for="pass" class="label">Password</label>
-                                <input value="{{password}}" id="pass" type="password" name="password" class="input" data-type="password">
+                                <input value="{{password}}" id="pass" type="password" name="password" class="input" required data-type="password">
                             </div>
                             <div class="group">
                                 <label for="pass" class="label">Repeat Password</label>
-                                <input id="pass" type="password" name="confirm_password" class="input" data-type="password">
+                                <input id="pass" type="password" name="confirm_password" class="input" data-type="password" required>
                             </div>
 
-
+                            <div class="group">
+                                <label for="user" class="label">Age</label>
+                                <input id="user" value="{{age}}" type="number" name="age" class="input" max="150" min="1" required>
+                            </div>
 
                             <div class="group">
                                 <label for="user" class="label">City</label>
