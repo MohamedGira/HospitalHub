@@ -861,7 +861,20 @@ class Admin:
                 doctor.hospital = request.user.my_admin.first().hospital
                 doctor.save()
                     
-                
+                hospital = request.user.my_admin.first().hospital
+                specialities = hospital.specialities.all()
+                specialities_with_doctors_dependet = []
+                for speciality in specialities:
+                     doctors = DoctorModel.objects.filter(
+                     hospital=hospital, speciality=speciality , is_employed=True)
+                     specialities_with_doctors_dependet.append([speciality, doctors])
+                return render(request, "hospital_hub/Admin/view_specialities.html", {
+                 "message": "A notification is sent to doctor "+ userset.first().full_name,
+                "specialities": specialities_with_doctors_dependet,
+                "hospital_name": request.user.my_admin.first().hospital.name,
+
+                #   "hospital_name":hospital.name,
+                 })
                 return HttpResponseRedirect(reverse('view_specialities'))
             else:
                 return render(request, "hospital_hub/Admin/add_doctor.html", {
