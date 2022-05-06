@@ -108,7 +108,7 @@ def Login(request):
 
 def next_weekday(d, weekday):
     days_ahead = weekday - d.weekday()
-    if days_ahead <= 0:  # Target day already happened this week
+    if days_ahead < 0:  # Target day already happened this week
         days_ahead += 7
     return d + datetime.timedelta(days_ahead)
 
@@ -1104,20 +1104,28 @@ class Doctor:
             return HttpResponseRedirect(reverse('doctor_login'))
         status_booked = AppointmentStatus.objects.get(status="booked")
         status_pending = AppointmentStatus.objects.get(status="pending")
+        status_done = AppointmentStatus.objects.get(status="done")
+
         print(status_booked)
         print(status_pending)
         doctor = DoctorModel.objects.filter(my_account=request.user).first()
         #schedule = Schedule.objects.filter(doctor=doctor).first()
-        appointment = Appointment.objects.filter(
+        appointmentpart1 = Appointment.objects.filter(
+            doctor=doctor, appt_date=datetime.datetime.today(), status=None).all()
+        appointmentpart2 = Appointment.objects.filter(
             doctor=doctor, appt_date=datetime.datetime.today(), status=status_booked).all()
+        appointment=appointmentpart1|appointmentpart2
         # give all pending any day for the doctor
         pending = Appointment.objects.filter(
             doctor=doctor, status=status_pending).all()
+        done = Appointment.objects.filter(
+            doctor=doctor, status=status_done).all()
         # status=status
         return render(request, "hospital_hub/Doctor/doctor_dashboard.html", {
             "doctor": doctor,
             "appointments": appointment,
             "pending": pending,
+            "done":done,
         })
 
     def DoctorProfile(request):
@@ -1129,12 +1137,27 @@ class Doctor:
 
         doc_account = request.user
         doctor = DoctorModel.objects.filter(my_account=request.user).first()
-        days = ['Saturday', 'Sunday', 'Monday',
-                'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+        days = [ 'Monday',
+                'Tuesday', 'Wednesday', 'Thursday', 'Friday','Saturday', 'Sunday']
         hospital = doctor.hospital
         reviews = doctor.my_reviews.all()
         schedules = doctor.dailyschedule.all()
         schedule_abbreviation = []
+
+        total_reviews = 0
+        reviews_left = []
+        reviews_right = []
+        for i in range(reviews.count()):
+            print(reviews.count())
+            total_reviews += reviews[i].rating
+            if i <= reviews.count()/2:
+                reviews_left.append(reviews[i])
+            else:
+                reviews_right.append(reviews[i])
+        if reviews.count():
+            total_reviews = int(total_reviews/reviews.count())
+
+
         for schedule in schedules:
             schedule_abbreviation.append([schedule, schedule.day[0:3]])
         empty_days = []
@@ -1148,57 +1171,17 @@ class Doctor:
                 empty_days.append(day)
 
         if request.method == "POST":
-            if request.POST.get("command", False):
-
-                for day in days:
-                    if request.POST['command'] == "edit_"+day:
-                        schedule_day = Schedule.objects.filter(
-                            doctor=doctor, day=day).first()
-                        schedule_day.start_time = request.POST['new_start']
-                        schedule_day.end_time = request.POST['new_end']
-                        schedule_day.save()
-                        return HttpResponseRedirect(reverse('doctor_profile'))
-
-                for day in days:
-                    if request.POST['command'] == "remove_"+day:
-                        schedule_day = Schedule.objects.filter(
-                            doctor=doctor, day=day).first()
-                        if schedule_day.appointments.all().count() == 0:
-                            schedule_day.delete()
-                            return HttpResponseRedirect(reverse('doctor_profile'))
-                        else:
-                            return HttpResponseRedirect(reverse('doctor_profile') +
-                                                        '?message=+'+day+' is busy, couldn\'t remove')
-
-                if request.POST['command'] == "add_day":
-                    if Schedule.objects.filter(doctor=doctor, day=request.POST['to_add']).count() == 0:
-                        schedule = Schedule(doctor=doctor, day=request.POST['to_add'],
-                                            start_time=request.POST['start_time'],
-                                            end_time=request.POST['end_time'],
-                                            price=request.POST['price'],
-                                            patient_count=request.POST['max_patient_count'])
-                        schedule.save()
-                        return HttpResponseRedirect(reverse('doctor_profile'))
-
-                    return HttpResponseRedirect(reverse('doctor_profile') +
-                                                '?message=A Schedule exists on day already, you can Edit it below')
-
-            return render(request, "hospital_hub/Doctor/doctor_profile.html", {
-                "doctor": doctor,
-                "hospital": hospital,
-                "schedules": schedule_abbreviation,
-                "reviews": reviews,
-                "empty_days": empty_days,
-
-            })
+            pass
         else:
-            specialities = hospital.specialities.all()
             return render(request, "hospital_hub/Doctor/doctor_profile.html", {
                 "doctor": doctor,
                 "hospital": hospital,
                 "schedules": schedule_abbreviation,
                 "reviews": reviews,
-                "empty_days": empty_days,
+                "reviews_left":reviews_left,
+                "reviews_righ":reviews_right,
+                "total_reviews":total_reviews,
+                
             })
 
     # def DoctorSchedule(request):
@@ -1232,9 +1215,10 @@ class Doctor:
             logout(request)
             return HttpResponseRedirect(reverse('doctor_login'))
 
-        status_done = AppointmentStatus.objects.get(status="done")
+        status_done    = AppointmentStatus.objects.get(status="done")
         status_pending = AppointmentStatus.objects.get(status="pending")
-
+        status_booked  = AppointmentStatus.objects.get(status="booked")
+        tests_list     = MedicalTestType.objects.all()
         patient_user = User.objects.filter(username=patient_name).first()
         patient = PatientModel.objects.filter(my_account=patient_user).first()
 
@@ -1242,56 +1226,72 @@ class Doctor:
 
         this_appointment = Appointment.objects.filter(
             doctor=doctor, patient=patient, appt_date=datetime.datetime.today()).first()
+        is_new =False;
+        if this_appointment is not None:
+            if this_appointment.status==status_booked or this_appointment.status==None:
+                is_new=True
+        
 
         appointments = Appointment.objects.filter(patient=patient)
-        docs = []
-        tests = []
+        docs_with_tests = []
+        
         for apt in appointments:
-            documents = AppointmentDocument.objects.filter(
-                appointment=apt).first()
-            if documents != None:
-                docs.append(documents)
-                test = MedicalTest.objects.filter(
-                    appointment_document=documents)
-                if test != None:
-                    tests.append(test)
-                else:
-                    tests.append("pending")
+            document = apt.document.first();
+            if document != None:
+                test = document.tests.all().first()
+                docs_with_tests.append([document,test])
 
         if request.method == "POST":
-            title = request.POST["diagnosis"]
-            attachment = request.POST["prescription"]
-            diagnosis = request.POST["tests"]
-            disease = request.POST["diagnosis"]
+            title = request.POST["title"]
+            attachment = request.FILES.get('attachment', None)
+            diagnosis = request.POST["diagnosis"]
+            disease = request.POST["title"]
+            reqired_test=request.POST["reqired_test"]
             try:
                 doc = AppointmentDocsModel(appointment=this_appointment, title=title,
                                            attachment=attachment, diagnosis=diagnosis, disease=disease)
-                if diagnosis == "None":
-                    print("done")
+
+                if reqired_test == "None":
                     this_appointment.status = status_done
                 else:
                     this_appointment.status = status_pending
+                    typeset=MedicalTestType.objects.filter(type=reqired_test)
+                    if typeset.count()==1:
+                        test=MedicalTest(appointment_document=doc,type=typeset.first())
+                        doc.save()
+                        test.save()
+                    else:
+                        new_type=MedicalTestType(type=reqired_test)
+                        new_type.save()
+                        test=MedicalTest(appointment_document=doc,type=typeset.first())
+                        doc.save()
+                        test.save()
+                        
                 this_appointment.save()
                 print("saved")
                 doc.save()
             except IntegrityError:
                 return render(request, "hospital_hub/Doctor/doctor_viewRecord.html", {
+                    "message":"an Error Happened, Try again",
+                    "is_new": is_new,
                     "patient": patient_user,
                     "doctor": doctor,
-                    "documents": docs,  # array
-                    "tests": tests,  # array
+                    "documents": docs_with_tests,
+                    "test_types":tests_list,
                 })
+            return HttpResponseRedirect(reverse('doctor_viewRecord',args=[patient_name]))
 
         return render(request, "hospital_hub/Doctor/doctor_viewRecord.html", {
+            "is_new": is_new,
             "patient": patient_user,
             "doctor": doctor,
-            "documents": docs,  # array
-            "tests": tests,  # array
+            "documents": docs_with_tests,
+            "test_types":tests_list,
         })
 
     def DoctorLogout(request):
         logout(request)
-        return HttpResponseRedirect(reverse('doctor_login'))
+        return HttpResponseRedirect(reverse('login'))
 
 
 ############################################################################

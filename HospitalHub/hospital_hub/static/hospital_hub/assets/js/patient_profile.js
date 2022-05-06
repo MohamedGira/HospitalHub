@@ -76,5 +76,5 @@ $("#add-book-modal3").button().on("click", function() {
 
 form = dialog.find("form").on("submit", function(event) {
   event.preventDefault();
-  document.getElementById("myForm").submit();
+  addBook();
 });

@@ -43,7 +43,7 @@ class Speciality(models.Model):
 
 
 class MedicalTestType(models.Model):
-    type = models.CharField(max_length=100)
+    type = models.CharField(max_length=100,unique=True)
 
     def __str__(self):
         return self.type
@@ -299,7 +299,7 @@ class Appointment(models.Model):
         Patient, on_delete=models.CASCADE, related_name="appointments")
     schedule = models.ForeignKey(
         Schedule, on_delete=models.CASCADE, related_name="appointments")
-    status = models.ForeignKey(AppointmentStatus, on_delete=models.SET_NULL,null=True)
+    status = models.ForeignKey(AppointmentStatus, on_delete=models.SET_NULL,null=True,blank=True,default=None)
     patient_no = models.IntegerField()
     appt_date = models.DateField()
 
@@ -309,9 +309,9 @@ class Appointment(models.Model):
 
 class AppointmentDocument(models.Model):
     appointment = models.ForeignKey(
-        Appointment, on_delete=models.CASCADE, related_name="document")
+    Appointment, on_delete=models.CASCADE, related_name="document")
     title = models.CharField(max_length=100)
-    attachment = models.TextField()
+    attachment = models.FileField(null=True, blank=True)
     diagnosis = models.TextField()
     disease = models.CharField(max_length=100)
 
@@ -321,7 +321,7 @@ class MedicalTest(models.Model):
         MedicalTestType, on_delete=models.CASCADE, related_name="document")
     appointment_document = models.ForeignKey(
         AppointmentDocument, on_delete=models.CASCADE, related_name="tests")
-    result = models.TextField(null=True)
+    result = models.FileField(null=True, blank=True,default=None)
 
 
 class Rating(models.IntegerChoices):
