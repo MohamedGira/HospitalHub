@@ -19,7 +19,9 @@ from .models import Schedule as ScheduleModel
 from .models import Appointment as AppointmentModel
 from .models import AppointmentDocument as AppointmentDocsModel
 from .utils import *
-
+from django.core.mail import EmailMessage
+from django.conf import settings
+from django.template.loader import render_to_string
 import re
 import datetime
 ##
@@ -630,7 +632,7 @@ class Admin:
         specialities_with_doctors_dependet = []
         for speciality in specialities:
             doctors = DoctorModel.objects.filter(
-                hospital=hospital, speciality=speciality)
+                hospital=hospital, speciality=speciality , is_employed=True)
             specialities_with_doctors_dependet.append([speciality, doctors])
 
         if specialities.count() == 0:
@@ -647,19 +649,14 @@ class Admin:
                 #   "hospital_name":hospital.name,
             })
 
-    def ViewSpeciality(request, speciality):
-        hospital = request.user.my_admin.first().hospital
-        spec = Speciality.objects.filter(name=speciality)
-        if spec.count() == 1:
-            doctors = DoctorModel.objects.filter(
-                speciality=spec.first(), hospital=hospital)
+
 
     def ViewSpeciality(request, speciality):
         hospital = request.user.my_admin.first().hospital
         spec = Speciality.objects.filter(name=speciality)
         if spec.count() == 1:
             doctors = DoctorModel.objects.filter(
-                speciality=spec.first(), hospital=hospital)
+                speciality=spec.first(), hospital=hospital, is_employed=True)
             doctors_with_dependent_appointmens = []
             for doctor in doctors:
                 doctors_with_dependent_appointmens.append(
@@ -774,7 +771,7 @@ class Admin:
 
     def ViewDoctors(request):
         hospital = request.user.my_admin.first().hospital
-        doctors = DoctorModel.objects.filter(hospital=hospital)
+        doctors = DoctorModel.objects.filter(hospital=hospital, is_employed=True)
         doctors_with_dependent_appointmens = []
         for doctor in doctors:
             doctors_with_dependent_appointmens.append(
@@ -802,7 +799,7 @@ class Admin:
                     name=request.GET['speciality'])
                 if speciality.count() == 1:
                     doctors = DoctorModel.objects.filter(
-                        is_employed=False, speciality=speciality.first())
+                        is_employed=False,is_notified=False, speciality=speciality.first())
                     doctors_accounts = []
                     for doc in doctors:
                         doctors_accounts.append(doc.my_account)
@@ -844,6 +841,7 @@ class Admin:
                 weekly_schedule = []
                 for day in days:
                     if day in request.POST:
+                        
                         s = Schedule(day=day,
                                      doctor=doctor,
                                      start_time=request.POST[(day+"1")],
@@ -852,11 +850,18 @@ class Admin:
                                      patient_count=10)
                         weekly_schedule.append(s)
 
-                doctor.is_employed = True
-                doctor.hospital = request.user.my_admin.first().hospital
-                doctor.save()
+                
+                
+           
+
                 for s in weekly_schedule:
                     s.save()
+
+                doctor.is_notified=True 
+                doctor.hospital = request.user.my_admin.first().hospital
+                doctor.save()
+                    
+                
                 return HttpResponseRedirect(reverse('view_specialities'))
             else:
                 return render(request, "hospital_hub/Admin/add_doctor.html", {
@@ -1096,6 +1101,7 @@ class Doctor:
             "appointments": appointment,
             "pending": pending,
             "done":done,
+            "is_notified":doctor.is_notified
         })
 
     def DoctorProfile(request):
@@ -1262,6 +1268,75 @@ class Doctor:
     def DoctorLogout(request):
         logout(request)
         return HttpResponseRedirect(reverse('login'))
+    
+    def DoctorAccept(request, doctor_name):
+         print("Confirmed")
+         #Unnecesarry
+         #if not request.user.is_authenticated:
+         #      return render(request, "hospital_hub\login-general.html", {
+         #               "message": "sign in then re-click the link",
+         #               "radio": "doctor"
+         #           })
+         #if not request.user.is_doctor:
+         #   logout(request)
+         #   return render(request, "hospital_hub\login-general.html", {
+         #               "message": "sign in then re-click the link",
+         #               "radio": "doctor"
+         #           })
+
+         #if not request.user.username == doctor_name:
+         #   logout(request)
+         #   return render(request, "hospital_hub\login-general.html", {
+         #               "message": "sign in then re-click the link",
+         #               "radio": "doctor"
+         #           })
+         doctorset=User.objects.filter(username=doctor_name)
+
+         if doctorset.count()==1:
+             doctoracc=doctorset.first()
+             doctor=doctoracc.my_doctor.first()
+             doctor.is_employed = True
+             doctor.is_notified = False
+             doctor.save()
+             
+             #email=EmailMessage(
+             #       'Employment Request To '+doctor.full_name+' is Accepted',
+             #        'Doctor '+doctor.full_name+' has accepted your Employment, you can now view and edit his scedule',
+             #        settings.EMAIL_USER_HOST,
+             #        [admin_email],
+             #        )
+             #email.fail_silently=False
+             #email.send()
+             
+             return HttpResponseRedirect(reverse('doctor_dashboard'))
+             
+         else:
+             return HttpResponse("something went wrong")
+        
+    def DoctorReject(request,doctor_name):
+        print("deleted")
+        doctorset=User.objects.filter(username=doctor_name)
+        if doctorset.count()==1:
+             doctoracc=doctorset.first()
+             doctor=doctoracc.my_doctor.first()
+             doctor.hospital= None
+             doctor.is_employed = False
+             doctor.is_notified = False
+             schedules=ScheduleModel.objects.filter(doctor=doctor)
+             for schedule in schedules:
+                 schedule.delete()
+             doctor.save()
+             #email=EmailMessage(
+             #       'Employment Request To '+doctor.full_name+' is Rejected',
+             #        'Doctor '+doctor.full_name+' has accepted your Employment.',
+             #        settings.EMAIL_USER_HOST,
+             #        [admin_email],
+             #        )
+             #email.fail_silently=False
+             #email.send()
+             return HttpResponseRedirect(reverse('doctor_dashboard'))
+        else:
+             return HttpResponse("something went wrong")
 
 
 ############################################################################
@@ -1709,7 +1784,7 @@ class Patient:
             hospital = hospitalset.first()
             if spec.count() == 1:
                 doctors = DoctorModel.objects.filter(
-                    speciality=spec.first(), hospital=hospital)
+                    speciality=spec.first(), hospital=hospital, is_employed=True)
 
                 return render(request, "hospital_hub/patient/patient_view_speciality.html", {
                     "doctors": doctors,

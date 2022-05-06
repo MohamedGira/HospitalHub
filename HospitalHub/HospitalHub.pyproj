@@ -186,6 +186,7 @@
     <Content Include="hospital_hub\templates\hospital_hub\Admin\view_speciality.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Doctor\doctor_registration.html" />
     <Content Include="hospital_hub\templates\hospital_hub\Doctor\doctor_ViewRecord.html" />
+    <Content Include="hospital_hub\templates\hospital_hub\Doctor\employment_confirmation.html" />
     <Content Include="hospital_hub\templates\hospital_hub\home_layout.html" />
     <Content Include="hospital_hub\templates\hospital_hub\index.html" />
     <Content Include="hospital_hub\templates\hospital_hub\login-general.html">

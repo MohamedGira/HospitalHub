@@ -117,3 +117,12 @@ STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
 
 
 AUTH_USER_MODEL = 'hospital_hub.User'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER='hospitalhub01@gmail.com'
+EMAIL_HOST_PASSWORD='123456789Aa!'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'default from email'

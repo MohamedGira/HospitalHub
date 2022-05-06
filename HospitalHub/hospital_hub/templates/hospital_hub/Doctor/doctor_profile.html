@@ -124,7 +124,7 @@
                                 <div class="row">
 
 
-         
+                                    {%if doctor.is_employed %}
                                     
                                     {%for schedule,abbreviation in schedules %}
 
@@ -148,8 +148,9 @@
                                
 
                                     {%endfor%}
-
-
+                                    {% else %}
+                                    <div> You are not enrolled in any Hospital </div>
+                                    {% endif %}
 
 
 

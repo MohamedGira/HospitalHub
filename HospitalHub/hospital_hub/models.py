@@ -275,7 +275,7 @@ class Doctor(models.Model):
         Speciality, on_delete=models.CASCADE, related_name="doctors")
     hospital = models.ForeignKey(
         Hospital, on_delete=models.SET_NULL, related_name="my_doctors", null=True, blank=True)
-
+    is_notified = models.BooleanField(default=False);
     def __str__(self):
         return str(self.my_account)
 

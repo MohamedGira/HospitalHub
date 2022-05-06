@@ -43,9 +43,12 @@
                             <div class="header">
 
 
-
+                                 {%if hospital.image%}
                                 <img src="{{hospital.image.url}}" alt="" height="260" style="object-fit: cover;">
+                                {%else%}
+                                 <img src="{%static 'hospital_hub\assets\img\no_hospital_img.png'%}" class="card-img-top" alt="...">
 
+                                {%endif%}
 
                                 <div class="meta" style="text-align:center;">
 
