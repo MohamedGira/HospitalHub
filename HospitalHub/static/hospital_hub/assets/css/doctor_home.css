@@ -342,12 +342,12 @@ a:hover {
 }
 
 .profile-card__button.button--orange {
-  background: linear-gradient(45deg, #CF484C, #CF484C);
-  box-shadow: 0px 4px 30px rgba(223, 45, 70, 0.35);
+  background: linear-gradient(45deg, #cb5a5e, #CF484C);
+  box-shadow: 0px 4px 30px rgba(208, 72, 90, 0.35);
 }
 
 .profile-card__button.button--orange:hover {
-  box-shadow: 0px 7px 30px rgba(223, 45, 70, 0.75);
+  box-shadow: 0px 7px 30px rgba(215, 80, 98, 0.75);
 }
 
 .profile-card__button.button--gray {

@@ -184,29 +184,35 @@
 
                                                     <div class="flex-container" id="books-table">
 
-                                                        <h2 style="text-align: center; margin-bottom:50px;">Medical Record</h2>
-                                                        <table class="table table-bordered table-striped table-responsive-stack" id="books"
-                                                               style="text-align:center;table-layout:fixed">
+                                                        <h2 style="text-align: center; margin-bottom:50px;">Medical History</h2>
+                                                        <table
+                                                            class="table table-bordered table-striped table-responsive-stack"
+                                                            id="books" style="text-align:center;table-layout:fixed">
 
 
-                                                            <thead class="thead" style="background-color:#81C2D6; color:white;" >
+                                                            <thead class="thead"
+                                                                style="background-color:#81C2D6; color:white;">
                                                                 <tr>
                                                                     <th>Date</th>
-                                                                    <th>Title</th>
+                                                                    <th>Doctor</th>
                                                                     <th>Diagnosis</th>
-                                                                    <th>Attachment</th>
+                                                                    <th>Prescription</th>
                                                                     <th>Tests Results</th>
                                                                 </tr>
                                                             </thead>
 
                                                             <tbody>
                                                                 {%for doc, test in documents%}
-                                                                <tr >
+                                                                <tr>
                                                                     <td>{{doc.appointment.appt_date}}</td>
-                                                                    <td>{{doc.title}}</td>
+                                                                    <td><a
+                                                                            href="{%url 'book_appointment' doctor_name=doc.appointment.doctor %}">{{doc.appointment.doctor}}</a>
+                                                                    </td>
                                                                     <td>
-                                                                        <button type="button" data-toggle="modal" class="link"
-                                                                                style="border:none; color:lightseagreen;background:none" data-target="#diagnosis_{{doc.id}}">
+                                                                        <button type="button" data-toggle="modal"
+                                                                            class="link"
+                                                                            style="border:none; color:lightseagreen;background:none"
+                                                                            data-target="#diagnosis_{{doc.id}}">
                                                                             Show
                                                                         </button>
                                                                     </td>
@@ -215,28 +221,35 @@
                                                                     {% else %}
                                                                     <td>None</td>
                                                                     {%endif%}
-
                                                                     {%if not test %}
                                                                     <td>Not Requested</td>
                                                                     {%elif not test.result%}
                                                                     <td>Pending</td>
                                                                     {%else%}
-                                                                    <td> <a href="{{test.result.url}}">{{test.type}}</a> </td>
+                                                                    <td> <a href="{{test.result.url}}">{{test.type}}</a>
+                                                                    </td>
                                                                     {%endif%}
                                                                 </tr>
 
 
 
-
-                                                                <div class="modal fade" id="diagnosis_{{doc.id}}" tabindex="-1" role="dialog"
-                                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <!--relate the diagnoses id to every document id (dynamic)-->
+                                                                <div class="modal fade" id="diagnosis_{{doc.id}}"
+                                                                    tabindex="-1" role="dialog"
+                                                                    aria-labelledby="exampleModalLabel"
+                                                                    aria-hidden="true">
                                                                     <div class="modal-dialog" role="document">
                                                                         <div class="modal-content" style="width:120%;">
                                                                             <div class="modal-header">
-                                                                                <h5 class="modal-title" id="exampleModalLabel">Doctor Diagnosis</h5>
-                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                                                                                        style="color:#CF484C;">
-                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                <h5 class="modal-title"
+                                                                                    id="exampleModalLabel">Doctor
+                                                                                    Diagnosis</h5>
+                                                                                <button type="button" class="close"
+                                                                                    data-dismiss="modal"
+                                                                                    aria-label="Close"
+                                                                                    style="color:#CF484C;">
+                                                                                    <span
+                                                                                        aria-hidden="true">&times;</span>
                                                                                 </button>
                                                                             </div>
                                                                             <div class="modal-body">
@@ -244,7 +257,7 @@
 
                                                                             </div>
 
-                                                                           
+
 
 
                                                                         </div>
@@ -252,15 +265,14 @@
                                                                 </div>
 
 
-
+                                                             
 
 
 
 
                                                                 {%empty%}
                                                                 <tr>
-                                                                    <td colspan="5">No previous visits</td>
-                                                                    
+                                                                    <td colspan="5">No medical history yet.</td>
                                                                 </tr>
 
                                                                 {%endfor%}
@@ -287,7 +299,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="modal fade" id="add_record" tabindex="-1" role="dialog"
+                                               <div class="modal fade" id="add_record" tabindex="-1" role="dialog"
                                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content" style="width:120%;border-radius:25px;">
@@ -355,7 +367,7 @@
 
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div>  
 
                                             </div>
                                             </section>

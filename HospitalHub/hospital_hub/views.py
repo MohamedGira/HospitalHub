@@ -870,7 +870,7 @@ class Admin:
                      hospital=hospital, speciality=speciality , is_employed=True)
                      specialities_with_doctors_dependet.append([speciality, doctors])
                 return render(request, "hospital_hub/Admin/view_specialities.html", {
-                 "message": "A notification is sent to doctor "+ userset.first().full_name,
+                 "message": "A notification has been sent to doctor "+ userset.first().full_name,
                 "specialities": specialities_with_doctors_dependet,
                 "hospital_name": request.user.my_admin.first().hospital.name,
 
@@ -1223,7 +1223,7 @@ class Doctor:
                 is_new=True
         
 
-        appointments = Appointment.objects.filter(patient=patient)
+        appointments = Appointment.objects.filter(patient=patient,doctor=doctor)
         docs_with_tests = []
         
         for apt in appointments:
@@ -1279,6 +1279,96 @@ class Doctor:
             "documents": docs_with_tests,
             "test_types":tests_list,
         })
+
+
+
+
+    def ViewMedicalHistory(request, patient_name):
+        print("view")
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('login'))
+        elif not request.user.is_doctor:
+            logout(request)
+            return HttpResponseRedirect(reverse('login'))
+
+
+
+        
+
+        status_booked=AppointmentStatus.objects.get(status="booked")
+        status_pending=AppointmentStatus.objects.get(status="pending")
+
+        patient_user = User.objects.filter(username=patient_name).first()
+        patient = PatientModel.objects.filter(my_account=patient_user).first()
+        doctor = DoctorModel.objects.filter(my_account=request.user).first()
+
+        this_appointment = Appointment.objects.filter(
+            doctor=doctor, patient=patient, appt_date=datetime.datetime.today()).first()
+        is_new =False;
+        if this_appointment is not None:
+            if this_appointment.status==status_booked or this_appointment.status==None:
+                is_new=True
+        
+
+
+        if request.method == "POST":
+            title = request.POST["title"]
+            attachment = request.FILES.get('attachment', None)
+            diagnosis = request.POST["diagnosis"]
+            disease = request.POST["title"]
+            reqired_test=request.POST["reqired_test"]
+            try:
+                doc = AppointmentDocsModel(appointment=this_appointment, title=title,
+                                           attachment=attachment, diagnosis=diagnosis, disease=disease)
+
+                if reqired_test == "None":
+                    this_appointment.status = status_done
+                else:
+                    this_appointment.status = status_pending
+                    typeset=MedicalTestType.objects.filter(type=reqired_test)
+                    if typeset.count()==1:
+                        test=MedicalTest(appointment_document=doc,type=typeset.first())
+                        doc.save()
+                        test.save()
+                    else:
+                        new_type=MedicalTestType(type=reqired_test)
+                        new_type.save()
+                        test=MedicalTest(appointment_document=doc,type=typeset.first())
+                        doc.save()
+                        test.save()
+                        
+                this_appointment.save()
+                print("saved")
+                doc.save()
+            except IntegrityError:
+                return render(request, "hospital_hub/Doctor/doctor_viewRecord.html", {
+                    "message":"an Error Happened, Try again",
+                    "is_new": is_new,
+                    "patient": patient_user,
+                    "doctor": doctor,
+                    "documents": docs_with_tests,
+                    "test_types":tests_list,
+                })
+            return HttpResponseRedirect(reverse('doctor_view_history',args=[patient_name]))
+        
+        appointments = Appointment.objects.filter(patient=patient)
+        docs_with_tests = []
+        
+        for apt in appointments:
+            document = apt.document.first();
+            if document != None:
+                test = document.tests.all().first()
+                docs_with_tests.append([document,test])
+
+
+
+        return render(request, "hospital_hub/Doctor/medical_history.html", {
+            "is_new": is_new,
+            "patient": patient_user,
+            "doctor": doctor,
+            "documents": docs_with_tests,
+        })
+
 
     def DoctorLogout(request):
         logout(request)
@@ -1633,6 +1723,7 @@ class Patient:
                                 appointment.schedule = selected_schedule
                                 appointment.patient_no = patient_no
                                 appointment.appt_date = appt_date
+                                appointment.status=AppointmentStatus.objects.filter(status='booked').first()
                                 # appointment.status=AppointmentStatus.objects.filter("Booked").first()
                                 appointment.save()
                                 return HttpResponseRedirect(reverse('book_appointment', args=[doctor_name]))

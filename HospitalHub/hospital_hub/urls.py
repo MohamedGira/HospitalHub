@@ -82,6 +82,9 @@ urlpatterns = [
     #path('Doctor/schedule', views.Doctor.DoctorSchedule, name='doctor_schedule'),
     path('Doctor/ViewRecord/<str:patient_name>', views.Doctor.DoctorViewRecord,
          name='doctor_viewRecord'),
+    path('Doctor/ViewHistory/<str:patient_name>', views.Doctor.ViewMedicalHistory,
+         name='doctor_view_history'),
+
     path('Doctor/AcceptEmployment/<str:doctor_name>',
          views.Doctor.DoctorAccept, name='doctor_employment_success' ),
     path('Doctor/RejectEmployment/<str:doctor_name>',

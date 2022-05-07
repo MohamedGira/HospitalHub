@@ -199,8 +199,13 @@
                           My Medical Records
                         </a>
                       </button>
+
                       <button class="profile-card__button button--orange js-message-btn"
-                        style="margin: 30px 35px; padding:5px;">Medical History</button>
+                        style="margin: 30px 35px; padding:5px;">
+                        <a style="color: white"
+                          href="{%url 'doctor_view_history' patient_name=appointment.patient%}">
+                          Medical History
+                        </a>Medical History</button>
                     </div>
                   </div>
 
@@ -275,9 +280,13 @@
                     <a style="color: white"
                       href="{%url 'doctor_viewRecord' patient_name=pend.patient.my_account.username%}">
                       My Medical Records
-                    </a>
+                    </a></button>
                     <button class="profile-card__button button--orange js-message-btn"
-                      style="margin: 30px 35px; padding:5px;">Medical History</button>
+                        style="margin: 30px 35px; padding:5px;">
+                        <a style="color: white"
+                          href="{%url 'doctor_view_history' patient_name=pend.patient.my_account.username%}">
+                          Medical History
+                        </a></button>
                 </div>
               </div>
 
@@ -348,7 +357,11 @@
                       My Medical Records
                     </a></button>
                   <button class="profile-card__button button--orange js-message-btn"
-                    style="margin: 30px 35px; padding:5px;">Medical History</button>
+                        style="margin: 30px 35px; padding:5px;">
+                        <a style="color: white"
+                          href="{%url 'doctor_view_history' patient_name=appointment.patient.my_account.username%}">
+                          Medical History
+                        </a></button>
                 </div>
               </div>
 
