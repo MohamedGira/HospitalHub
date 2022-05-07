@@ -1,0 +1,556 @@
+
+{%extends 'hospital_hub/Patient/patient_layout.html'%}
+{% load static %}
+{%block body%}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Patient Profile</title>
+
+    <link rel="stylesheet" href="{% static 'hospital_hub/assets/css/maicons.css'%}">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700&subset=latin-ext">
+
+    <link rel="stylesheet" href="{% static 'hospital_hub/assets/css/bootstrap.css'%}">
+    <link rel="stylesheet" href="{% static 'hospital_hub/assets/vendor/owl-carousel/css/owl.carousel.css'%}">
+    <link rel="stylesheet" href="{% static 'hospital_hub/assets/vendor/animate/animate.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'hospital_hub/assets/css/theme.css'%}">
+    <link rel='stylesheet' href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css'>
+    <link rel="stylesheet" href="{% static 'hospital_hub/assets/css/patient_profile.css'%}">
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+    <div class="page-section bg-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+
+                    <div class="row">
+
+                        <div class="row gutters-sm">
+                            <div class="col-md-4 mb-3">
+                                <div class="card ">
+                                    <div class="card-body" style="display:block; margin:auto;">
+                                        <div class="d-flex flex-column align-items-center text-center">
+
+                                            <img src={{user.image.url}} alt="Admin" class="rounded-circle"
+                                                width="150" height="150">
+                                            <div class="mt-3">
+                                                <h4 style="font-size:auto;">{{user.full_name}}</h4>
+                                                {%if user.age%}
+                                                <p class="text-secondary mb-1">{{user.age}} Years</p>
+                                                {%endif%}
+                                                <p class="text-muted font-size-sm">{{user.email}}</p>
+                                                <br>
+
+
+                                                <!--                           <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"
+                                                        style="visibility:hidden; padding:8px 20px; border-radius:10px;">
+                                                    Message
+                                                </button> -->
+                                                <div id="myModal" class="modal fade" role="dialog">
+                                                    <div class="modal-dialog">
+
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title" style="text-align:center">Send
+                                                                    Message</h4>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    style="text-align:center">
+                                                                    &times;
+                                                                </button>
+
+                                                            </div>
+                                                            <div class="modal-body" style="text-align:right;">
+                                                                <textarea rows="5" cols="50" name="message"
+                                                                    style="margin:20px"
+                                                                    placeholder="Enter your message.."></textarea>
+                                                            </div>
+                                                            <div class="modal-footer">
+
+                                                                <button type="button" class="btn btn-primary"
+                                                                    data-dismiss="modal"
+                                                                    style="background:rgba(207, 72, 76, 0.8)">
+                                                                    Close
+                                                                </button>
+                                                                <input type="submit" class="btn btn-primary"
+                                                                    value="Submit" />
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-8 ">
+                                <div class="card mb-3">
+                                    <div class="card2-body ">
+                                        <section id="working-time" class="">
+                                            <div class="container">
+                                                <!-- .row end -->
+                                                <div class="row" style="display:block;">
+
+                                                    <div class="flex-container" id="books-table">
+
+                                                        <h2 style="text-align: center; margin-bottom:50px;">Medical
+                                                            Record</h2>
+                                                        <table
+                                                            class="table table-bordered table-striped table-responsive-stack"
+                                                            id="books" style="text-align:center;table-layout:fixed">
+
+
+                                                            <thead class="thead"
+                                                                style="background-color:#81C2D6; color:white;">
+                                                                <tr>
+                                                                    <th>Date</th>
+                                                                    <th>Doctor</th>
+                                                                    <th>Diagnosis</th>
+                                                                    <th>Prescription</th>
+                                                                    <th>Tests Results</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                {%for doc, test in documents_with_tests%}
+                                                                <tr>
+                                                                    <td>{{doc.appointment.appt_date}}</td>
+                                                                    <td><a
+                                                                            href="{%url 'book_appointment' doctor_name=doc.appointment.doctor %}">{{doc.appointment.doctor}}</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button type="button" data-toggle="modal"
+                                                                            class="link"
+                                                                            style="border:none; color:lightseagreen;background:none"
+                                                                            data-target="#diagnosis_{{doc.id}}">
+                                                                            Show
+                                                                        </button>
+                                                                    </td>
+                                                                    {% if doc.attachment%}
+                                                                    <td> <a href="{{doc.attachment.url}}">link</a></td>
+                                                                    {% else %}
+                                                                    <td>None</td>
+                                                                    {%endif%}
+                                                                    {%if not test %}
+                                                                    <td>Not Requested</td>
+                                                                    {%elif not test.result%}
+                                                                    <td><button type="button" data-toggle="modal"
+                                                                            class="link"
+                                                                            style="border:none; color:lightseagreen;background:none"
+                                                                            data-target="#test_{{test.id}}">
+                                                                            {{test.type}}
+                                                                        </button></td>
+                                                                    {%else%}
+                                                                    <td> <a href="{{test.result.url}}">{{test.type}}</a>
+                                                                    </td>
+                                                                    {%endif%}
+                                                                </tr>
+
+
+
+                                                                <!--relate the diagnoses id to every document id (dynamic)-->
+                                                                <div class="modal fade" id="diagnosis_{{doc.id}}"
+                                                                    tabindex="-1" role="dialog"
+                                                                    aria-labelledby="exampleModalLabel"
+                                                                    aria-hidden="true">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content" style="width:120%;">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="exampleModalLabel">Doctor
+                                                                                    Diagnosis</h5>
+                                                                                <button type="button" class="close"
+                                                                                    data-dismiss="modal"
+                                                                                    aria-label="Close"
+                                                                                    style="color:#CF484C;">
+                                                                                    <span
+                                                                                        aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                {{doc.diagnosis}}
+
+                                                                            </div>
+
+
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="modal fade" id="test_{{test.id}}"
+                                                                    tabindex="-1" role="dialog"
+                                                                    aria-labelledby="exampleModalLabel"
+                                                                    aria-hidden="true">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content" style="width:120%;">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="exampleModalLabel">ADD
+                                                                                    ATTACHEMENT</h5>
+                                                                                <button type="button" class="close"
+                                                                                    data-dismiss="modal"
+                                                                                    aria-label="Close"
+                                                                                    style="color:#CF484C;">
+                                                                                    <span
+                                                                                        aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <form method="post" id="myForm"
+                                                                                    enctype="multipart/form-data">
+                                                                                    {%csrf_token%}
+                                                                                    <!-- addes fields together -->
+                                                                                    <fieldset style="margin:30px">
+                                                                                        <!-- semantically adding a title -->
+
+
+                                                                                        <input type="hidden"
+                                                                                            name="test_id"
+                                                                                            value="{{test.id}}" />
+                                                                                        <div class="group">
+                                                                                            <label for="results">Test
+                                                                                                Results</label>
+                                                                                            <input type="file"
+                                                                                                name="required_test"
+                                                                                                id="results" required />
+                                                                                        </div>
+
+
+                                                                                    </fieldset>
+                                                                                    <div>
+                                                                                        <input type="submit"
+                                                                                            class="btn btn-primary "
+                                                                                            value="Submit Results"
+                                                                                            style="background:#81C2D6; color:white;
+              border-radius:10px; padding:8px 20px; margin-left:75%;" />
+                                                                                    </div>
+                                                                                </form>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+
+
+                                                                {%empty%}
+                                                                <tr>
+                                                                    <td colspan="5">No previous visits</td>
+
+                                                                </tr>
+
+                                                                {%endfor%}
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                    <!-- /.container -->
+                                                    <!-- .row end -->
+                                                </div>
+                                                <!-- .container end -->
+                                                <hr>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div class="row gutters-sm">
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div> <!-- .container -->
+        </div> <!-- .page-section -->
+
+        <div class="page-section banner-home bg-image" style="background-image: url(../assets/img/banner-pattern.svg);">
+            <div class="container py-5 py-lg-0">
+                <div class="row align-items-center">
+                    <div class="col-lg-12 wow zoomIn">
+                        <div class="img-banner d-none d-lg-block">
+                            <p><img src="../assets/img/logo3.png" alt="Logo"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- .banner-home -->
+
+        <footer class="page-footer">
+            <div class="container">
+                <div class="row px-md-3">
+                    <div class="col-sm-6 col-lg-4 py-3">
+                        <h5>Company</h5>
+                        <ul class="footer-menu">
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Career</a></li>
+                            <li><a href="#">Editorial Team</a></li>
+                            <li><a href="#">Protection</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-lg-4 py-3">
+                        <h5>More</h5>
+                        <ul class="footer-menu">
+                            <li><a href="#">Terms & Condition</a></li>
+                            <li><a href="#">Privacy</a></li>
+                            <li><a href="#">Advertise</a></li>
+                            <li><a href="#">Join as Doctors</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-lg-4 py-3">
+                        <h5>Contact</h5>
+                        <p class="footer-link mt-2">Ain Shams University, Faculty of Engineering</p>
+                        <a href="#" class="footer-link">HospitalHub@gmail.com</a>
+                        <br>
+                        <a href="#" class="footer-link">+20 1013421486</a>
+                        <h5 class="mt-3">Social Media</h5>
+                        <div class="footer-sosmed mt-3">
+                            <a href="#" target="_blank"><span class="mai-logo-facebook-f"></span></a>
+                            <a href="#" target="_blank"><span class="mai-logo-twitter"></span></a>
+                            <a href="#" target="_blank"><span class="mai-logo-google-plus-g"></span></a>
+                            <a href="#" target="_blank"><span class="mai-logo-instagram"></span></a>
+                            <a href="#" target="_blank"><span class="mai-logo-linkedin"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <style type="text/css">
+            .test {
+                position: relative;
+            }
+
+            .test::before {
+                border-radius: 10px;
+                content: "";
+                background: url(https://img.freepik.com/free-vector/clean-medical-patterned-background-vector_53876-140867.jpg?t=st=1651095193~exp=1651095793~hmac=b3c93edbeb698542600111de138b25dae0abe0992bc019bc2024d669bcc0d684&w=1060) no-repeat;
+                background-size: cover;
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                bottom: 0px;
+                left: 0px;
+                opacity: 0.1;
+            }
+
+            .time-panel {
+                -webkit-transition: all 0.35s;
+                -moz-transition: all 0.35s;
+                -ms-transition: all 0.35s;
+                -o-transition: all 0.35s;
+                transition: all 0.35s;
+                position: relative;
+                padding: 26px 0;
+                border: 1px solid rgba(207, 72, 76, 0.5);
+                border-radius: 10px;
+            }
+
+            .time-panel::before {
+                border-radius: 10px;
+                content: "";
+                background: rgba(207, 72, 76, 0.15);
+                background-size: cover;
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                bottom: 0px;
+                left: 0px;
+                opacity: 0.1;
+            }
+
+            .time-panel:hover {
+                -webkit-transform: translateY(-4px);
+                -moz-transform: translateY(-4px);
+                -ms-transform: translateY(-4px);
+                -o-transform: translateY(-4px);
+                transform: translateY(-4px);
+            }
+
+            .time-panel h3 {
+                font-size: 24px;
+                font-weight: 700;
+                line-height: 1;
+                margin-bottom: 20px;
+                color: #81C2D6;
+                text-transform: capitalize;
+            }
+
+            .time-panel ul li {
+                font-size: 14px;
+                line-height: 24px;
+                font-weight: 400;
+                color: #fff;
+            }
+
+            /* Custom, iPhone Retina */
+
+
+            .heading h2 {
+                font-size: 28px;
+                position: relative;
+                color: #212121;
+                margin: 0px 0px 40px 0;
+            }
+
+            .heading h2:before {
+                bottom: 0;
+                height: 17px;
+                width: 117px;
+                background: url(https://i.ibb.co/LCh7Hwv/line.png);
+                content: "";
+                display: inline-block;
+                background-repeat: no-repeat;
+                content: '';
+                position: absolute;
+                left: 50%;
+                -webkit-backface-visibility: hidden;
+                -webkit-transform: translate(-50%) rotate(45deg);
+                transform: translate(-50%);
+                top: 140%;
+            }
+
+            .heading {
+                margin-bottom: 50px;
+            }
+
+            .working-time {
+                text-align: center;
+            }
+
+            .working-time::before {
+                content: "";
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                left: 0;
+                top: 0;
+            }
+
+            .working-time h2,
+            .working-time p {
+                color: #fff;
+            }
+
+
+            .text-secondary {
+                color: #CF484C !important;
+            }
+
+            .hr {
+                height: 2px;
+                margin: 10px 0 10px 0;
+                background: rgba(0, 0, 0, .2);
+            }
+
+            .checked {
+                color: orange;
+            }
+
+            .main-body {
+                padding: 15px;
+            }
+
+            .card {
+                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+            }
+
+            .card {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                min-width: 0;
+                word-wrap: break-word;
+                background-color: rgba(255, 255, 255, 1);
+                background-clip: border-box;
+                border: 0 solid rgba(0, 0, 0, .125);
+                border-radius: .25rem;
+            }
+
+            .card-body {
+                flex: 1 1 auto;
+                min-height: 1px;
+                padding: 1rem;
+                width: 300px;
+            }
+
+            .card2-body {
+                flex: 1 1 auto;
+                min-height: 1px;
+                padding: 1rem;
+            }
+
+            .gutters-sm {
+                margin-right: -8px;
+                margin-left: -8px;
+            }
+
+            .gutters-sm>.col,
+            .gutters-sm>[class*=col-] {
+                padding-right: 8px;
+                padding-left: 8px;
+            }
+
+            .mb-3,
+            .my-3 {
+                margin-bottom: 1rem !important;
+            }
+
+            .bg-gray-300 {
+                background-color: #e2e8f0;
+            }
+
+            .h-100 {
+                height: 100% !important;
+            }
+
+            .shadow-none {
+                box-shadow: none !important;
+            }
+        </style>
+
+
+        <script src="{% static 'hospital_hub/assets/js/jquery-3.5.1.min.js'%}"></script>
+        <script src="{% static 'hospital_hub/assets/js/bootstrap.bundle.min.js'%}"></script>
+        <script src="{% static 'hospital_hub/assets/vendor/owl-carousel/js/owl.carousel.min.js'%}"></script>
+        <script src="{% static 'hospital_hub/assets/vendor/wow/wow.min.js'%}"></script>
+        <script src="{% static 'hospital_hub/assets/js/theme.js'%}"></script>
+
+
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
+        <script src="{%static 'hospital_hub/assets/js/patient_profile.js'%}"></script>
+</body>
+
+{%endblock%}

@@ -18,6 +18,7 @@ from .models import City as CityModel
 from .models import Schedule as ScheduleModel
 from .models import Appointment as AppointmentModel
 from .models import AppointmentDocument as AppointmentDocsModel
+from .models import MedicalTest as MedicalTestModel
 from .utils import *
 from django.core.mail import EmailMessage
 from django.conf import settings
@@ -1842,3 +1843,47 @@ class Patient:
         return render(request, "hospital_hub/Patient/view_hospitals.html", {
             "hospitals": hospitals
         })
+
+    def PatientViewRecord(request):
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse('login'))
+        elif not request.user.is_patient:
+            logout(request)
+            return HttpResponseRedirect(reverse('login'))
+
+        patient = request.user.my_patient.first()
+
+        all_appointments = AppointmentModel.objects.filter(patient=patient)
+        all_documents = []
+        
+        for apt in all_appointments:
+            document = apt.document.first()
+            if document != None:
+                test = document.tests.first()
+                all_documents.append([document,test])
+
+        if request.method == "POST":
+            required_test=request.FILES.get("required_test" , None)
+            test_id=request.POST["test_id"]
+         
+            try:
+                
+                test = MedicalTestModel.objects.filter(id=int(test_id)).first()
+                test.result=required_test
+                test.save()
+                status_done = AppointmentStatus.objects.get(status="done")
+                appointement=test.appointment_document.appointment
+                appointement.status=status_done
+                appointement.save()
+            except IntegrityError:
+                return render(request, "hospital_hub/Patient/patient_viewRecord.html", {
+                    "message":"an Error Occured, Try again", 
+                    "documents_with_tests":all_documents
+                    })
+            return HttpResponseRedirect(reverse('patient_viewRecord'))
+
+        return render(request, "hospital_hub/Patient/patient_viewRecord.html", {
+            "documents_with_tests":all_documents
+        })
+
+   

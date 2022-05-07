@@ -111,4 +111,5 @@ urlpatterns = [
     
     path('patient/appointments',views.Patient.ViewAppointments, name='patient_view_appointments'),
     path('patient/appointments/<int:appt_id>',views.Patient.ViewAppointmentDocs, name='patient_view_appointments_docs'),
+    path('patient/ViewRecord', views.Patient.PatientViewRecord,name='patient_viewRecord'),
 ]
