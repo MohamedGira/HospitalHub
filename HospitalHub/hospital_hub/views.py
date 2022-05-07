@@ -1143,6 +1143,7 @@ class Doctor:
                 reviews_left.append(reviews[i])
             else:
                 reviews_right.append(reviews[i])
+
         if reviews.count():
             total_reviews = int(total_reviews/reviews.count())
 
@@ -1168,7 +1169,7 @@ class Doctor:
                 "schedules": schedule_abbreviation,
                 "reviews": reviews,
                 "reviews_left":reviews_left,
-                "reviews_righ":reviews_right,
+                "reviews_right":reviews_right,
                 "total_reviews":total_reviews,
                 
             })

@@ -1,9 +1,9 @@
-body{
-	margin:0;
-	color:#81C2D6;
-	background:url(https://i.ibb.co/DM8LKZZ/New-Project.png) no-repeat center;
+body {
+	margin: 0;
+	color: #81C2D6;
+	background: white;
 	background-attachment: fixed;
-	font:600 16px/18px 'Open Sans',sans-serif;
+	font: 600 16px/18px 'Open Sans',sans-serif;
 }
 *,:after,:before{box-sizing:border-box}
 .clearfix:after,.clearfix:before{content:'';display:table}
@@ -18,16 +18,17 @@ a{color:inherit;text-decoration:none}
 .text-primary{
 	color: #81C2D6 !important;
 }
-.login-wrap{
-	border-radius:50px;
-	width:100%;
-	height:900px;
-	margin-top:20px;
-	margin-left:800px;
-	max-width:525px;
-	min-height:670px;
-	position:relative;
-	box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+.login-wrap {
+	border-radius: 50px;
+	width: 100%;
+	height: 900px;
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 525px;
+	min-height: 670px;
+	position: relative;
+	box-shadow: 0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
 }
 .login-wrap::before {
 	border-radius:50px;

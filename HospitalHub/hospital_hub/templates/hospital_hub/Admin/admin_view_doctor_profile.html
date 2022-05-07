@@ -61,9 +61,9 @@
   <div class="page-section bg-light">
     <div class="container">
       <div class="row justify-content-center">
-        <div class="col-lg-10">
+        <div class="col-lg-9">
 
-          <div class="row">
+          <div class="row" style="display:block">
 
             <div class="row gutters-sm">
               <div class="col-md-4 mb-3">
@@ -103,66 +103,28 @@
                 </div>
        
               </div>
-              <div class="col-md-8 ">
-                <div class="card mb-3">
-                  <div class="card2-body test">
+              <div class="col-md-8 " >
+                <div class="card mb-4">
+                  <div class="card-body test">
                     
-  <!--                    <section>
-                      <div class ="container">
-                        <div class="row">
-                          <div class="col-sm-3">
-                            <h6 calss ="mb-0">Address</h6>
-                          </div>
-                          <div class="col-sm-9 text-secondary">
-                            Qalubia
-                          </div>
-                        </div>
-
-                        <hr>
-                        
-                        <div class="row">
-                          <div class="col-sm-3">
-                            <h6 calss ="mb-0">Address</h6>
-                          </div>
-                          <div class="col-sm-9 text-secondary">
-                            Qalubia
-                          </div>
-                        </div>
-                      </div>
-                    </section>-->
+ 
                       
                     <section id="working-time" class="working-time">
                             <div>
                                 <p class="text-primary">Weekly Schedule</p>
                             </div>
                         <div>
-                        {%if request.GET.message%}
-                      <p class="text-secondary">{{request.GET.message}}</p>
-                      {%endif%}
-                            </div>
+                          {%if request.GET.message%}
+                          <p class="text-secondary">{{request.GET.message}}</p>
+                          {%endif%}
+                          </div>
                             <div class="container">
                                 <!-- .row end -->
-                                <div class="row">
+                                <div class="row" >
 
 
          
-                                    <!-- Service #1 -->
-                                    <!-- .col-md-2 end -->
-
-                                    <!-- 
-                                    <div class="col-3 col-sm-3 col-md-3 col-lg-3 mb-2">
-                                        <div class="time-panel">
-                                            <h3>sat</h3>
-                                            <ul class="list-unstyled mb-0">
-                                                <li style="color:#CF484C;" >9:00 AM</li>
-                                                <li style="color:#81C2D6;">to</li>
-                                                <li style="color:#CF484C;">4:30 PM</li>
-                                            </ul>
-                                        </div>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width:50%; font-size:12px; padding:0px 0px;">Reserve </button>
-                                    
-                                    </div>
-                                    -->
+                                   
                                     
                                     {%for schedule,abbreviation in schedules %}
 
@@ -415,18 +377,7 @@
                   </div>
 
 
-                  
-                  <div class="col-sm-6 mb-3">
-                    <div class="card h-100">
-                      <div class="card-body">
-                        <h6 style="text-align:center;"></h6>
-                        
-                   
-
-                     
-                      </div>
-                    </div>
-                  </div>
+              
                 </div>
 
 
@@ -437,127 +388,123 @@
         </div>
       </div>  
             <!--comments-->
-     <div class="row gutters-sm mb-3" style="background:white;  box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.2); border-radius:10px;">
-                  <div class="row" style="width:100%; text-align:center; font-size:30px;"> <div class="col-12" >Latest Reviews </div> </div>
-                  <div class="row">
-                    <div class="col-6" style="padding:0px;">
-                    <div class="col-12 mb-3" >
-                    <div class="card h-100">
-                      <div class="card-body" style="width:100%;">
-                    <div class="row align-items-center" style="visibility:hidden">
-              
-                      <span style="font-size:10px; text-align:left; "> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt  </span>
-                    </div>
-
-                        {%for review in reviews_left%}
-                          <!-- comment template-->
-
-                        <div class="row align-items-center" >
-                          <div class="col-2">
-                          <img src="{{review.patient.my_account.image.url}}" alt="UserProfile" class="rounded-circle" width="40">
-                          </div>
-                          <div class="col-3" style="padding-left:0px">
+    <div class="row gutters-sm mb-3" style="background:white;  box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.2); border-radius:10px;">
+                            <div class="row" style="width:100%; text-align:center; font-size:30px;"> <div class="col-12">Latest Reviews </div> </div>
                             <div class="row">
-                            <span style="font-size:12px; text-align:left; "> {{review.patient.my_account.username}} </span>
+                                <div class="col-6" style="padding:0px;">
+                                    <div class="col-12 mb-3">
+                                        <div class="card h-100">
+                                            <div class="card-body" style="width:100%;">
+
+
+                                                {%for review in reviews_left%}
+                                                <!-- comment template-->
+
+                                                <div class="row align-items-center">
+                                                    <div class="col-2">
+                                                        <img src="{{review.patient.my_account.image.url}}" alt="UserProfile" class="rounded-circle" width="40">
+                                                    </div>
+                                                    <div class="col-3" style="padding-left:0px">
+                                                        <div class="row">
+                                                            <span style="font-size:12px; text-align:left; "> {{review.patient.my_account.username}} </span>
+                                                        </div>
+                                                        <div class="row">
+                                                            {% for i in '01234'|make_list %}
+                                                            {%if forloop.counter <= review.rating %}
+                                                            <span class="fa fa-star checked"></span>
+                                                            {%else%}
+                                                            <span class="fa fa-star "></span>
+                                                            {%endif%}
+                                                            {% endfor %}
+                                                        </div>
+                                                        <div class="row">
+                                                            <span style="font-size:12px; text-align:left; color: rgba(0,0,0,0.3)"> {{review.created_at.date}} </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6" style="padding:0px">
+                                                        <span style="font-size:13px; text-align:left; ">
+                                                            {{review.comment}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                {%endfor%}
+
+
+                                                <div class="row align-items-center" style="visibility:hidden">
+
+                                                    <span style="font-size:10px; text-align:left; "> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt  </span>
+                                                </div>
+
+
+
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6" style="padding:0px;width:900px">
+                                    <div class="col-12 mb-3">
+                                        <div class="card h-100">
+                                            <div class="card-body" style="width:100%;">
+
+
+
+                                                {%for review in reviews_right%}
+                                                <!-- comment template-->
+
+                                                <div class="row align-items-center">
+                                                    <div class="col-2">
+                                                        <img src="{{review.patient.my_account.image.url}}" alt="UserProfile" class="rounded-circle" width="40">
+                                                    </div>
+                                                    <div class="col-3" style="padding-left:0px">
+                                                        <div class="row">
+                                                            <span style="font-size:12px; text-align:left; "> {{review.patient.my_account.username}} </span>
+                                                        </div>
+                                                        <div class="row">
+                                                            {% for i in '01234'|make_list %}
+                                                            {%if forloop.counter <= review.rating %}
+                                                            <span class="fa fa-star checked"></span>
+                                                            {%else%}
+                                                            <span class="fa fa-star "></span>
+                                                            {%endif%}
+                                                            {% endfor %}
+                                                        </div>
+                                                        <div class="row">
+                                                            <span style="font-size:12px; text-align:left; color: rgba(0,0,0,0.3)"> {{review.created_at.date}}  </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6" style="padding:0px">
+                                                        <span style="font-size:13px; text-align:left; ">
+                                                            {{review.comment}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                {%endfor%}
+
+
+
+
+                                                <div class="row align-items-center" style="visibility:hidden">
+                                                    <span style="font-size:10px; text-align:left; "> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt  </span>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="row" >
-                              {% for i in '01234'|make_list %}
-                                  {%if forloop.counter <= review.rating %}
-                                  <span class="fa fa-star checked"></span>
-                                  {%else%}
-                                  <span class="fa fa-star "></span>
-                                  {%endif%}
-                            {% endfor %} 
-                            </div>
-                            <div class="row">
-                              <span style="font-size:12px; text-align:left; color: rgba(0,0,0,0.3)"> {{review.created_at.date}} </span>
-                            </div>
-                          </div>
-                          <div class="col-6" style="padding:0px">
-                            <span style="font-size:13px; text-align:left; ">
-                            {{review.comment}}  
-                            </span>
-                          </div>
-                      </div>
-
-                          {%endfor%}
-
-
-
-                  
-
-          
-
-            
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-6" style="padding:0px;width:900px">
-                <div class="col-12 mb-3" >
-                <div class="card h-100">
-                  <div class="card-body" style="width:100%;">
-
-            
-
-                        {%for review in reviews_right%}
-                          <!-- comment template-->
-
-                        <div class="row align-items-center" >
-                          <div class="col-2">
-                          <img src="{{review.patient.my_account.image.url}}" alt="UserProfile" class="rounded-circle" width="40">
-                          </div>
-                          <div class="col-3" style="padding-left:0px">
-                            <div class="row">
-                            <span style="font-size:12px; text-align:left; "> {{review.patient.my_account.username}} </span>
-                            </div>
-                            <div class="row" >
-                              {% for i in '01234'|make_list %}
-                                  {%if forloop.counter <= review.rating %}
-                                  <span class="fa fa-star checked"></span>
-                                  {%else%}
-                                  <span class="fa fa-star "></span>
-                                  {%endif%}
-                            {% endfor %} 
-                            </div>
-                            <div class="row">
-                              <span style="font-size:12px; text-align:left; color: rgba(0,0,0,0.3)"> {{review.created_at.date}}  </span>
-                            </div>
-                          </div>
-                          <div class="col-6" style="padding:0px">
-                            <span style="font-size:13px; text-align:left; ">
-                            {{review.comment}}  
-                            </span>
-                          </div>
-                      </div>
-
-                          {%endfor%}
-
-
-            
-
-                 <div class="row align-items-center" style="visibility:hidden">
-             
-                      <span style="font-size:10px; text-align:left; "> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt  </span>
-                </div>
-
-
-    
-                      </div>
-                </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                        </div>
             </div>
           </div>
         </div>
     </div> <!-- .container -->
-  </div> <!-- .page-section -->
 
-  <style type="text/css">
+<link rel="stylesheet" href="{%static 'hospital_hub/assets/css/doctor_profile.css'%}" />
 
-  
-  </style>
 {%endblock%}
