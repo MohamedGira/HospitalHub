@@ -68,10 +68,11 @@ def Login(request):
     if request.method == 'POST':
         username = request.POST.get("username", None)
         password = request.POST.get("password", None)
+        user_type= request.POST.get('user_type',"patient")
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            if request.POST['user_type'] == "doctor":
+            if user_type== "doctor":
                 if user.is_doctor:
                     login(request, user)
                     return HttpResponseRedirect(reverse("doctor_dashboard"))
@@ -95,10 +96,16 @@ def Login(request):
                     "radio": "patient"
                 })
         else:
-            return render(request, "hospital_hub\login-general.html", {
-                "message": "Invalid username or password",
-                "radio": "patient"
-            })
+             if user_type== "doctor":
+                return render(request, "hospital_hub\login-general.html", {
+                    "message": "Invalid username or password",
+                    "radio": "doctor"
+                })
+             else:
+                return render(request, "hospital_hub\login-general.html", {
+                    "message": "Invalid username or password",
+                     "radio": "patient"
+                })
     else:
         return render(request, "hospital_hub\login-general.html", {
             "radio": "patient"
