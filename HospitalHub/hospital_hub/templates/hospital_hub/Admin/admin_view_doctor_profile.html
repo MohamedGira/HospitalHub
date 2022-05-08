@@ -135,6 +135,8 @@
                                                 <li style="color:#CF484C;" >{{schedule.start_time|time:"h:i A"}}</li>
                                                 <li style="color:#81C2D6;">to</li>
                                                 <li style="color:#CF484C;">{{schedule.end_time|time:"h:i A"}}</li>
+                                                <li style="color:#AAAAAA; font-size:smaller">{{schedule.price}} EGP </li>
+
                                             </ul>
                                         </div>
                                         <button type="button" class="btn btn-primary" data-toggle="modal"
@@ -168,14 +170,21 @@
 
                                                  </div>
                                                 <div class="group" style="color: rgba(255,255,255,.5);">
-                                                from
+                                                
                                                 <input class="input" type="time" value="{{schedule.start_time|time:"h:i"}}"  name="new_start" min="00:00" max="23:59"  required
                                                     style="width:40%;">
                                                 to
                                                 <input class="input" type="time" value="{{schedule.end_time|time:"h:i"}}"  name="new_end" min="00:00" max="23:59"  required
                                                     style="width:40%;" />
                                                 </div>
-
+                                                <br />
+                                                
+                                                <div>
+                                                    price:
+                                                     <input class="input" type="number" value="{{schedule.price}}"  name="new_price" required
+                                                    style="width:40%;" />
+                                                </div>
+                                                <br />
                                                 <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary" data-dismiss="modal" style="background: rgba(207, 72, 76, 0.8)  ;">Cancel</button>
                                                 <input type="submit" class="btn btn-primary" value="Save">

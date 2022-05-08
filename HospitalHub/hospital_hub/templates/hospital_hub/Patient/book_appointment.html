@@ -4,8 +4,9 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+
 <div class="page-banner overlay-dark bg-image" style="background-image: url(../../../static/hospital_hub/assets/img/bg_image_1.jpg);">
-    4
+
     <div class="banner-section">
         <div class="container text-center wow fadeInUp">
             <h1 class="font-weight-normal">🏥{{hospital.name}}🏥</h1>
@@ -246,6 +247,8 @@
                                                             <li style="color:#CF484C;">{{schedule_and_abbreviation.0.start_time|time:"h:i A"}}</li>
                                                             <li style="color:#81C2D6;">to</li>
                                                             <li style="color:#CF484C;">{{schedule_and_abbreviation.0.end_time|time:"h:i A"}}</li>
+                                                            
+                                                            <li style="color:#AAAAAA; font-size:smaller">{{schedule_and_abbreviation.0.price}} EGP </li>
                                                         </ul>
                                                     </div>
                                                     <button type="button" class="btn btn-primary" data-toggle="modal"
@@ -293,7 +296,7 @@
                                                                 </div>
 
                                                                 <div class="group" style="color: rgba(255,255,255,.5);">
-                                                                    alo
+                                                                    
                                                                 </div>
 
                                                                 <div class="modal-footer">
@@ -610,7 +613,7 @@
     </div> <!-- .container -->
 </div> <!-- .page-section -->
 
-<link rel="stylesheet" href="{%static 'hospital_hub/assets/css/doctor_profile.css'%}" />
+   <link rel="stylesheet" href="{%static 'hospital_hub/assets/css/doctor_profile.css'%}"/>
 
 <style type="text/css">
 </style>

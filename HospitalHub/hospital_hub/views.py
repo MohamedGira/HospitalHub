@@ -692,6 +692,7 @@ class Admin:
                             doctor=doctor, day=day).first()
                         schedule_day.start_time = request.POST['new_start']
                         schedule_day.end_time = request.POST['new_end']
+                        schedule_day.price= request.POST['new_price']
                         schedule_day.save()
                         return HttpResponseRedirect(reverse('admin_view_doctor', args=[doctor_name]))
 
@@ -1048,7 +1049,7 @@ class Doctor:
                 })
             login(request, user)
             # why not doctor home
-            return HttpResponseRedirect(reverse("doctor_home"))
+            return HttpResponseRedirect(reverse("doctor_dashboard"))
         else:
             return render(request, "hospital_hub/Doctor/doctor_register.html", {
                 "cities": cities,
