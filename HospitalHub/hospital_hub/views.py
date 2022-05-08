@@ -279,7 +279,7 @@ class Owner:
         if(request.method == "POST"):
             hospital_name = request.POST["hospital_name"]
             city = request.POST["city"]
-            admin_account_id = request.POST["admin_account_id"]
+            admin_account_id = request.POST.get("admin_account_id",-1)
 
             image = request.FILES.get('image', None)
 
