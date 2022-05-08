@@ -33,7 +33,8 @@
 
                 <div class="row">
 
-                    <div class="row gutters-sm">
+                    <div class="row gutters-sm" style="width:100%">
+                        
                         <div class="col-md-4 mb-3">
                             <div class="card ">
                                 <div class="card-body">
@@ -199,6 +200,7 @@
                             <!---->
 
                         </div>
+
                         <div class="col-md-8 ">
                             <div class="card mb-3">
                                 <div class="card2-body test">
@@ -222,22 +224,7 @@
 
 
 
-                                                <!-- Service #1 -->
-                                                <!-- .col-md-2 end -->
-                                                <!--
-                                                <div class="col-3 col-sm-3 col-md-3 col-lg-3 mb-2">
-                                                    <div class="time-panel">
-                                                        <h3>sat</h3>
-                                                        <ul class="list-unstyled mb-0">
-                                                            <li style="color:#CF484C;" >9:00 AM</li>
-                                                            <li style="color:#81C2D6;">to</li>
-                                                            <li style="color:#CF484C;">4:30 PM</li>
-                                                        </ul>
-                                                    </div>
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width:50%; font-size:12px; padding:0px 0px;">Reserve </button>
-
-                                                </div>
-                                                -->
+                                   
                                                 {%for schedule_and_abbreviation, dates_and_corres_turn in schedules %} <!--schedule,abbreviation, nextdays-->
 
                                                 <div class="col-3 col-sm-3 col-md-3 col-lg-3 mb-2">
@@ -332,13 +319,6 @@
 
 
                                     </section>
-
-
-                                    <hr>
-
-
-
-
 
 
 
@@ -488,8 +468,10 @@
 
 
                         </div>
+                    </div>
+                </div>
 
-
+                
                         <div class="row gutters-sm mb-3" style="background:white;  box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.2); border-radius:10px;">
                             <div class="row" style="width:100%; text-align:center; font-size:30px;"> <div class="col-12">Latest Reviews </div> </div>
                             <div class="row">
@@ -610,8 +592,8 @@
 
             </div>
         </div>
-    </div> <!-- .container -->
-</div> <!-- .page-section -->
+  
+
 
    <link rel="stylesheet" href="{%static 'hospital_hub/assets/css/doctor_profile.css'%}"/>
 

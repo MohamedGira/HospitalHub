@@ -7,6 +7,13 @@
   Version: 1.0
  */
 
+
+@import url("https://fonts.googleapis.com/css?family=Quicksand:400,500,700&subset=latin-ext");
+
+body {
+    font-family: "Quicksand", sans-serif;
+}
+
 :root {
   --primary: #81C2D6;
   --accent: #FF3D85;
