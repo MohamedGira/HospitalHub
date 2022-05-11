@@ -30,11 +30,11 @@ a{color:inherit;text-decoration:none}
 	position: relative;
 	box-shadow: 0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
 }
-.login-wrap::before {
-	border-radius:50px;
-	content: "";
-	background:url(https://i.ibb.co/z724T02/full-length-portrait-confident-young-male-doctor-1.jpg) no-repeat;
-	background-size:     cover;
+	.login-wrap::before {
+		border-radius: 50px;
+		content: "";
+		background: url(../../assets/img/logins/doctor-register.jpg) no-repeat;
+		background-size: cover;
 		position: absolute;
 		top: 0px;
 		right: 0px;

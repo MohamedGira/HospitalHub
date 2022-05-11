@@ -75,6 +75,7 @@
     <Folder Include="hospital_hub\static\hospital_hub\assets\fonts\" />
     <Folder Include="hospital_hub\static\hospital_hub\assets\img\" />
     <Folder Include="hospital_hub\static\hospital_hub\assets\img\doctors\" />
+    <Folder Include="hospital_hub\static\hospital_hub\assets\img\logins\" />
     <Folder Include="hospital_hub\static\hospital_hub\assets\js\" />
     <Folder Include="hospital_hub\static\hospital_hub\assets\vendor\" />
     <Folder Include="hospital_hub\static\hospital_hub\assets\vendor\animate\" />
@@ -140,6 +141,13 @@
     <Content Include="hospital_hub\static\hospital_hub\assets\img\hands-unrecognizable-female-doctor-writing-form-typing-laptop-keyboard.jpg" />
     <Content Include="hospital_hub\static\hospital_hub\assets\img\loginbg.jpg" />
     <Content Include="hospital_hub\static\hospital_hub\assets\img\loginbg3.jpg" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\img\logins\add-admin.webp" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\img\logins\add-doctor.jpg" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\img\logins\add-speciality.webp" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\img\logins\doctor-register.jpg" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\img\logins\login-admin.jpg" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\img\logins\login.jpg" />
+    <Content Include="hospital_hub\static\hospital_hub\assets\img\logins\patient-register.jpg" />
     <Content Include="hospital_hub\static\hospital_hub\assets\img\logo.png" />
     <Content Include="hospital_hub\static\hospital_hub\assets\img\logo2.png" />
     <Content Include="hospital_hub\static\hospital_hub\assets\img\medical-physician-doctor-man %281%29.jpg" />

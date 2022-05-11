@@ -28,7 +28,7 @@ a{color:inherit;text-decoration:none}
 .login-wrap::before {
 	border-radius:50px;
 	content: "";
-	background:url(https://i.ibb.co/3S6J02Z/42667-1.jpg) no-repeat;
+	background:url(../img/logins/login-admin.jpg) no-repeat;
 	background-size:     cover;
 		position: absolute;
 		top: 0px;

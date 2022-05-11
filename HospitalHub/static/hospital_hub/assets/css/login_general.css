@@ -45,7 +45,7 @@ a {
 	.login-wrap::before {
 		border-radius: 50px;
 		content: "";
-		background: url(https://i.ibb.co/ZMC0Xnj/smiling-dentist-clinic.jpg) no-repeat;
+		background: url(../img/logins/login.jpg) no-repeat;
 		background-size: cover;
 		position: absolute;
 		top: 0px;

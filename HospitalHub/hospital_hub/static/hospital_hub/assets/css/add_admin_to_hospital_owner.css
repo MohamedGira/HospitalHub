@@ -33,7 +33,7 @@ a{color:inherit;text-decoration:none}
 .login-wrap::before {
 	border-radius:50px;
 	content: "";
-	background:url(https://img.freepik.com/free-photo/handshake-business-partners-deskbusiness-concept_252847-19206.jpg?w=740) no-repeat;
+	background:url(../img/logins/add-admin.webp) no-repeat;
 	background-size:     cover;
 		position: absolute;
 		top: 0px;

@@ -33,7 +33,7 @@ a{color:inherit;text-decoration:none}
 .login-wrap::before {
 	border-radius:50px;
 	content: "";
-	background:url(https://img.freepik.com/free-vector/clean-medical-patterned-background-vector_53876-140867.jpg?t=st=1651095193~exp=1651095793~hmac=b3c93edbeb698542600111de138b25dae0abe0992bc019bc2024d669bcc0d684&w=1060) no-repeat;
+	background:url(../img/logins/add-speciality.webp) no-repeat;
 	background-size:     cover;
 		position: absolute;
 		top: 0px;

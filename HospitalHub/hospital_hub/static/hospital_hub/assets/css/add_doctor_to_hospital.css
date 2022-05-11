@@ -33,7 +33,7 @@ a{color:inherit;text-decoration:none}
 .login-wrap::before {
 	border-radius:50px;
 	content: "";
-	background:url(	https://i.ibb.co/pzck32t/medical-stethoscope-white-surface.jpg) no-repeat;
+	background:url(	../img/logins/patient-register.jpg) no-repeat;
 	background-size:     cover;
 		position: absolute;
 		top: 0px;
