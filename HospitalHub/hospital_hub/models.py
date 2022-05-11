@@ -301,13 +301,16 @@ class Appointment(models.Model):
     patient = models.ForeignKey(
         Patient, on_delete=models.CASCADE, related_name="appointments")
     schedule = models.ForeignKey(
-        Schedule, on_delete=models.CASCADE, related_name="appointments")
+        Schedule, null=True,on_delete=models.SET_NULL, related_name="appointments")
     status = models.ForeignKey(AppointmentStatus, on_delete=models.SET_NULL,null=True,blank=True,default=None)
     patient_no = models.IntegerField()
     appt_date = models.DateField()
 
     def __str__(self):
-        return ("Appointment with "+str(self.patient.my_account.username) + " on "+self.schedule.day+" "+str(self.appt_date))
+        if self.schedule is not None:
+            return ("Appointment with "+str(self.patient.my_account.username) + " on "+self.schedule.day+" "+str(self.appt_date))
+        else:
+            return ("Appointment with "+str(self.patient.my_account.username))
 
 
 class AppointmentDocument(models.Model):
