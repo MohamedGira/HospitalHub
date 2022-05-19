@@ -1,4 +1,5 @@
-# End User Guide
+# Hospital Hub
+
 
 This guide is meant to the different kinds of users to our app
 (patients, doctors, admins, and owners)\
