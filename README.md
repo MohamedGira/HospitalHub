@@ -1,3 +1,4 @@
+# Configuration
 In order to run this application you need to install the following
 
 python 3.7               use pip install python
